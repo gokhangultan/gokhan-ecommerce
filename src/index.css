@@ -14,6 +14,33 @@
 @tailwind components;
 @tailwind utilities;
 
+@media screen and (max-width:1740px){
+  .mobile-menu nav {
+    display: none;
+    flex-direction: column;
+  }
+  
+  .font-menu button {
+    display: none;
+  }
+  .mobile-logo {
+    display: none;
+  }
+}
+
+@media screen and (max-width:1580px){
+  .mobile-menu nav {
+    display: none;
+    flex-direction: column;
+  }
+  
+  .font-menu button {
+    display: none;
+  }
+  .mobile-logo {
+    display: none;
+  }
+}
 
 @media screen and (max-width:1440px){
   .mobile-menu nav {
@@ -22,6 +49,9 @@
   }
   
   .font-menu button {
+    display: none;
+  }
+  .mobile-logo {
     display: none;
   }
 }
@@ -33,6 +63,9 @@
   .font-menu button {
     display: none;
   }
+  .mobile-logo {
+    display: none;
+  }
 }
 @media screen and  (max-width:992px){
   .mobile-menu nav {
@@ -40,6 +73,9 @@
     flex-direction: column;
   }
   .font-menu button {
+    display: none;
+  }
+  .mobile-logo {
     display: none;
   }
 }
@@ -52,6 +88,9 @@
   .font-menu button {
     display: none;
   }
+  .mobile-logo {
+    display: none;
+  }
 }
 @media screen and (max-width:640px){
   .mobile-menu nav {
@@ -59,6 +98,9 @@
     flex-direction: column;
   }
   .font-menu button {
+    display: flex;
+  }
+  .mobile-logo {
     display: flex;
   }
 }
