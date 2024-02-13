@@ -5,28 +5,32 @@ import { UncontrolledCarousel } from 'reactstrap';
 function CustomCarousel() {
   return (
     <div>
-      
-
-      <div style={{ float: 'left' }}>
+      <style>{`
+        .carousel-item  {
+          height: 750px;
+          object-fit: cover; 
+        }
+      `}</style>
+      <div className=''>
         <UncontrolledCarousel
           items={[
             {
-              altText: 'Slide 1',
-              caption: 'Slide 1',
+              altText: '',
+              caption: '',
               key: 1,
-              src: 'https://picsum.photos/id/123/1200/600'
+              src: 'slider3.jpeg'
             },
             {
-              altText: 'Slide 2',
-              caption: 'Slide 2',
+              altText: '',
+              caption: '',
               key: 2,
-              src: 'https://picsum.photos/id/456/1200/600'
+              src: 'slider3.jpeg'
             },
             {
-              altText: 'Slide 3',
-              caption: 'Slide 3',
+              altText: '',
+              caption: '',
               key: 3,
-              src: 'https://picsum.photos/id/678/1200/600'
+              src: 'slider3.jpeg'
             }
           ]}
         />
