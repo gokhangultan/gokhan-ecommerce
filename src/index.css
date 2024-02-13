@@ -14,7 +14,7 @@
 @tailwind components;
 @tailwind utilities;
 
-@media screen and (max-width:1740px){
+@media screen and (max-width:1940px){
   .mobile-menu nav {
     display: none;
     flex-direction: column;
