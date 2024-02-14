@@ -1,4 +1,5 @@
 import Carousel from "../components/Carousel";
+import ProductCard from "../components/ProductCard";
 
 export default function Home() {
     return (
@@ -19,29 +20,48 @@ export default function Home() {
             </div>
 
             <section className="editor-pick py-[80px] relative">
-    <h3 className="font-bold text-[24px] leading-[32px] font-container text-[#252B42] align-middle mb-3">EDITOR'S PICK</h3>
-    <p className="text-[14px] leading-[20px] align-middle">Problems trying to resolve the conflict between </p>
-    <div className="flex gap-3 justify-center mt-[50px] relative">
-        <div className="flex">
-            <img src="editor.jpeg" className="object-cover w-[500px] h-[509px]" />
-            <button className="absolute bg-white mt-[426px] xl:ml-[31px] sm:ml-[11px] xl:w-[170px] xl:h-[48px] sm:w-[105px] sm:h-[28px] lg:w-[135px] lg:h-[36px] md:sm:w-[125px] md:h-[32px]  w-[85px] h-[24px] z-10 font-bold xl:text-[16px] sm:text-[10px] lg:text-[14px] md:text-[12px] text-[10px]">MEN</button>
-        </div>
-        <div className="flex">
-            <img src="editor.jpeg" className="object-cover w-[250px]  h-[509px]"/>
-            <button className="absolute bg-white mt-[434px] xl:ml-[31px] sm:ml-[11px] xl:w-[170px] xl:h-[48px] sm:w-[105px] sm:h-[28px] lg:w-[135px] lg:h-[36px] md:sm:w-[125px] md:h-[32px]  w-[85px] h-[24px] z-10 font-bold xl:text-[16px] sm:text-[10px] lg:text-[14px] md:text-[12px] text-[10px]">WOMEN</button>
-        </div>
-        <div className="flex-col relative ">
-        <div className="flex mb-2">
-            <img src="editor.jpeg" className="object-cover w-[250px] h-[250px]" />
-            <button className="absolute bg-white mt-[426px] xl:ml-[31px] sm:ml-[11px] xl:w-[170px] xl:h-[48px] sm:w-[105px] sm:h-[28px] lg:w-[135px] lg:h-[36px] md:sm:w-[125px] md:h-[32px]  w-[85px] h-[24px] z-10 font-bold xl:text-[16px] sm:text-[10px] lg:text-[14px] md:text-[12px] text-[10px]">KIDS</button>
-            <button className="absolute bg-white mt-[176px] xl:ml-[31px] sm:ml-[11px] xl:w-[170px] xl:h-[48px] sm:w-[105px] sm:h-[28px] lg:w-[135px] lg:h-[36px] md:sm:w-[125px] md:h-[32px]  w-[85px] h-[24px] z-10 font-bold xl:text-[16px] sm:text-[10px] lg:text-[14px] md:text-[12px] text-[10px]">ACCESSORIES</button>
-        </div>
-        <div className="flex">
-            
-            <img src="editor.jpeg" className="object-cover w-[250px] h-[250px]" />
-        </div>
+             <h3 className="font-bold text-[24px] leading-[32px] font-container text-[#252B42] align-middle mb-3">EDITOR'S PICK</h3>
+             <p className="text-[14px] leading-[20px] align-middle">Problems trying to resolve the conflict between </p>
+               <div className="flex gap-3 justify-center mt-[50px] relative">
+                 <div className="flex">
+                  <img src="editor.jpeg" className="object-cover w-[500px] h-[509px]" />
+                  <button className="absolute bg-white mt-[426px] xl:ml-[31px] sm:ml-[11px] xl:w-[170px] xl:h-[48px] sm:w-[105px] sm:h-[28px] lg:w-[135px] lg:h-[36px] md:sm:w-[125px] md:h-[32px]  w-[85px] h-[24px] z-10 font-bold xl:text-[16px] sm:text-[10px] lg:text-[14px] md:text-[12px] text-[10px]">MEN</button>
+                </div>
+              <div className="flex">
+                <img src="editor.jpeg" className="object-cover w-[250px]  h-[509px]"/>
+                <button className="absolute bg-white mt-[434px] xl:ml-[31px] sm:ml-[11px] xl:w-[170px] xl:h-[48px] sm:w-[105px] sm:h-[28px] lg:w-[135px] lg:h-[36px] md:sm:w-[125px] md:h-[32px]  w-[85px] h-[24px] z-10 font-bold xl:text-[16px] sm:text-[10px] lg:text-[14px] md:text-[12px] text-[10px]">WOMEN</button>
+              </div>
+              <div className="flex-col relative ">
+                 <div className="flex mb-2">
+                  <img src="editor.jpeg" className="object-cover w-[250px] h-[250px]" />
+                  <button className="absolute bg-white mt-[426px] xl:ml-[31px] sm:ml-[11px] xl:w-[170px] xl:h-[48px] sm:w-[105px] sm:h-[28px] lg:w-[135px] lg:h-[36px] md:sm:w-[125px] md:h-[32px]  w-[85px] h-[24px] z-10 font-bold xl:text-[16px] sm:text-[10px] lg:text-[14px] md:text-[12px] text-[10px]">KIDS</button>
+                  <button className="absolute bg-white mt-[176px] xl:ml-[31px] sm:ml-[11px] xl:w-[170px] xl:h-[48px] sm:w-[105px] sm:h-[28px] lg:w-[135px] lg:h-[36px] md:sm:w-[125px] md:h-[32px]  w-[85px] h-[24px] z-10 font-bold xl:text-[16px] sm:text-[10px] lg:text-[14px] md:text-[12px] text-[10px]">ACCESSORIES</button>
+              </div>
+             <div className="flex">
+                 <img src="editor.jpeg" className="object-cover w-[250px] h-[250px]" />
+          </div>
         </div>
     </div>
+            </section>
+
+<section className="best-seller ">
+    <h4 className="font-container text-[20px] leading-[30px] align-middle mb-3">Featured Products</h4>
+<h3 className="font-bold text-[24px] leading-[32px] font-container text-[#252B42] align-middle mb-3">BESTSELLER PRODUCTS</h3>
+    <p className="text-[14px] leading-[20px] align-middle mb-5">Problems trying to resolve the conflict between</p>
+        <div className="product-mapping flex mx-[50px] xl:mx-[50px] 2xl:mx-[300px] ">
+        <ProductCard />
+        <ProductCard />
+        <ProductCard />
+        <ProductCard />
+        
+        </div>
+        <div className="product-mapping flex mx-[50px] xl:mx-[50px] 2xl:mx-[300px]  mt-5">
+        <ProductCard />
+        <ProductCard />
+        <ProductCard />
+        <ProductCard />
+        
+        </div>
 </section>
 
 
