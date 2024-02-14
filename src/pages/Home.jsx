@@ -81,6 +81,25 @@ export default function Home() {
                 </div>
                 </div>
             </div>
+            <section className="collection">
+    <div className="flex flex-col-reverse items-center mx-4 md:flex-row md:justify-between md:mx-0">
+        <div className="w-full md:w-3/5 md:h-auto md:flex md:items-center">
+            <img src="collection.png" alt="Collection" className="object-cover w-full" />
+        </div>
+        <div className="collection-text flex flex-col mt-8 md:mt-0 md:w-2/5 md:ml-8">
+            <h5 className="font-container font-bold text-sm leading-6 text-gray-400 tracking-widest mb-4 md:mb-4">SUMMER 2020</h5>
+            <h1 className="font-bold font-container text-2xl leading-10 tracking-wide text-gray-800 md:text-4xl md:leading-12">Part of the Neural</h1>
+            <h1 className="font-bold font-container text-2xl leading-10 tracking-wide text-gray-800 md:text-4xl md:leading-12 mb-4">Universe</h1>
+            <h4 className="text-gray-600 text-lg leading-7 tracking-wide font-container ">We know how large objects will act,</h4>
+            <h4 className="text-gray-600 text-lg leading-7 tracking-wide font-container mb-4">but things on a small scale.</h4>
+            <div className="flex flex-col gap-2 md:flex-row md:gap-4">
+                <button className="text-white bg-green-500 rounded-md px-4 py-2 md:px-6 md:py-3">BUY NOW</button>
+                <button className="border-2 border-green-500 bg-white text-green-500 rounded-md px-4 py-2 md:px-6 md:py-3">READ MORE</button>
+            </div>
+        </div>
+    </div>
+</section>
+
 
 
         </div>
