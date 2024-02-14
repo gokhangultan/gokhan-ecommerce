@@ -1,4 +1,5 @@
 import Carousel from "../components/Carousel";
+import Carousel2 from "../components/Carousel2";
 import ProductCard from "../components/ProductCard";
 
 export default function Home() {
@@ -44,7 +45,7 @@ export default function Home() {
     </div>
             </section>
 
-<section className="best-seller ">
+            <section className="best-seller mb-10">
     <h4 className="font-container text-[20px] leading-[30px] align-middle mb-3">Featured Products</h4>
 <h3 className="font-bold text-[24px] leading-[32px] font-container text-[#252B42] align-middle mb-3">BESTSELLER PRODUCTS</h3>
     <p className="text-[14px] leading-[20px] align-middle mb-5">Problems trying to resolve the conflict between</p>
@@ -62,8 +63,24 @@ export default function Home() {
         <ProductCard />
         
         </div>
-</section>
-
+            </section>
+            
+            <div className="relative text-white carousel-item2">
+               <div className="">
+                <Carousel2 />
+                <div className="absolute top-0 left-0 z-10 flex flex-col xl:text-left 2xl:text-left lg:text-left md:text-left sm:text-left xl:py-[200px] lg:py-[180px] md:py-[120px] sm:py-[100px] py-[40px] gap-[1px] 2xl:gap-[24px] xl:gap-[24px] lg:gap-[18px] md:gap-[14px] sm:gap-[12px] xl:ml-[200px] 2xl:ml-[200px] lg:ml-[120px] md:ml-[80px] sm:ml-[60px] ml-[30px]">
+                    <div><h5 className="font-2xl:bold 2xl:text-[16px] xl:text-[16px] lg:text-[14px] md:text-[12px] sm:text-[12px] text-[16px] font-container leading-[24px]">SUMMER 2020</h5></div>
+                    <div>
+                    <h1 className="font-bold xl:text-[58px] 2xl:text-[58px] lg:text-[40px] md:text-[32px] sm:text-[28px] text-[40px] font-container leading-[80px]">Vita Classic</h1>
+                    <h1 className="font-bold xl:text-[58px] 2xl:text-[58px] lg:text-[40px] md:text-[32px] sm:text-[28px] text-[40px] font-container leading-[80px]">Product</h1>
+                     
+                    </div>
+                    <div><h4 className="2xl:text-[20px] xl:text-[20px] lg:text-[18px] md:text-[16px] sm:text-[14px] text-[20px] leading-[30px] font-container">We know how large objects will act,</h4>
+                    <h4 className="2xl:text-[20px] xl:text-[20px] lg:text-[18px] md:text-[16px] sm:text-[14px] text-[20px] leading-[30px] font-container">but things on a small scale.</h4></div>
+                    <div><button className="text-center  w-[221px] h-[62px] 2xl:w-[221px] 2xl:h-[62px] xl:w-[221px] xl:h-[62px] lg:w-[180px] lg:h-[42px] md:w-[160px] md:h-[38px] sm:w-[120px] sm:h-[32px] text-[24px] 2xl:text-[24px] xl:text-[24px] lg:text-[20px] md:text-[16px] sm:text-[14px] font-bold bg-[#2DC071] rounded-[5px]">SHOP NOW</button></div>
+                </div>
+                </div>
+            </div>
 
 
         </div>
