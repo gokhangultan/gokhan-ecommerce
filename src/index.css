@@ -2,243 +2,268 @@
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif, 'Montserrat';
   line-height: 1.5;
   font-weight: 400;
-  
-}
 
-.font-container {
-  font-family: "Montserrat", sans-serif;
 }
-
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-@media screen and (max-width:1940px){
+@media screen and (max-width:1940px) {
   .mobile-menu nav {
     display: none;
     flex-direction: column;
   }
-  
-  .font-menu button {
-    display: none;
-  }
-  .mobile-logo {
-    display: none;
-  }
-  .carousel-item img  {
-    height: 750px;
-    object-fit:cover; 
-  }
-  .carousel-item2 img  {
-    height: 750px;
-    object-fit:contain; 
-    margin-left: 300px;
-    margin-top: 120px;
-  }
-  .collection-text {
-    text-align: left;
-  }
-}
 
-@media screen and (max-width:1580px){
-  .mobile-menu nav {
-    display: none;
-    flex-direction: column;
-  }
-  
   .font-menu button {
     display: none;
   }
-  .mobile-logo {
-    display: none;
-  }
-  .carousel-item img  {
-    height: 750px;
-    object-fit:cover; 
-  }
-  .carousel-item2 img  {
-    height: 750px;
-    object-fit:contain; 
-    margin-left: 300px;
-    margin-top: 120px;
-  }
-  .collection-text {
-    text-align: left;
-  }
-}
 
-@media screen and (max-width:1440px){
-  .mobile-menu nav {
-    display: none;
-    flex-direction: column;
-  }
-  
-  .font-menu button {
-    display: none;
-  }
   .mobile-logo {
     display: none;
   }
-  .carousel-item img  {
+
+  .carousel-item img {
+    height: 1500px;
+    object-fit: cover;
+  }
+
+  .carousel-item2 img {
     height: 750px;
-    object-fit:contain;
-  }
-  .carousel-item2 img  {
-    height: 750px;
-    object-fit:contain; 
-    margin-left: 300px;
-    margin-top: 120px;
-  }
-  .collection-text {
-    text-align: left;
-  }
-}
-@media screen and (max-width:1200px){
-  .mobile-menu nav {
-    display: none;
-    flex-direction: column;
-  }
-  .font-menu button {
-    display: none;
-  }
-  .mobile-logo {
-    display: none;
-  }
-  .carousel-item img  {
-    height: 750px;
-    object-fit:cover; 
-  }
-  .carousel-item2 img  {
-    height: 750px;
-    object-fit:contain; 
-    margin-left: 300px;
-    margin-top: 120px;
-  }
-  .collection {
     object-fit: contain;
-  }
-  .collection-text {
-    text-align: left;
+    margin-left: 300px;
+    margin-top: 120px;
   }
 }
-@media screen and  (max-width:992px){
+
+@media screen and (max-width:1580px) {
   .mobile-menu nav {
     display: none;
     flex-direction: column;
   }
+
   .font-menu button {
     display: none;
   }
+
   .mobile-logo {
     display: none;
   }
-  .carousel-item img  {
+
+  .carousel-item img {
     height: 750px;
-    object-fit:cover; 
+    object-fit: cover;
+    object-position: top;
   }
+
+  .carousel-item2 img {
+    height: 750px;
+    object-fit: contain;
+    margin-left: 300px;
+    margin-top: 120px;
+  }
+
+}
+
+@media screen and (max-width:1440px) {
+  .mobile-menu nav {
+    display: none;
+    flex-direction: column;
+  }
+
+  .font-menu button {
+    display: none;
+  }
+
+  .mobile-logo {
+    display: none;
+  }
+
+  .carousel-item img {
+    height: 750px;
+    object-fit: cover;
+  }
+
+  .carousel-item2 img {
+    height: 750px;
+    object-fit: contain;
+    margin-left: 300px;
+    margin-top: 120px;
+  }
+
+}
+
+@media screen and (max-width:1200px) {
+  .mobile-menu nav {
+    display: none;
+    flex-direction: column;
+  }
+
+  .font-menu button {
+    display: none;
+  }
+
+  .mobile-logo {
+    display: none;
+  }
+
+  .carousel-item img {
+    height: 750px;
+    object-fit: cover;
+  }
+
+  .carousel-item2 img {
+    height: 750px;
+    object-fit: contain;
+    margin-left: 300px;
+    margin-top: 120px;
+  }
+
+}
+
+@media screen and (max-width:992px) {
+  .mobile-menu nav {
+    display: none;
+    flex-direction: column;
+  }
+
+  .font-menu button {
+    display: none;
+  }
+
+  .mobile-logo {
+    display: none;
+  }
+
+  .carousel-item img {
+    height: 750px;
+    object-fit: cover;
+  }
+
   .product-mapping {
     display: flex;
-    flex-direction:row
+    flex-direction: row
   }
-  .carousel-item2 img  {
+
+  .carousel-item2 img {
     height: 750px;
-    object-fit:contain; 
+    object-fit: contain;
     margin-left: 300px;
     margin-top: 120px;
   }
-  .collection-text {
-    text-align: left;
+
+  .featured-card {
+    display: flex;
+    flex-direction: column;
+
   }
 }
-@media screen and (max-width:768px){
+
+@media screen and (max-width:768px) {
   .mobile-menu nav {
     display: none;
-    flex-direction:column;
+    flex-direction: column;
   }
+
   .font-menu button {
     display: none;
   }
+
   .mobile-logo {
     display: none;
   }
-  .carousel-item img  {
+
+  .carousel-item img {
     height: 750px;
-    object-fit:cover; 
+    object-fit: cover;
   }
+
   .product-mapping {
     display: flex;
     flex-direction: column
   }
-  .carousel-item2 img  {
+
+  .carousel-item2 img {
     height: 750px;
-    object-fit:contain; 
+    object-fit: contain;
     margin-left: 200px;
     margin-top: 120px;
   }
-  .collection img{
-    object-fit:cover
-  }
-  .collection-text {
-    text-align: left;
-  }
 }
-@media screen and (max-width:640px){
+
+@media screen and (max-width:640px) {
   .mobile-menu nav {
     display: flex;
     flex-direction: column;
   }
+
   .font-menu button {
     display: flex;
   }
+
   .mobile-logo {
     display: flex;
   }
-  .carousel-item img  {
+
+  .carousel-item img {
     height: 750px;
-    object-fit:cover; 
+    object-fit: cover;
   }
+
   .product-mapping {
     display: flex;
     flex-direction: column
   }
-  .carousel-item2 img  {
+
+  .carousel-item2 img {
     height: 750px;
-    object-fit:contain; 
+    object-fit: contain;
     margin-left: 180px;
     margin-top: 80px;
   }
-  .collection img{
-    object-fit:cover
-  }
+
   .collection-text {
-    text-align: left;
+    text-align: center;
+  }
+
+  .carousel-2 {
+    text-align: center;
   }
 }
-@media screen and (max-width:576px){
+
+@media screen and (max-width:576px) {
   .mobile-menu nav {
     display: flex;
     flex-direction: column;
   }
+
   .font-menu button {
     display: flex;
   }
-  .carousel-item img  {
+
+  .carousel-item img {
     height: 750px;
-    object-fit:cover;
+    object-fit: cover;
   }
+
   .product-mapping {
     display: flex;
     flex-direction: column
   }
-  .carousel-item2 img  {
+
+  .carousel-item2 img {
     height: 750px;
-    object-fit:contain; 
+    object-fit: contain;
     margin-left: 10px;
     margin-top: 290px;
   }
+
   .collection-text {
     text-align: center;
   }
-  
+
+  .carousel-2 {
+    text-align: center;
+  }
+
 }

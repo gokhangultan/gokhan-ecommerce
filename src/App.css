@@ -1,4 +1,30 @@
 #root {
   margin: 0 auto;
-  text-align: center;
+  font-family: "Montserrat", sans-serif;
+}
+
+.button {
+  @apply text-white px-4 py-3 sm:px-8 sm:py-3 font-bold rounded-md border text-sm;
+
+}
+
+.primary-button {
+  @apply bg-green-500 hover:bg-transparent hover:border-green-500 hover:text-green-500;
+
+}
+
+.secondary-button {
+  @apply border-green-500 text-green-500 hover:bg-green-500 hover:text-white;
+}
+
+.h2-home {
+  @apply font-bold text-[40px] leading-[50px] text-[#252B42];
+}
+
+.carousel-button {
+  @apply hover:border-2 hover:text-white hover:border-white text-center primary-button w-[221px] h-[62px] text-sm font-bold bg-[#2DC071] rounded-[5px];
+}
+
+.primary-text {
+  @apply text-[#23A6F0];
 }
