@@ -184,10 +184,14 @@
   }
 
   .carousel-item2 img {
-    height: 750px;
+    height: 550px;
     object-fit: contain;
-    margin-left: 200px;
-    margin-top: 120px;
+    margin-left: 220px;
+    margin-top: 220px;
+  }
+
+  .carousel-2 {
+    margin-left: 5px;
   }
 }
 
@@ -216,10 +220,10 @@
   }
 
   .carousel-item2 img {
-    height: 750px;
+    height: 350px;
     object-fit: contain;
-    margin-left: 180px;
-    margin-top: 80px;
+    margin-left: 20px;
+    margin-top: 480px;
   }
 
   .collection-text {
@@ -228,6 +232,7 @@
 
   .carousel-2 {
     text-align: center;
+    margin-left: 120px;
   }
 }
 
@@ -252,10 +257,10 @@
   }
 
   .carousel-item2 img {
-    height: 750px;
+    height: 450px;
     object-fit: contain;
     margin-left: 10px;
-    margin-top: 290px;
+    margin-top: 390px;
   }
 
   .collection-text {
@@ -264,6 +269,7 @@
 
   .carousel-2 {
     text-align: center;
+    margin-left: 40px;
   }
 
 }

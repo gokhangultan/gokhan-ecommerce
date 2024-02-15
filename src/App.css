@@ -21,10 +21,22 @@
   @apply font-bold text-[40px] leading-[50px] text-[#252B42];
 }
 
+.footer-title {
+  @apply font-bold text-base leading-5 text-[#252B42];
+}
+
+.footer-link {
+  @apply font-bold text-sm leading-6 text-[#737373];
+}
+
 .carousel-button {
   @apply hover:border-2 hover:text-white hover:border-white text-center primary-button w-[221px] h-[62px] text-sm font-bold bg-[#2DC071] rounded-[5px];
 }
 
 .primary-text {
   @apply text-[#23A6F0];
+}
+
+.editor-button {
+  @apply absolute bg-white mt-[434px] xl:ml-[31px] sm:ml-[11px] xl:w-[170px] xl:h-[48px] sm:w-[105px] sm:h-[28px] lg:w-[135px] lg:h-[36px] md:sm:w-[125px] md:h-[32px] w-[85px] h-[24px] z-10 font-bold xl:text-[16px] sm:text-[10px] lg:text-sm md:text-xs text-[10px] hover:text-[#2DC071]
 }

@@ -1,6 +1,6 @@
 import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { UncontrolledCarousel } from 'reactstrap'; 
+import { UncontrolledCarousel } from 'reactstrap';
 
 function CustomCarousel() {
   return (
@@ -27,12 +27,7 @@ function CustomCarousel() {
               key: 2,
               src: 'slider2.png'
             },
-            {
-              altText: '',
-              caption: '',
-              key: 3,
-              src: 'slider2.png'
-            }
+
           ]}
         />
       </div>

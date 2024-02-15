@@ -29,25 +29,25 @@ export default function Header() {
                 </div>
                 <div className='flex basis-2/5 mx-1'>
                     <div className=' hidden  sm:flex xl:flex lg:flex md:flex gap-4 '>
-                        <button className='font-container  text-primaryColor text-sm '><FontAwesomeIcon icon={faUser} /> Login / Register</button>
-                        <button className='font-container text-primaryColor text-sm'><FontAwesomeIcon icon={faMagnifyingGlass} /> </button>
-                        <button className='font-container text-primaryColor text-sm'><FontAwesomeIcon icon={faCartShopping} /> 1</button>
-                        <button className='font-container text-primaryColor text-sm'><FontAwesomeIcon icon={faHeart} /> 1</button>
+                        <button className='font-container  text-primaryColor text-sm hover:text-white hover:bg-primaryColor rounded p-1'><FontAwesomeIcon icon={faUser} /> Login / Register</button>
+                        <button className='font-container text-primaryColor text-sm hover:text-white hover:bg-primaryColor rounded p-1'><FontAwesomeIcon icon={faMagnifyingGlass} /> </button>
+                        <button className='font-container text-primaryColor text-sm hover:text-white hover:bg-primaryColor rounded p-1'><FontAwesomeIcon icon={faCartShopping} /> 1</button>
+                        <button className='font-container text-primaryColor text-sm hover:text-white hover:bg-primaryColor rounded p-1'><FontAwesomeIcon icon={faHeart} /> 1</button>
                     </div>
                 </div>
             </div>
             <div className="flex justify-between">
-            <div className='flex  mobile-logo'>
+                <div className='flex  mobile-logo'>
                     <h3 className=' font-container xl:mx-[136px] lg:mx-[40px] md:mx-[20px] mx-[5px] text-[24px] font-bold font- text-[#252B42] leading-8 pb-2'>BrandName</h3>
                 </div>
-            <div className='flex-2 mx-1 my-2 font-menu'>
+                <div className='flex-2 mx-1 my-2 font-menu'>
                     <div className='flex gap-4 '>
                         <button className='font-container text-secondaryColor text-sm'><FontAwesomeIcon icon={faMagnifyingGlass} /> </button>
                         <button className='font-container text-secondaryColor text-sm '><FontAwesomeIcon icon={faCartShopping} /> </button>
                         <button onClick={toggleMenuVisibility} className="text-secondaryColor" ><FontAwesomeIcon icon={faBars} /></button>
                     </div>
                 </div>
-                </div>
+            </div>
             <div className={`mobile-menu  ${isMenuVisible ? '' : 'hidden'}`}>
                 <nav className='2xl:hidden xl:hidden lg:hidden md:hidden sm:hidden mt-5 gap-4'>
                     <button className='text-[30px] leading-[45px] font-container text-secondaryColor'>Home</button>

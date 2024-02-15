@@ -6,7 +6,7 @@ export default function CategoryCard() {
     return (
         <div>
             <div className="w-[328px] h-[606px] border-1 border-gray-150 shadow relative">
-                <button className="absolute top-[20px] left-[20px] bg-[#E74040] w-[52px] h-[24px] font-container text-[14px] leading-6 font-bold text-white">NEW</button>
+                <button className="absolute top-[20px] left-[20px] bg-[#E74040] w-[52px] h-[24px] font-container text-[14px] leading-6 font-bold text-white rounded">NEW</button>
                 <img src="feature.jpeg" className="w-[348px] h-[300px]  " />
                 <div className="flex flex-col gap-3 m-3 ">
                     <div className="flex justify-start gap-3 text-xs flex-wrap">
