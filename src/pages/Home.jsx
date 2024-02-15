@@ -66,7 +66,7 @@ export default function Home() {
             <div className="relative text-white carousel-item2 mb-5">
                 <div className="">
                     <Carousel2 />
-                    <div className="absolute top-[20px] left-[30px] sm:top-[180px] sm:left-[240px] z-10 flex flex-col text-left gap-4 carousel-2 w-[300px] sm:w-[500px]">
+                    <div className="absolute top-[10px] left-[10px] sm:top-[180px] sm:left-[240px] z-10 flex flex-col text-left gap-4 carousel-2 w-[300px] sm:w-[500px]">
                         <div><h5 className="text-xl font-bold  leading-[24px]">SUMMER 2020</h5></div>
                         <div>
                             <h1 className="font-bold text-4xl sm:text-6xl leading-[40px] sm:leading-[80px]">Vita Classic Product</h1>
