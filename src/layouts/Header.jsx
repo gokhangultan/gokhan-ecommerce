@@ -1,7 +1,6 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUser, faHeart } from "@fortawesome/free-regular-svg-icons";
 import { faMagnifyingGlass, faCartShopping, faBars } from "@fortawesome/free-solid-svg-icons";
-
 import React, { useState } from 'react';
 
 export default function Header() {
@@ -18,9 +17,14 @@ export default function Header() {
                     <h3 className=' font-container xl:mx-[136px] lg:mx-[40px] md:mx-[20px] mx-[5px] text-[24px] font-bold font- text-[#252B42] leading-8'>BrandName</h3>
                 </div>
                 <div className=' sm:flex xl:flex lg:flex md:flex basis-4/5 mx-1'>
-                    <nav className=' hidden  sm:flex xl:flex lg:flex md:flex xl:gap-4 sm:gap-2'>
+                    <nav className='hidden sm:flex xl:flex lg:flex md:flex xl:gap-4 sm:gap-2'>
                         <button>Home</button>
-                        <button>Shop</button>
+                        <button onClick={toggleMenuVisibility} className="relative">Shop</button>
+                        <div className={`dropdown-content ${isMenuVisible ? 'absolute top-16 flex flex-row gap-3' : 'hidden'}`}>
+                            <a href="#">About</a>
+                            <a href="#">Team</a>
+                            <a href="#">Contact</a>
+                        </div>
                         <button>About</button>
                         <button>Blog</button>
                         <button>Contact</button>
