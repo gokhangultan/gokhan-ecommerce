@@ -7,7 +7,7 @@ export default function Team() {
                 <h2 className="font-bold text-4xl text-center">Meet Our Team</h2>
                 <p className="text-sm leading-5 text-secondaryColor text-center">Problems trying to resolve the conflict between the two major realms of Classical physics: Newtonian mechanics</p>
             </div>
-            <div className="flex flex-col md:flex-row gap-4">
+            <div className="flex flex-col md:flex-row gap-4 flex-wrap">
                 <TeamCard />
                 <TeamCard />
                 <TeamCard />
