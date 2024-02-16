@@ -17,10 +17,10 @@ export default function CategoryCard() {
                     <h4 className="text-xl leading-7">Loudest à la Madison #1 (L'integral)</h4>
                     <p>We focus on ergonomics and meeting you where you work. It's only a keystroke away.</p>
                     <div className="flex justify-between">
-                        <h6 className="text-xs font-container leading-4 text-[#737373]"><FontAwesomeIcon icon={faClock} style={{ color: "#8EC2F2" }} /> 22 April 2021</h6>
-                        <h6 className="text-xs font-container leading-4 text-[#737373]"><FontAwesomeIcon icon={faChartLine} style={{ color: "#23856D" }} /> 10 comments</h6>
+                        <h6 className="text-xs font-container leading-4 secondary-text "><FontAwesomeIcon icon={faClock} style={{ color: "#8EC2F2" }} /> 22 April 2021</h6>
+                        <h6 className="text-xs font-container leading-4 secondary-text "><FontAwesomeIcon icon={faChartLine} style={{ color: "#23856D" }} /> 10 comments</h6>
                     </div>
-                    <button className="hover:border-1 hover:border-[#23A6F0]  w-[101px] h-[24px] hover:bg-[#23A6F0] hover:text-white rounded-xl text-secondaryColor text-sm leading-6">Learn More <FontAwesomeIcon icon={faChevronRight} style={{ color: "#8EC2F2" }} /> </button>
+                    <button className="hover:border-1">Learn More <FontAwesomeIcon icon={faChevronRight} style={{ color: "#8EC2F2" }} /> </button>
                 </div>
             </div>
         </div>

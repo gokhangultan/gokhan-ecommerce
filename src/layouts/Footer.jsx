@@ -65,14 +65,14 @@ export default function Footer() {
                                 onChange={handleInputChange}
                                 className="pl-2 py-3 rounded-md border-1 border-[#E6E6E6] text-gray-500 bg-[#F9F9F9]"
                             />
-                            <button type="submit" className="bg-[#23A6F0] text-[#E6E6E6] rounded-md border-1 w-[117px] h-[58px] hover:bg-white hover:text-[#23A6F0] hover:border-[#23A6F0]">Subscribe</button>
+                            <button type="submit" className="bg-[#23A6F0] text-[#E6E6E6] rounded-md border-1 w-[117px] h-[58px] hover:bg-white hover:primary-text hover:border-[#23A6F0]">Subscribe</button>
                         </form>
-                        <p className="text-[#737373] text-xs leading-7">Lore imp sum dolor Amit</p>
+                        <p className="secondary-text  text-xs leading-7">Lore imp sum dolor Amit</p>
                     </div>
                 </div>
             </div>
             <div className="w-[full] px-[50px] sm:px-[195px] py-4 bg-[#FAFAFA]">
-                <h6 className="font-bold leading-6 text-sm text-[#737373] text-center ">Made With Love By Gokhan Gultan All Right Reserved </h6>
+                <h6 className="font-bold leading-6 text-sm secondary-text  text-center ">Made With Love By Gokhan Gultan All Right Reserved </h6>
             </div>
         </div>
     )

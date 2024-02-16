@@ -50,7 +50,7 @@ export default function Home() {
                 <h4 className=" text-xl leading-[30px] align-middle mb-3">Featured Products</h4>
                 <h3 className="font-bold text-2xl leading-[32px]  text-[#252B42] mb-3">BESTSELLER PRODUCTS</h3>
                 <p className="text-sm leading-5 align-middle mb-5">Problems trying to resolve the conflict between</p>
-                <div className="product-mapping flex flex-wrap gap-3 justify-between  ">
+                <div className=" flex flex-wrap flex-row gap-3 justify-between  ">
                     <ProductCard />
                     <ProductCard />
                     <ProductCard />
@@ -66,7 +66,7 @@ export default function Home() {
             <div className="relative text-white carousel-item2 mb-5">
                 <div className="">
                     <Carousel2 />
-                    <div className="absolute top-[10px] left-[10px] sm:top-[180px] sm:left-[240px] z-10 flex flex-col text-left gap-4 carousel-2 w-[300px] sm:w-[500px]">
+                    <div className="absolute top-[10px] left-[10px] sm:top-[180px] lg:left-[240px] z-10 flex flex-col text-left gap-4 carousel-2 w-[300px] md:w-[400px]">
                         <div><h5 className="text-xl font-bold  leading-[24px]">SUMMER 2020</h5></div>
                         <div>
                             <h1 className="font-bold text-4xl sm:text-6xl leading-[40px] sm:leading-[80px]">Vita Classic Product</h1>
@@ -102,7 +102,7 @@ export default function Home() {
                 <div className="flex flex-col items-center flex-wrap gap-3 ">
                     <h6 className="font-bold text-sm leading-6 primary-text">Practice Advice</h6>
                     <h2 className="h2-home text-5xl">Featured Posts</h2>
-                    <p className="text-[#737373] text-sm leading-5 w-[369px] text-center">Problems trying to resolve the conflict between the two major realms of Classical physics: Newtonian mechanics </p>
+                    <p className="secondary-text  text-sm leading-5 w-[369px] text-center">Problems trying to resolve the conflict between the two major realms of Classical physics: Newtonian mechanics </p>
                 </div>
                 <div className="featured-card flex flex-row  gap-2 mt-5 justify-center flex-wrap ">
                     <FeaturedCard />
