@@ -2,6 +2,7 @@ import Carousel from "../components/Carousel";
 import Carousel2 from "../components/Carousel2";
 import ProductCard from "../components/ProductCard";
 import FeaturedCard from "../components/FeaturedCard";
+import { Link } from "react-router-dom/cjs/react-router-dom.min";
 
 export default function Home() {
     return (
@@ -17,7 +18,7 @@ export default function Home() {
                     </div>
                     <div><h4 className="2xl:text-xl xl:text-xl lg:text-[18px] md:text-[16px] sm:text-sm text-xl leading-[30px] ">We know how large objects will act,</h4>
                         <h4 className="2xl:text-xl xl:text-xl lg:text-[18px] md:text-[16px] sm:text-sm text-xl leading-[30px] ">but things on a small scale.</h4></div>
-                    <div><button className="carousel-button hover:bg-white hover:text-[#2DC071]">SHOP NOW</button></div>
+                    <div><Link to="/products"><button className="carousel-button hover:bg-white hover:text-[#2DC071]">SHOP NOW</button></Link></div>
                 </div>
             </div>
 
