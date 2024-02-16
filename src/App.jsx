@@ -7,11 +7,14 @@ import ProductList from './pages/ProductList';
 import Team from './pages/Team';
 import About from './pages/About';
 import Contact from './pages/Contact';
+import Login from './pages/Login';
+import Card from './pages/Card';
+import Favorites from './pages/Favorites';
 
 function App() {
   return (
     <div>
-      <Header /> 
+      <Header />
       <Switch>
         <Route path="/" exact>
           <Home />
@@ -24,6 +27,15 @@ function App() {
         </Route>
         <Route path="/team" exact>
           <Team />
+        </Route>
+        <Route path="/login" exact>
+          <Login />
+        </Route>
+        <Route path="/favorites" exact>
+          <Favorites />
+        </Route>
+        <Route path="/card" exact>
+          <Card />
         </Route>
         <Route path="/contact" exact>
           <Contact />

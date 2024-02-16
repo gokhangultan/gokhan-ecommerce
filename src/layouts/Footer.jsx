@@ -18,42 +18,42 @@ export default function Footer() {
     return (
         <div>
             <div className="w-[full] px-[50px] sm:px-[195px] py-[50px] flex flex-col sm:flex-row justify-between mt-5 gap-3 bg-[#FAFAFA]">
-                <h3 className="font-bold text-2xl leading-8 text-[#252B42]">Bandage</h3>
+                <Link to="/"><h3 className="font-bold text-2xl leading-8 text-[#252B42]">Bandage</h3></Link>
                 <div className="flex gap-3">
-                    <button className="hover:text-white hover:bg-gray-300 rounded p-1"><FontAwesomeIcon icon={faFacebook} size="lg" style={{ color: "#23A6F0", }} /></button>
-                    <button className="hover:text-white hover:bg-gray-300 rounded p-1"><FontAwesomeIcon icon={faInstagram} size="lg" style={{ color: "#23A6F0", }} /></button>
-                    <button className="hover:text-white hover:bg-gray-300 rounded p-1"><FontAwesomeIcon icon={faTwitter} size="lg" style={{ color: "#23A6F0", }} /></button>
+                    <a href="" target="_blank"><button className="hover:text-white hover:bg-gray-300 rounded p-1"><FontAwesomeIcon icon={faFacebook} size="lg" style={{ color: "#23A6F0", }} /></button></a>
+                    <a href="" target="_blank"><button className="hover:text-white hover:bg-gray-300 rounded p-1"><FontAwesomeIcon icon={faInstagram} size="lg" style={{ color: "#23A6F0", }} /></button></a>
+                    <a href="" target="_blank"><button className="hover:text-white hover:bg-gray-300 rounded p-1"><FontAwesomeIcon icon={faTwitter} size="lg" style={{ color: "#23A6F0", }} /></button></a>
                 </div>
             </div>
             <div className="w-[full] px-[50px] sm:px-[195px] py-5">
                 <div className="flex flex-col gap-5  sm:flex-row justify-between flex-wrap">
                     <div className="flex flex-col gap-3">
                         <h5 className="footer-title">Company Info</h5>
-                        <Link href="" className="footer-link">About us</Link>
-                        <Link href="" className="footer-link">Carrier</Link>
-                        <Link href="" className="footer-link">We are hiring</Link>
-                        <Link href="" className="footer-link">Blog</Link>
+                        <Link to="/about" className="footer-link">About us</Link>
+                        <Link to="" className="footer-link">Carrier</Link>
+                        <Link to="" className="footer-link">We are hiring</Link>
+                        <Link to="" className="footer-link">Blog</Link>
                     </div>
                     <div className="flex flex-col gap-3">
                         <h5 className="footer-title">Legal</h5>
-                        <Link href="" className="footer-link">About us</Link>
-                        <Link href="" className="footer-link">Carrier</Link>
-                        <Link href="" className="footer-link">We are hiring</Link>
-                        <Link href="" className="footer-link">Blog</Link>
+                        <Link to="/about" className="footer-link">About us</Link>
+                        <Link to="" className="footer-link">Carrier</Link>
+                        <Link to="" className="footer-link">We are hiring</Link>
+                        <Link to="" className="footer-link">Blog</Link>
                     </div>
                     <div className="flex flex-col gap-3">
                         <h5 className="footer-title">Features</h5>
-                        <Link href="" className="footer-link">Business Marketing</Link>
-                        <Link href="" className="footer-link">User Analytic</Link>
-                        <Link href="" className="footer-link">Live Chat</Link>
-                        <Link href="" className="footer-link">Unlimited Support</Link>
+                        <Link to="" className="footer-link">Business Marketing</Link>
+                        <Link to="" className="footer-link">User Analytic</Link>
+                        <Link to="" className="footer-link">Live Chat</Link>
+                        <Link to="" className="footer-link">Unlimited Support</Link>
                     </div>
                     <div className="flex flex-col gap-3">
                         <h5 className="footer-title">Resources</h5>
-                        <Link href="" className="footer-link">IOS & Android</Link>
-                        <Link href="" className="footer-link">Watch a Demo</Link>
-                        <Link href="" className="footer-link">Customers</Link>
-                        <Link href="" className="footer-link">API</Link>
+                        <Link to="" className="footer-link">IOS & Android</Link>
+                        <Link to="" className="footer-link">Watch a Demo</Link>
+                        <Link to="" className="footer-link">Customers</Link>
+                        <Link to="" className="footer-link">API</Link>
                     </div>
                     <div className="flex flex-col gap-3">
                         <h5 className="footer-title">Get In Touch</h5>
