@@ -26,20 +26,20 @@ export default function Home() {
                 <h3 className="font-bold text-2xl leading-[32px]  text-[#252B42] align-middle mb-3">EDITOR'S PICK</h3>
                 <p className="text-sm leading-5 align-middle">Problems trying to resolve the conflict between </p>
                 <div className="flex flex-col sm:flex-row gap-3 justify-center mt-[50px] relative mx-4">
-                    <div className="flex">
+                    <Link to="/products"> <div className="flex">
                         <img src="editor.jpeg" className="object-cover w-[500px] h-[509px]" />
                         <button className="editor-button">MEN</button>
-                    </div>
-                    <div className="flex">
+                    </div></Link>
+                    <Link to="/products"><div className="flex">
                         <img src="editor2.jpeg" className="object-cover w-[500px] sm:w-[250px]  h-[509px]" />
                         <button className="editor-button">WOMEN</button>
-                    </div>
+                    </div></Link>
                     <div className="flex-col relative ">
-                        <div className="flex mb-2">
+                        <Link to="/products"><div className="flex mb-2">
                             <img src="editor3.jpeg" className="object-cover w-[500px] sm:w-[250px] h-[250px]" />
                             <button className="editor-button">KIDS</button>
                             <button className=" editor-button mt-[176px] ">ACCESSORIES</button>
-                        </div>
+                        </div></Link>
                         <div className="flex">
                             <img src="editor4.jpeg" className="object-cover w-[500px] sm:w-[250px] h-[250px]" />
                         </div>
@@ -76,7 +76,7 @@ export default function Home() {
                             <h4 className="text-xl leading-[30px] ">but things on a small scale.</h4></div>
                         <div className="flex flex-col sm:flex-row  gap-1 items-center">
                             <h3 className=" text-white  text-2xl leading-8 font-bold mr-0 sm:mr-10 ">$16.48</h3>
-                            <button className="carousel-button hover:bg-white hover:text-green-500 bg-[#2DC071] ">ADD TO CART</button></div>
+                            <Link to="/card"><button className="carousel-button hover:bg-white hover:text-green-500 bg-[#2DC071] ">ADD TO CART</button></Link> </div>
                     </div>
                 </div>
             </div>
@@ -92,8 +92,8 @@ export default function Home() {
                             <h2 className="h2-home">Part of the Neural Universe</h2>
                             <div className="text-gray-600 text-lg  ">We know how large objects will act, but things on a small scale.</div>
                             <div className="flex flex-col sm:flex-row  gap-3 ">
-                                <button className="button primary-button ">BUY NOW</button>
-                                <button className="button secondary-button ">READ MORE</button>
+                                <Link to="/productpage"><button className="button primary-button ">BUY NOW</button></Link>
+                                <Link to="/"> <button className="button secondary-button ">READ MORE</button></Link>
                             </div>
                         </div>
                     </div>
@@ -112,6 +112,6 @@ export default function Home() {
                 </div>
 
             </section>
-        </div>
+        </div >
     )
 }

@@ -1,6 +1,7 @@
 import { faClock } from "@fortawesome/free-regular-svg-icons";
 import { faChartLine, faChevronRight } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { Link } from "react-router-dom/cjs/react-router-dom.min";
 
 export default function CategoryCard() {
     return (
@@ -20,7 +21,7 @@ export default function CategoryCard() {
                         <h6 className="text-xs font-container leading-4 secondary-text "><FontAwesomeIcon icon={faClock} style={{ color: "#8EC2F2" }} /> 22 April 2021</h6>
                         <h6 className="text-xs font-container leading-4 secondary-text "><FontAwesomeIcon icon={faChartLine} style={{ color: "#23856D" }} /> 10 comments</h6>
                     </div>
-                    <button className="hover:border-1">Learn More <FontAwesomeIcon icon={faChevronRight} style={{ color: "#8EC2F2" }} /> </button>
+                    <Link to="/"><button className="product-card-more ">Learn More <FontAwesomeIcon icon={faChevronRight} /> </button></Link>
                 </div>
             </div>
         </div>
