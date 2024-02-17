@@ -60,3 +60,7 @@
 .editor-button {
   @apply absolute bg-white mt-[434px] xl:ml-[31px] sm:ml-[11px] xl:w-[170px] xl:h-[48px] sm:w-[105px] sm:h-[28px] lg:w-[135px] lg:h-[36px] md:sm:w-[125px] md:h-[32px] w-[85px] h-[24px] z-10 font-bold xl:text-[16px] sm:text-[10px] lg:text-sm md:text-xs text-[10px] hover:text-[#2DC071]
 }
+
+.text-textColor {
+  @apply text-[#252B42];
+}

@@ -10,6 +10,7 @@ import Contact from './pages/Contact';
 import Login from './pages/Login';
 import Card from './pages/Card';
 import Favorites from './pages/Favorites';
+import ProductDetail from './pages/ProductDetail';
 
 function App() {
   return (
@@ -36,6 +37,9 @@ function App() {
         </Route>
         <Route path="/card" exact>
           <Card />
+        </Route>
+        <Route path="/productpage" exact>
+          <ProductDetail />
         </Route>
         <Route path="/contact" exact>
           <Contact />

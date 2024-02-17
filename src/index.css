@@ -9,6 +9,16 @@
 @tailwind components;
 @tailwind utilities;
 
+.inactive-thumbnail {
+  opacity: 0.6;
+  transition: opacity 0.3s ease;
+}
+
+.inactive-thumbnail:hover {
+  opacity: 1;
+}
+
+
 @media screen and (max-width:1940px) {
   .carousel-item img {
     height: 1500px;
