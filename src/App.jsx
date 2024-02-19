@@ -12,6 +12,8 @@ import Card from './pages/Card';
 import Favorites from './pages/Favorites';
 import ProductDetail from './pages/ProductDetail';
 import Signup from './pages/Signup';
+import 'react-toastify/dist/ReactToastify.css';
+
 
 function App() {
   return (
