@@ -11,6 +11,23 @@ const axiosInstance = Axios.create({
 export default function Signup(props) {
     const { register, handleSubmit, formState: { errors }, setValue, watch } = useForm();
     const [isLoading, setIsLoading] = useState(false);
+    const [roles, setRoles] = useState([]);
+
+
+    //Rolleri fetchle al
+    useEffect(() => {
+        const fetchRoles = async () => {
+            try {
+                const response = await axiosInstance.get("/roles"); //GET Request T5
+                setRoles(response.data);
+                console.log(response.data)
+            } catch (error) {
+                console.error("Rolleri Alamıyorum.", error);
+            }
+        };
+
+        fetchRoles();
+    }, []);
 
     useEffect(() => {
         const role = watch("role_id");
@@ -79,14 +96,14 @@ export default function Signup(props) {
                             {errors.confirmPassword && <span className="text-secondaryColor text-sm leading-7">Şifreleriniz Eşleşmiyor.</span>}
                         </div>
                         <div className="flex flex-col gap-2">
-                            <h3 className="text-textColor text-lg leading-6">Role *</h3>
+                            <h3 className="text-textColor text-lg leading-6">Rol *</h3>
                             <select {...register("role_id")} className="form-input">
-                                <option value="customer">Customer</option>
-                                <option value="admin">Admin</option>
-                                <option value="store">Store</option>
+                                {roles.map(role => (
+                                    <option key={role.id} value={role.id}>{role.name}</option>
+                                ))}
                             </select>
                         </div>
-                        {watch("role_id") === "store" && (
+                        {watch("role_id") === "2" && (
                             <>
                                 <div className="flex flex-col gap-2">
                                     <h3 className="text-textColor text-lg leading-6">Store Name *</h3>
@@ -115,7 +132,7 @@ export default function Signup(props) {
                                         required: true,
                                         pattern: /^TR\d{2}\s\d{4}\s\d{4}\s\d{4}\s\d{4}\s\d{4}\s\d{2}$/
                                     })} type="text" placeholder="Store IBAN Adresiniz *" className="form-input" />
-                                    {errors.store?.bank_account && <span className="text-secondaryColor text-sm leading-7">IBAN Adresinizi Kontrol Ediniz: "TR XX XXXX XXXX XXXX XXXX XXXX XX".</span>}
+                                    {errors.store?.bank_account && <span className="text-secondaryColor text-sm leading-7">IBAN Adresinizi Kontrol Ediniz: "TRXX XXXX XXXX XXXX XXXX XXXX XX".</span>}
                                 </div>
                             </>
                         )}
