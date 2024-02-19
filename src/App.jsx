@@ -11,6 +11,7 @@ import Login from './pages/Login';
 import Card from './pages/Card';
 import Favorites from './pages/Favorites';
 import ProductDetail from './pages/ProductDetail';
+import Signup from './pages/Signup';
 
 function App() {
   return (
@@ -31,6 +32,9 @@ function App() {
         </Route>
         <Route path="/login" exact>
           <Login />
+        </Route>
+        <Route path="/signup" exact>
+          <Signup />
         </Route>
         <Route path="/favorites" exact>
           <Favorites />

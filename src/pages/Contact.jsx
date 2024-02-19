@@ -14,10 +14,10 @@ export default function Contact() {
     };
 
     return (
-        <div className="my-20">
+        <div className="my-20 px-[10px] lg:px-[250px]">
             <div className="flex flex-col items-center gap-4 ">
-                <h2 className="font-bold text-[40px] leading-10 w-[607px] text-center">Get answers to all your questions.</h2>
-                <h4 className="text-secondaryColor text-xl leading-8 w-[607px] text-center">Problems trying to resolve the conflict between the two major realms of Classical physics: </h4>
+                <h2 className="font-bold text-[40px] leading-10 md:w-[607px] w-[307px] text-center">Get answers to all your questions.</h2>
+                <h4 className="text-secondaryColor text-xl leading-8 md:w-[607px] w-[307px] text-center">Problems trying to resolve the conflict between the two major realms of Classical physics: </h4>
                 <button onClick={showForm} className="text-sm font-bold leading-6 bg-primaryColor rounded px-5 py-3 text-white hover:text-primaryColor hover:bg-gray-400 border-1 border-primaryColor">CONTACT OUR COMPANY</button>
                 <div className="flex flex-row gap-3">
                     <button><FontAwesomeIcon icon={faTwitter} size="lg" style={{ color: "#23A6F0" }} /></button>

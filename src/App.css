@@ -37,6 +37,10 @@
   @apply font-bold text-base leading-5 text-[#252B42];
 }
 
+.form-input {
+  @apply p-2 rounded border-2 border-[#E6E6E6] text-xl text-secondaryColor bg-white pl-3;
+}
+
 .footer-link {
   @apply font-bold text-sm leading-6 secondary-text;
 }
