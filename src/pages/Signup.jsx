@@ -90,6 +90,7 @@ export default function Signup(props) {
                         </div>
                         <div className="flex flex-col gap-2">
                             <h3 className="text-textColor text-lg leading-6">Confirm Password *</h3>
+                            {/*Dataya ekleniyor sonra siliyorum confirmpswd*/}
                             <input {...register("confirmPassword", {
                                 validate: value => value === watch('password')
                             })} type="password" placeholder="Confirm Password *" className="form-input" />
