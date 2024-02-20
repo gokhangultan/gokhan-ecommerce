@@ -68,7 +68,7 @@ export default function Header({ direction, ...args }) {
                 </div >
                 <div className='flex basis-2/5 mx-1'>
                     <div className=' hidden  sm:hidden xl:flex lg:flex md:hidden gap-4 '>
-                        <Link to="/login"><button className='  header-button'><FontAwesomeIcon icon={faUser} /> Login / Register</button></Link>
+                        <Link to="/signup"><button className='  header-button'><FontAwesomeIcon icon={faUser} /> Login / Register</button></Link>
                         <button className=' header-button' onClick={toggleSearch}><FontAwesomeIcon icon={faMagnifyingGlass} /> </button>
                         {isSearchOpen && (
                             <div>
