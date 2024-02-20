@@ -3,6 +3,8 @@ import { useForm } from 'react-hook-form';
 import Axios from 'axios';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchRoles } from '../store/actions/roleActions';
 
 const axiosInstance = Axios.create({
     baseURL: "https://workintech-fe-ecommerce.onrender.com"
@@ -11,23 +13,19 @@ const axiosInstance = Axios.create({
 export default function Signup(props) {
     const { register, handleSubmit, formState: { errors }, setValue, watch } = useForm();
     const [isLoading, setIsLoading] = useState(false);
-    const [roles, setRoles] = useState([]);
+    const dispatch = useDispatch();
+    const roles = useSelector(state => state.global.roles);
 
 
     //Rolleri fetchle al
     useEffect(() => {
-        const fetchRoles = async () => {
-            try {
-                const response = await axiosInstance.get("/roles"); //GET Request T5
-                setRoles(response.data);
-                console.log(response.data)
-            } catch (error) {
-                console.error("Rolleri Alamıyorum.", error);
-            }
-        };
+        // Rol listesi store'da yoksa fetch işlemi yap
+        if (!roles || roles.length === 0) {
+            dispatch(fetchRoles());
+        }
+    }, [dispatch, roles]);
 
-        fetchRoles();
-    }, []);
+
 
     useEffect(() => {
         const role = watch("role_id");

@@ -5,6 +5,7 @@ import { userReducer } from "./reducers/UserReducer";
 import { productReducer } from "./reducers/ProductReducer";
 import { storeReducer } from "./reducers/StoreReducer";
 import { shoppingCartReducer } from "./reducers/ShoppingCardReducer";
+import { thunk } from "redux-thunk";
 
 const reducers = combineReducers({
     global: globalReducer,
@@ -17,5 +18,5 @@ const reducers = combineReducers({
 
 export const store = createStore(
     reducers,
-    applyMiddleware(logger)
+    applyMiddleware(thunk, logger)
 );
