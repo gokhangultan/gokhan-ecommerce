@@ -31,7 +31,6 @@ export default function ProductList({ direction, ...args }) {
 
     //categories fetchle al
     useEffect(() => {
-        // categories listesi store'da yoksa fetch işlemi yap
         if (!categories || categories.length === 0) {
             dispatch(postLogin());
         }
@@ -47,12 +46,12 @@ export default function ProductList({ direction, ...args }) {
                         <Link href="" className="font-bold text-sm leading-6 text-[#BDBDBD]">Shop</Link>
                     </div>
                 </div>
-                <div className="flex md:flex-row flex-col gap-4 px-[50px] sm:px-[205px] justify-between ">
-                    <CategoryCard />
-                    <CategoryCard />
-                    <CategoryCard />
-                    <CategoryCard />
-                    <CategoryCard />
+                <div className="flex md:flex-row flex-col gap-4 justify-between ">
+                    <div className="flex md:flex-row flex-col gap-4 justify-between ">
+                        {categories.slice(0, 1).map(category => (
+                            <CategoryCard key={category.id} category={category} />
+                        ))}
+                    </div>
                 </div>
 
             </div>
