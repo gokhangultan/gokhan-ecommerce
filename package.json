@@ -24,12 +24,14 @@
     "react-redux": "^9.1.0",
     "react-router": "^5.3.4",
     "react-router-dom": "^5.3.4",
+    "react-router-redux": "^4.0.8",
     "react-toastify": "^10.0.4",
     "react-youtube": "^10.1.0",
     "reactstrap": "^9.2.2",
     "redux": "^5.0.1",
     "redux-logger": "^3.0.6",
-    "redux-thunk": "^3.1.0"
+    "redux-thunk": "^3.1.0",
+    "use-gravatar": "^1.0.1"
   },
   "devDependencies": {
     "@types/react": "^18.2.55",

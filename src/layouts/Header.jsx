@@ -1,7 +1,9 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUser, faHeart } from "@fortawesome/free-regular-svg-icons";
 import { faMagnifyingGlass, faCartShopping, faBars } from "@fortawesome/free-solid-svg-icons";
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import { useGravatar } from 'use-gravatar';
+
 import {
     Dropdown,
     DropdownToggle,
@@ -10,9 +12,23 @@ import {
     NavLink,
 } from 'reactstrap';
 import { Link } from "react-router-dom/cjs/react-router-dom.min";
+import { useSelector } from "react-redux";
+import { useHistory } from "react-router";
 
 export default function Header({ direction, ...args }) {
     const [isMenuVisible, setMenuVisible] = useState(false);
+    const token = localStorage.getItem('token');
+    //localStorage.removeItem('userName'); logout da eklemeyi unutma
+    const userName = useSelector(state => state.user.user.name);
+    const userEmail = useSelector(state => state.user.user.email);
+    const gravatarUrl = useGravatar(userEmail);
+    const history = useHistory();
+
+    const handleLogout = () => {
+        // Redux store'u güncellemeden logout icin tokenı sil
+        // localStorage.removeItem('token');
+        // history.push('/login');
+    };
 
     const toggleMenuVisibility = () => {
         setMenuVisible(!isMenuVisible);
@@ -68,7 +84,15 @@ export default function Header({ direction, ...args }) {
                 </div >
                 <div className='flex basis-2/5 mx-1'>
                     <div className=' hidden  sm:hidden xl:flex lg:flex md:hidden gap-4 '>
-                        <Link to="/signup"><button className='  header-button'><FontAwesomeIcon icon={faUser} /> Login / Register</button></Link>
+                        <Link to={userName ? "/" : "/signup"} className="header-link">
+                            <div className="flex-row flex">
+                                {/* Eğer token varsa Gravatar resmini, yoksa faUser ikonunu göster */}
+                                {token ? <img src={gravatarUrl} alt="User Avatar" className="avatar w-10 h-10" /> : <FontAwesomeIcon icon={faUser} />}
+                                <button className='header-button' onClick={token && handleLogout}>
+                                    {token ? `${userName} - Logout` : 'Login / Register'}
+                                </button>
+                            </div>
+                        </Link>
                         <button className=' header-button' onClick={toggleSearch}><FontAwesomeIcon icon={faMagnifyingGlass} /> </button>
                         {isSearchOpen && (
                             <div>

@@ -5,6 +5,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchRoles } from '../store/actions/roleActions';
+import { Link } from 'react-router-dom/cjs/react-router-dom.min';
 
 const axiosInstance = Axios.create({
     baseURL: "https://workintech-fe-ecommerce.onrender.com"
@@ -138,6 +139,7 @@ export default function Signup(props) {
                         <button type="submit" className="text-sm font-bold leading-6 bg-primaryColor rounded px-5 py-3 text-white hover:text-primaryColor hover:bg-gray-400 border-1 border-primaryColor" disabled={isLoading}>
                             {isLoading ? "Formunuz Gönderiliyor..." : "Signup"}
                         </button>
+                        <div>Do you have an account ? <Link to="/login"><button className='text-primaryColor'>Login</button></Link> </div>
                         <ToastContainer position="top-right" autoClose={5000} />
                     </div>
                 </form>
