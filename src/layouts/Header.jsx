@@ -26,8 +26,8 @@ export default function Header({ direction, ...args }) {
 
     const handleLogout = () => {
         // Redux store'u güncellemeden logout icin tokenı sil
-        // localStorage.removeItem('token');
-        // history.push('/login');
+        localStorage.removeItem('token');
+        window.location.replace('/');
     };
 
     const toggleMenuVisibility = () => {
@@ -87,9 +87,9 @@ export default function Header({ direction, ...args }) {
                         <Link to={userName ? "/" : "/signup"} className="header-link">
                             <div className="flex-row flex">
                                 {/* Eğer token varsa Gravatar resmini, yoksa faUser ikonunu göster */}
-                                {token ? <img src={gravatarUrl} alt="User Avatar" className="avatar w-10 h-10" /> : <FontAwesomeIcon icon={faUser} />}
+                                {userName ? <img src={gravatarUrl} alt="User Avatar" className="avatar w-10 h-10" /> : <FontAwesomeIcon icon={faUser} />}
                                 <button className='header-button' onClick={token && handleLogout}>
-                                    {token ? `${userName} - Logout` : 'Login / Register'}
+                                    {userName ? `${userName} - Logout` : 'Login / Register'}
                                 </button>
                             </div>
                         </Link>
@@ -142,8 +142,15 @@ export default function Header({ direction, ...args }) {
                     <Link to="/contact"><button className='text-[30px] leading-[45px]  text-secondaryColor'>Contact</button></Link>
 
                     <div className=' flex flex-col items-center  lg:hidden  gap-1 '>
-                        <Link to="/login"><button className='  header-button'><FontAwesomeIcon icon={faUser} /> Login / Register</button></Link>
-                        <button className=' header-button' onClick={toggleSearch}><FontAwesomeIcon icon={faMagnifyingGlass} /> </button>
+                        <Link to={userName ? "/" : "/signup"} className="header-link">
+                            <div className="flex-row flex">
+                                {/* Eğer token varsa Gravatar resmini, yoksa faUser ikonunu göster */}
+                                {userName ? <img src={gravatarUrl} alt="User Avatar" className="avatar w-10 h-10" /> : <FontAwesomeIcon icon={faUser} />}
+                                <button className='header-button' onClick={token && handleLogout}>
+                                    {userName ? `${userName} - Logout` : 'Login / Register'}
+                                </button>
+                            </div>
+                        </Link>                        <button className=' header-button' onClick={toggleSearch}><FontAwesomeIcon icon={faMagnifyingGlass} /> </button>
                         {isSearchOpen && (
                             <div>
                                 <form onSubmit={handleSubmit}>
