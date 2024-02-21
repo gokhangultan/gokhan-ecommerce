@@ -36,7 +36,7 @@ export default function About() {
                         <button className="rounded-full bg-[#FFE9EA] w-[47px] h-[47px] sm:absolute relative top-[70px] sm:top-[420px] lg:top-[120px] left-[10%] sm:left-[30%]  lg:left-[55%] transform translate-x-[-50%] lg:flex sm:hidden flex z-10"></button>
                         <button className="rounded-full bg-[#FFE9EA] w-[18px] h-[18px] sm:absolute relative lg:top-[250px] top-[200px] sm:top-[530px] left-[71%] sm:left-[70%] lg:left-[52%] transform translate-x-[-50%] lg:flex sm:hidden flex z-10"></button>
                         <button className="rounded-full bg-[#FFE9EA] w-[295px] h-[295px] sm:absolute relative top-[30px] sm:top-[400px] lg:top-[120px] left-[45%] sm:left-[48%] lg:left-[65%] transform translate-x-[-50%] lg:flex sm:hidden flex z-10"></button>
-                        <img src="about.png" className="sm:absolute relative  lg:top-[50px] sm:top-[320px] top-[5px]  lg:left-[65%] sm:left-[45%] left-[1%] transform translate-x-[-15%] translate-y-[-90%] sm:translate-y-0 sm:translate-x-[-50%] z-10 max-w-[500px]  sm:max-h-[500px] max-h-[300px] sm:max-w-[700px] lg:flex sm:hidden flex " />
+                        <img src="about.png" className="sm:absolute relative  lg:top-[50px] sm:top-[320px] top-[5px]  lg:left-[65%] sm:left-[45%] left-[1%] transform translate-x-[-5%] translate-y-[-90%] sm:translate-y-0 sm:translate-x-[-50%] z-10 max-w-[500px]  sm:max-h-[500px] max-h-[300px] sm:max-w-[700px] lg:flex sm:hidden flex " />
                     </div>
                 </div>
             </div>
