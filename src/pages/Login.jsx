@@ -50,13 +50,13 @@ export default function Signup() {
             <div className="breadcrumb flex md:justify-between justify-center md:flex-row flex-col gap-3 ">
                 <div className="flex gap-2">
                     <Link to="/" className="font-bold text-sm leading-6 text-[#252B42] ">Home</Link>
-                    <Link><FontAwesomeIcon icon={faChevronRight} size="md" style={{ color: "#BDBDBD", }} /> </Link>
+                    <Link><FontAwesomeIcon icon={faChevronRight} size="lg" style={{ color: "#BDBDBD", }} /> </Link>
                     <Link to="" className="font-bold text-sm leading-6 text-[#BDBDBD]">Login</Link>
                 </div>
             </div>
             <div className="flex flex-col items-center gap-4 ">
                 <form id="contactForm" onSubmit={handleSubmit(onSubmit)}>
-                    <div className="flex-col flex bg-[#F9F9F9] md:px-[250px] px-[50px] py-[50px] gap-3">
+                    <div className="flex-col flex bg-[#F9F9F9] md:px-[250px] px-[50px] py-[50px] gap-3 rounded-xl">
                         <div className="flex flex-col gap-2">
                             <h3 className="text-textColor text-lg leading-6">Email *</h3>
                             <input {...register("email", { required: true, pattern: /^\S+@\S+$/i })} type="email" placeholder="Email *" className="form-input" />

@@ -77,7 +77,7 @@ export default function Signup(props) {
             <div className="flex flex-col items-center gap-4 ">
 
                 <form id="contactForm" onSubmit={handleSubmit(onSubmit)}>
-                    <div className="flex-col flex bg-[#F9F9F9] md:px-[250px] px-[50px] py-[50px] gap-3">
+                    <div className="flex-col flex bg-[#F9F9F9] md:px-[250px] px-[50px] py-[50px] gap-3 rounded-xl">
                         <div className="flex flex-col gap-2">
                             <h3 className="text-textColor text-lg leading-6">Name *</h3>
                             <input {...register("name", { required: true, minLength: 3 })} type="text" placeholder="Adınız *" className="form-input" />

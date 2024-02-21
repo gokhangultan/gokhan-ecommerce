@@ -7,8 +7,8 @@ const axiosInstance = Axios.create({
 // Thunk 
 export const postLogin = () => async (dispatch, getState) => {
     try {
-        const { categoriesIs } = getState().global;
-        if (categoriesIs.length > 0) {
+        const { categories } = getState().global;
+        if (categories.length > 0) {
             // category varmı kontrol et
             return;
         }
@@ -21,5 +21,5 @@ export const postLogin = () => async (dispatch, getState) => {
 
 export const setCategories = (categories) => ({
     type: 'SET_CATEGORIES',
-    payload: user
+    payload: categories
 });

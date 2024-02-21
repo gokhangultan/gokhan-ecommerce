@@ -15,15 +15,27 @@ import {
     PaginationItem,
 
 } from 'reactstrap';
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import ProductCard from "../components/ProductCard";
-import { faAmazon, faAws, faHooli, faLyft, faPiedPiperHat, faReddit, faRedditAlien, faStripe } from "@fortawesome/free-brands-svg-icons";
+import { faAws, faHooli, faLyft, faPiedPiperHat, faRedditAlien, faStripe } from "@fortawesome/free-brands-svg-icons";
+import { useDispatch, useSelector } from "react-redux";
+import { postLogin } from '../store/actions/categoryAction';
+
 
 
 export default function ProductList({ direction, ...args }) {
     const [dropdownOpen, setDropdownOpen] = useState(false);
-
+    const dispatch = useDispatch();
     const toggle = () => setDropdownOpen((prevState) => !prevState);
+    const categories = useSelector(state => state.global.categories);
+
+    //categories fetchle al
+    useEffect(() => {
+        // categories listesi store'da yoksa fetch işlemi yap
+        if (!categories || categories.length === 0) {
+            dispatch(postLogin());
+        }
+    }, [dispatch, categories]);
     return (
         <div>
             <div className="bg-[#FAFAFA] ">
@@ -31,7 +43,7 @@ export default function ProductList({ direction, ...args }) {
                     <h3 className="font-bold text-2xl leading-8 text-[#252B42] ml-5 sm:ml-0">Shop</h3>
                     <div className="flex gap-2">
                         <Link href="" className="font-bold text-sm leading-6 text-[#252B42] ">Home</Link>
-                        <Link><FontAwesomeIcon icon={faChevronRight} size="md" style={{ color: "#BDBDBD", }} /> </Link>
+                        <Link><FontAwesomeIcon icon={faChevronRight} size="lg" style={{ color: "#BDBDBD", }} /> </Link>
                         <Link href="" className="font-bold text-sm leading-6 text-[#BDBDBD]">Shop</Link>
                     </div>
                 </div>
@@ -53,7 +65,7 @@ export default function ProductList({ direction, ...args }) {
                 </div>
                 <div className="flex flex-row gap-3">
                     <Dropdown isOpen={dropdownOpen} toggle={toggle} direction={direction} className="text-sm leading-7 text-secondaryColor  rounded ">
-                        <DropdownToggle className="text-secondaryColor border-1 border-[#DDDDDD] hover:bg-gray-300 hover:text-black py-2.5">Popularity <FontAwesomeIcon icon={faChevronDown} size="md" /></DropdownToggle>
+                        <DropdownToggle className="text-secondaryColor border-1 border-[#DDDDDD] hover:bg-gray-300 hover:text-black py-2.5">Popularity <FontAwesomeIcon icon={faChevronDown} size="lg" /></DropdownToggle>
                         <DropdownMenu {...args}>
                             <DropdownItem header>Order By</DropdownItem>
                             <DropdownItem>Price Low to High</DropdownItem>
