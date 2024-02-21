@@ -84,7 +84,7 @@ export default function Header({ direction, ...args }) {
                 </div >
                 <div className='flex basis-2/5 mx-1'>
                     <div className=' hidden  sm:hidden xl:flex lg:flex md:hidden gap-4 '>
-                        <Link to={userName ? "/" : "/signup"} className="header-link">
+                        <Link to={userName ? "/" : "/login"} className="header-link">
                             <div className="flex-row flex">
                                 {/* Eğer token varsa Gravatar resmini, yoksa faUser ikonunu göster */}
                                 {userName ? <img src={gravatarUrl} alt="User Avatar" className="avatar w-10 h-10" /> : <FontAwesomeIcon icon={faUser} />}
@@ -142,7 +142,7 @@ export default function Header({ direction, ...args }) {
                     <Link to="/contact"><button className='text-[30px] leading-[45px]  text-secondaryColor'>Contact</button></Link>
 
                     <div className=' flex flex-col items-center  lg:hidden  gap-1 '>
-                        <Link to={userName ? "/" : "/signup"} className="header-link">
+                        <Link to={userName ? "/" : "/login"} className="header-link">
                             <div className="flex-row flex">
                                 {/* Eğer token varsa Gravatar resmini, yoksa faUser ikonunu göster */}
                                 {userName ? <img src={gravatarUrl} alt="User Avatar" className="avatar w-10 h-10" /> : <FontAwesomeIcon icon={faUser} />}

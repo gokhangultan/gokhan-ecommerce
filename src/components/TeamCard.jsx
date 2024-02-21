@@ -1,5 +1,6 @@
 import { faFacebook, faInstagram, faTwitter } from "@fortawesome/free-brands-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { Link } from "react-router-dom/cjs/react-router-dom.min";
 
 export default function CategoryCard() {
     return (
@@ -10,9 +11,9 @@ export default function CategoryCard() {
                 <h5 className="font-bold text-base leading-6 text-[#252B42]">Username</h5>
                 <h6 className="font-bold text-sm text-secondaryColor leading-6">Profession</h6>
                 <div className="flex flex-row gap-4 ">
-                    <button className=""><FontAwesomeIcon icon={faFacebook} size="lg" style={{ color: "#23A6F0" }} /></button>
-                    <button><FontAwesomeIcon icon={faInstagram} size="lg" style={{ color: "#23A6F0" }} /></button>
-                    <button><FontAwesomeIcon icon={faTwitter} size="lg" style={{ color: "#23A6F0" }} /></button>
+                    <a href="" target="_blank"><button className="hover:bg-gray-300 rounded-full p-1"><FontAwesomeIcon icon={faFacebook} size="lg" style={{ color: "#23A6F0" }} /></button></a>
+                    <a href="" target="_blank"><button className="hover:bg-gray-300 rounded-full p-1"><FontAwesomeIcon icon={faInstagram} size="lg" style={{ color: "#23A6F0" }} /></button></a>
+                    <a href="" target="_blank"><button className="hover:bg-gray-300 rounded-full p-1"><FontAwesomeIcon icon={faTwitter} size="lg" style={{ color: "#23A6F0" }} /></button></a>
                 </div>
             </div>
         </div>

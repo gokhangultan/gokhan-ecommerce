@@ -7,6 +7,8 @@ import { useDispatch } from 'react-redux';
 import { setUser } from '../store/actions/loginAction';
 import { useHistory } from 'react-router';
 import { Link } from 'react-router-dom/cjs/react-router-dom.min';
+import { faChevronRight } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 const axiosInstance = Axios.create({
     baseURL: "https://workintech-fe-ecommerce.onrender.com"
@@ -45,6 +47,13 @@ export default function Signup() {
 
     return (
         <div className="my-20 px-[10px] lg:px-[250px]">
+            <div className="breadcrumb flex md:justify-between justify-center md:flex-row flex-col gap-3 ">
+                <div className="flex gap-2">
+                    <Link to="/" className="font-bold text-sm leading-6 text-[#252B42] ">Home</Link>
+                    <Link><FontAwesomeIcon icon={faChevronRight} size="md" style={{ color: "#BDBDBD", }} /> </Link>
+                    <Link to="" className="font-bold text-sm leading-6 text-[#BDBDBD]">Login</Link>
+                </div>
+            </div>
             <div className="flex flex-col items-center gap-4 ">
                 <form id="contactForm" onSubmit={handleSubmit(onSubmit)}>
                     <div className="flex-col flex bg-[#F9F9F9] md:px-[250px] px-[50px] py-[50px] gap-3">

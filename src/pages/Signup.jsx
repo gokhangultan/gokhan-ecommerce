@@ -6,6 +6,8 @@ import 'react-toastify/dist/ReactToastify.css';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchRoles } from '../store/actions/roleActions';
 import { Link } from 'react-router-dom/cjs/react-router-dom.min';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faChevronRight } from '@fortawesome/free-solid-svg-icons';
 
 const axiosInstance = Axios.create({
     baseURL: "https://workintech-fe-ecommerce.onrender.com"
@@ -46,13 +48,13 @@ export default function Signup(props) {
             setIsLoading(true);
             const response = await axiosInstance.post("/signup", data);
             if (response.status === 201 || response.status === 204) {
-                toast.success("Form başarıyla gönderildi. Hesabınızı Aktifleştirmek İçin Email Adresinizi Kontrol Ediniz. Önceki Sayfaya yönlendiriliyorsunuz.", {
+                toast.success("Hesabınızı Aktifleştirmek İçin Email Adresinizi Kontrol Ediniz. Önceki Sayfaya yönlendiriliyorsunuz.", {
                     position: "top-right"
                 });
                 //önceki sayfaya yönlendir.
                 setTimeout(() => {
                     window.history.back();
-                }, 3000); // 3 saniye beklet sonra önceki sayfaya gönder
+                }, 5000); // 5 saniye beklet sonra önceki sayfaya gönder
             }
         } catch (error) {
             toast.error("Form gönderilirken bir hata oluştu. Lütfen tekrar deneyin.", {
@@ -65,7 +67,15 @@ export default function Signup(props) {
 
     return (
         <div className="my-20 px-[10px] lg:px-[250px]">
+            <div className="breadcrumb flex md:justify-between justify-center md:flex-row flex-col gap-3 ">
+                <div className="flex gap-2">
+                    <Link to="/" className="font-bold text-sm leading-6 text-[#252B42] ">Home</Link>
+                    <Link><FontAwesomeIcon icon={faChevronRight} size="md" style={{ color: "#BDBDBD", }} /> </Link>
+                    <Link to="" className="font-bold text-sm leading-6 text-[#BDBDBD]">Signup</Link>
+                </div>
+            </div>
             <div className="flex flex-col items-center gap-4 ">
+
                 <form id="contactForm" onSubmit={handleSubmit(onSubmit)}>
                     <div className="flex-col flex bg-[#F9F9F9] md:px-[250px] px-[50px] py-[50px] gap-3">
                         <div className="flex flex-col gap-2">

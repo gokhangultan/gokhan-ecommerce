@@ -17,12 +17,12 @@ export default function Footer() {
     };
     return (
         <div>
-            <div className="w-[full] px-[50px] sm:px-[195px] py-[50px] flex flex-col sm:flex-row justify-between mt-5 gap-3 bg-[#FAFAFA]">
+            <div className="w-[full] px-[50px] sm:px-[195px] py-[50px] flex flex-col sm:flex-row justify-between  gap-3 bg-[#FAFAFA]">
                 <Link to="/"><h3 className="font-bold text-2xl leading-8 text-[#252B42]">Bandage</h3></Link>
                 <div className="flex gap-3">
-                    <a href="" target="_blank"><button className="hover:text-white hover:bg-gray-300 rounded p-1"><FontAwesomeIcon icon={faFacebook} size="lg" style={{ color: "#23A6F0", }} /></button></a>
-                    <a href="" target="_blank"><button className="hover:text-white hover:bg-gray-300 rounded p-1"><FontAwesomeIcon icon={faInstagram} size="lg" style={{ color: "#23A6F0", }} /></button></a>
-                    <a href="" target="_blank"><button className="hover:text-white hover:bg-gray-300 rounded p-1"><FontAwesomeIcon icon={faTwitter} size="lg" style={{ color: "#23A6F0", }} /></button></a>
+                    <a href="" target="_blank"><button className="hover:text-white hover:bg-gray-300 rounded-full p-2"><FontAwesomeIcon icon={faFacebook} size="lg" style={{ color: "#23A6F0", }} /></button></a>
+                    <a href="" target="_blank"><button className="hover:text-white hover:bg-gray-300 rounded-full p-2"><FontAwesomeIcon icon={faInstagram} size="lg" style={{ color: "#23A6F0", }} /></button></a>
+                    <a href="" target="_blank"><button className="hover:text-white hover:bg-gray-300 rounded-full p-2"><FontAwesomeIcon icon={faTwitter} size="lg" style={{ color: "#23A6F0", }} /></button></a>
                 </div>
             </div>
             <div className="w-[full] px-[50px] sm:px-[195px] py-5">

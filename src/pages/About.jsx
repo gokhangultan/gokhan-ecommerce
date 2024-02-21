@@ -22,21 +22,21 @@ export default function About() {
     return (
         <div className="mt-5 ">
             <div>
-                <div className="flex lg:flex-row flex-col  px-[10px] lg:pl-[250px] ">
+                <div className="flex lg:flex-row flex-col  pl-[5px] lg:pl-[250px]  ">
 
-                    <div className="sm:text-left text-center  flex flex-col basis-1/3 gap-4">
+                    <div className="text-center sm:text-start  flex flex-col basis-1/3  gap-4  sm:w-[607px] w-[387px] items-center ">
                         <h5 className="font-bold text-base leading-6 text-[#252B42]">ABOUT COMPANY</h5>
                         <h1 className="font-bold text-6xl leading-[80px] text-[#252B42]">ABOUT US</h1>
                         <h4 className="text-xl text-secondaryColor leading-7">We know how large objects will act, but things on a small scale</h4>
-                        <div><button className="bg-primaryColor px-4 py-2 rounded-md text-white w-[193px] h-[52px] ">Get Quote Now</button></div>
+                        <div><button className="bg-primaryColor px-4 py-2 rounded-md text-white w-[193px] h-[52px] hover:bg-gray-300">Get Quote Now</button></div>
                     </div>
                     <div className="basis-2/3  ">
-                        <button className="rounded-full bg-[#977DF4] w-[9px] h-[9px] sm:absolute relative lg:top-[190px] top-[80px] sm:top-[450px] lg:left-[79%] left-[78%]  sm:left-[68%] transform translate-x-[-50%] lg:flex sm:hidden flex z-10"></button>
-                        <button className="rounded-full bg-[#977DF4] w-[9px] h-[9px] sm:absolute relative lg:top-[350px] top-[260px] sm:top-[550px] lg:left-[55%] left-[5%] sm:left-[30%] transform translate-x-[-50%] lg:flex sm:hidden flex z-10"></button>
-                        <button className="rounded-full bg-[#FFE9EA] w-[47px] h-[47px] sm:absolute relative top-[70px] sm:top-[420px] lg:top-[120px] left-[10%] sm:left-[30%]  lg:left-[55%] transform translate-x-[-50%] lg:flex sm:hidden flex z-10"></button>
-                        <button className="rounded-full bg-[#FFE9EA] w-[18px] h-[18px] sm:absolute relative lg:top-[250px] top-[200px] sm:top-[530px] left-[71%] sm:left-[70%] lg:left-[52%] transform translate-x-[-50%] lg:flex sm:hidden flex z-10"></button>
-                        <button className="rounded-full bg-[#FFE9EA] w-[295px] h-[295px] sm:absolute relative top-[30px] sm:top-[400px] lg:top-[120px] left-[45%] sm:left-[48%] lg:left-[65%] transform translate-x-[-50%] lg:flex sm:hidden flex z-10"></button>
-                        <img src="about.png" className="sm:absolute relative  lg:top-[50px] sm:top-[320px] top-[5px]  lg:left-[65%] sm:left-[45%] left-[1%] transform translate-x-[-5%] translate-y-[-90%] sm:translate-y-0 sm:translate-x-[-50%] z-10 max-w-[500px]  sm:max-h-[500px] max-h-[300px] sm:max-w-[700px] lg:flex sm:hidden flex " />
+                        <button className="rounded-full bg-[#977DF4] w-[6px] h-[6px] sm:absolute relative lg:top-[190px] top-[80px] sm:top-[450px] lg:left-[79%] left-[78%]  sm:left-[68%] transform translate-x-[-50%] lg:flex sm:hidden flex z-10"></button>
+                        <button className="rounded-full bg-[#977DF4] w-[6px] h-[6px] sm:absolute relative lg:top-[350px] top-[260px] sm:top-[550px] lg:left-[55%] left-[5%] sm:left-[30%] transform translate-x-[-50%] lg:flex sm:hidden flex z-10"></button>
+                        <button className="rounded-full bg-[#FFE9EA] w-[35px] h-[35px] sm:absolute relative top-[70px] sm:top-[420px] lg:top-[120px] left-[10%] sm:left-[30%]  lg:left-[55%] transform translate-x-[-50%] lg:flex sm:hidden flex z-10"></button>
+                        <button className="rounded-full bg-[#FFE9EA] w-[15px] h-[15px] sm:absolute relative lg:top-[250px] top-[200px] sm:top-[530px] left-[81%] sm:left-[70%] lg:left-[52%] transform translate-x-[-50%] lg:flex sm:hidden flex z-10"></button>
+                        <button className="rounded-full bg-[#FFE9EA] w-[255px] h-[255px] sm:absolute relative top-[30px] sm:top-[400px] lg:top-[120px] left-[45%] sm:left-[48%] lg:left-[65%] transform translate-x-[-50%] lg:flex sm:hidden flex z-10"></button>
+                        <img src="about.png" className="sm:absolute relative  lg:top-[50px] sm:top-[320px] top-[5px]  lg:left-[65%] sm:left-[45%] left-[-10%] transform translate-x-[-5%] translate-y-[-90%] sm:translate-y-0 sm:translate-x-[-50%] z-10 max-w-[500px]  sm:max-h-[500px] max-h-[300px] sm:max-w-[700px] lg:flex sm:hidden flex " />
                     </div>
                 </div>
             </div>
@@ -89,11 +89,11 @@ export default function About() {
                     )}
                 </div>
             </div>
-            <div className="px-[50px] lg:px-[255px] pt-5">
+            <div className="px-[50px] lg:px-[255px] pt-5 mb-[100px]">
                 <Team />
 
             </div>
-            <div className="pt-5 bg-[#FAFAFA] pb-5 ">
+            <div className="bg-[#FAFAFA] py-[100px] ">
                 <div className="flex flex-col text-center gap-4  ">
                     <h2 className="text-[#252B42] font-bold text-[40px] leading-[40px]">Big Companies Are Here</h2>
                     <p className="text-sm text-secondaryColor leading-5">Problems trying to resolve the conflict between the two major realms of Classical physics: Newtonian mechanics</p>
@@ -109,7 +109,7 @@ export default function About() {
 
             </div>
 
-            <div className="flex flex-col md:flex-row justify-between bg-[#2A7CC7] my-5">
+            <div className="flex flex-col md:flex-row justify-between bg-[#2A7CC7] ">
                 <div className="flex-col  basis-1/3 flex justify-center gap-4 mx-40 py-5 text-center ">
                     <h5 className="text-sm font-bold text-white leading-6">WORK WITH US</h5>
                     <h2 className="font-bold leading-[50px] text-[40px] text-white">Now Let’s grow Yours</h2>
