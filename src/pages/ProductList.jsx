@@ -38,8 +38,10 @@ export default function ProductList({ direction, ...args }) {
             sortByPriceHighToLow();
         } else if (sortBy === "priceLowToHigh") {
             sortByPriceLowToHigh();
+        } else if (sortBy === "popularity") {
+            sortByPopularity();
         }
-    }, [sortBy]);
+    }, [sortBy, productList.products]);
 
     const handleSortByPriceHighToLow = () => {
         setSortBy("priceHighToLow");
@@ -49,6 +51,9 @@ export default function ProductList({ direction, ...args }) {
         setSortBy("priceLowToHigh");
     };
 
+    const handleSortByPopularity = () => {
+        setSortBy("popularity");
+    };
     const sortByPriceHighToLow = () => {
         const sorted = [...productList.products].sort((a, b) => b.price - a.price);
         setSortedProducts(sorted);
@@ -56,6 +61,11 @@ export default function ProductList({ direction, ...args }) {
 
     const sortByPriceLowToHigh = () => {
         const sorted = [...productList.products].sort((a, b) => a.price - b.price);
+        setSortedProducts(sorted);
+    };
+
+    const sortByPopularity = () => {
+        const sorted = [...productList.products].sort((a, b) => b.rating - a.rating);
         setSortedProducts(sorted);
     };
 
@@ -114,13 +124,16 @@ export default function ProductList({ direction, ...args }) {
                     <div className="flex flex-row gap-3">
                         <Dropdown isOpen={dropdownOpen} toggle={toggle} direction={direction} className="text-sm leading-7 text-secondaryColor rounded">
                             <DropdownToggle className="text-secondaryColor border-1 border-[#DDDDDD] hover:bg-gray-300 hover:text-black py-2.5">
-                                Popularity <FontAwesomeIcon icon={faChevronDown} size="lg" />
+                                {sortBy === "priceLowToHigh" && "Price Low to High"}
+                                {sortBy === "priceHighToLow" && "Price High to Low"}
+                                {sortBy === "popularity" && "Popularity"}
+                                <FontAwesomeIcon icon={faChevronDown} size="lg" />
                             </DropdownToggle>
                             <DropdownMenu {...args}>
                                 <DropdownItem header>Order By</DropdownItem>
                                 <DropdownItem onClick={handleSortByPriceLowToHigh}>Price Low to High</DropdownItem>
                                 <DropdownItem onClick={handleSortByPriceHighToLow}>Price High to Low</DropdownItem>
-                                <DropdownItem>Popularity</DropdownItem>
+                                <DropdownItem onClick={handleSortByPopularity}>Popularity</DropdownItem>
                             </DropdownMenu>
                         </Dropdown>
                         <button className="button bg-primaryColor hover:text-primaryColor hover:bg-white rounded hover:border-primaryColor">Filter</button>
