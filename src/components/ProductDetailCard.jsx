@@ -1,7 +1,7 @@
 import { faEye, faHeart, faStarHalf } from '@fortawesome/free-regular-svg-icons';
 import { faCartShopping, faChevronRight, faStar } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom/cjs/react-router-dom.min';
 import {
     Carousel,
@@ -11,6 +11,9 @@ import {
 } from 'reactstrap';
 import ProductCard from './ProductCard';
 import { faAws, faHooli, faLyft, faPiedPiperHat, faRedditAlien, faStripe } from '@fortawesome/free-brands-svg-icons';
+import { fetchProduct } from '../store/actions/productAction';
+import { useDispatch, useSelector } from 'react-redux';
+
 
 const items = [
     {
@@ -36,6 +39,11 @@ const customStyles = {
 const customClass = "md:w-[540px] w-[350px] h-full lg:h-auto carousel-image";
 
 function ProductDetailCard() {
+    const dispatch = useDispatch();
+    const productList = useSelector(state => state.products.productList);
+
+    //products fetchle al productList ve Total dönüyor
+
     const [activeTab, setActiveTab] = useState('description');
     const [activeIndex, setActiveIndex] = useState(0);
     const [animating, setAnimating] = useState(false);
@@ -87,14 +95,27 @@ function ProductDetailCard() {
             ))}
         </div>
     );
+    useEffect(() => {
+        if (!productList || !productList.products || productList.products.length === 0) {
+            dispatch(fetchProduct());
+        }
+    }, [dispatch, productList]);
 
+    // productList yüklenene kadar bekle
+    if (!productList || !productList.products || productList.products.length === 0) {
+        return <div className='flex flex-col items-center'>
+            <h1>Loading...</h1>
+            <img src='loading.gif' className='w-[200px] h-[200px]' />
+
+        </div>;
+    }
     return (
         <div className=''>
             <section className='bg-[#FAFAFA] product-detail-data  w-[full] px-[30px] md:px-[195px]'>
                 <div className="breadcrumb flex md:justify-between justify-center md:flex-row flex-col py-8 gap-3 ">
                     <div className="flex gap-2">
                         <Link href="" className="font-bold text-sm leading-6 text-[#252B42] ">Home</Link>
-                        <Link><FontAwesomeIcon icon={faChevronRight} size="md" style={{ color: "#BDBDBD", }} /> </Link>
+                        <Link><FontAwesomeIcon icon={faChevronRight} size="lg" style={{ color: "#BDBDBD", }} /> </Link>
                         <Link href="" className="font-bold text-sm leading-6 text-[#BDBDBD]">Shop</Link>
                     </div>
                 </div>
@@ -242,15 +263,9 @@ function ProductDetailCard() {
                     </div>
                     <section className="best-seller mb-10 text-center ">
                         <div className=" flex flex-wrap flex-row gap-2 justify-between  ">
-                            <ProductCard />
-                            <ProductCard />
-                            <ProductCard />
-                            <ProductCard />
-                            <ProductCard />
-                            <ProductCard />
-                            <ProductCard />
-                            <ProductCard />
-                            <ProductCard />
+                            {productList.products.map(product => (
+                                <ProductCard key={product.id} product={product} />
+                            ))}
                         </div>
                     </section>
                     <div className="flex flex-col lg:flex-row gap-5 justify-between py-5">

@@ -70,7 +70,7 @@ export default function Signup(props) {
             <div className="breadcrumb flex md:justify-between justify-center md:flex-row flex-col gap-3 ">
                 <div className="flex gap-2">
                     <Link to="/" className="font-bold text-sm leading-6 text-[#252B42] ">Home</Link>
-                    <Link><FontAwesomeIcon icon={faChevronRight} size="md" style={{ color: "#BDBDBD", }} /> </Link>
+                    <Link><FontAwesomeIcon icon={faChevronRight} size="lg" style={{ color: "#BDBDBD", }} /> </Link>
                     <Link to="" className="font-bold text-sm leading-6 text-[#BDBDBD]">Signup</Link>
                 </div>
             </div>

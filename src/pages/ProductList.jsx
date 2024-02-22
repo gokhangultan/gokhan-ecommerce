@@ -31,19 +31,30 @@ export default function ProductList({ direction, ...args }) {
     const categories = useSelector(state => state.global.categories);
     const productList = useSelector(state => state.products.productList);
 
-    useEffect(() => {
-        if (!productList || productList.length === 0) {
-            dispatch(fetchProduct());
-        }
-    }, [dispatch, productList]);
 
-    console.log(productList)
     //categories fetchle al
     useEffect(() => {
         if (!categories || categories.length === 0) {
             dispatch(fetchCategory());
         }
     }, [dispatch, categories]);
+
+
+    //products fetchle al productList ve Total dönüyor
+    useEffect(() => {
+        if (!productList || !productList.products || productList.products.length === 0) {
+            dispatch(fetchProduct());
+        }
+    }, [dispatch, productList]);
+
+    // productList yüklenene kadar bekle
+    if (!productList || !productList.products || productList.products.length === 0) {
+        return <div className='flex flex-col items-center'>
+            <h1>Loading...</h1>
+            <img src='loading.gif' className='w-[200px] h-[200px]' />
+
+        </div>;
+    }
 
     return (
         <div>
@@ -86,19 +97,13 @@ export default function ProductList({ direction, ...args }) {
                 </div>
             </div>
             <div className="px-[10px] sm:px-[195px]">
-                <section className="best-seller mb-10 text-center ">
-                    <div className=" flex flex-wrap flex-row gap-2 justify-between  ">
-                        <ProductCard />
-                        <ProductCard />
-                        <ProductCard />
-                        <ProductCard />
-                        <ProductCard />
-                        <ProductCard />
-                        <ProductCard />
-                        <ProductCard />
-                        <ProductCard />
-
+                <section className="best-seller mb-10 text-center">
+                    <div className="flex flex-wrap flex-row gap-2 justify-between">
+                        {productList.products.map(product => (
+                            <ProductCard key={product.id} product={product} />
+                        ))}
                     </div>
+
                 </section>
             </div>
             <div className="flex justify-center ">

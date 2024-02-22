@@ -3,8 +3,30 @@ import Carousel2 from "../components/Carousel2";
 import ProductCard from "../components/ProductCard";
 import FeaturedCard from "../components/FeaturedCard";
 import { Link } from "react-router-dom/cjs/react-router-dom.min";
+import { useDispatch, useSelector } from "react-redux";
+import { useEffect } from "react";
+import { fetchProduct } from '../store/actions/productAction';
 
 export default function Home() {
+
+    const dispatch = useDispatch();
+    const productList = useSelector(state => state.products.productList);
+
+    //products fetchle al productList ve Total dönüyor
+    useEffect(() => {
+        if (!productList || !productList.products || productList.products.length === 0) {
+            dispatch(fetchProduct());
+        }
+    }, [dispatch, productList]);
+
+    // productList yüklenene kadar bekle
+    if (!productList || !productList.products || productList.products.length === 0) {
+        return <div className='flex flex-col items-center'>
+            <h1>Loading...</h1>
+            <img src='loading.gif' className='w-[200px] h-[200px]' />
+
+        </div>;
+    }
     return (
         <div>
             <div className="relative text-white hero-section">
@@ -52,14 +74,9 @@ export default function Home() {
                 <h3 className="font-bold text-2xl leading-[32px]  text-[#252B42] mb-3">BESTSELLER PRODUCTS</h3>
                 <p className="text-sm leading-5 align-middle mb-5">Problems trying to resolve the conflict between</p>
                 <div className=" flex flex-wrap flex-row gap-3 justify-between  ">
-                    <ProductCard />
-                    <ProductCard />
-                    <ProductCard />
-                    <ProductCard />
-                    <ProductCard />
-                    <ProductCard />
-                    <ProductCard />
-                    <ProductCard />
+                    {productList.products.map(product => (
+                        <ProductCard key={product.id} product={product} />
+                    ))}
 
                 </div>
             </section>
