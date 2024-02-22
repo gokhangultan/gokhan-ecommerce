@@ -20,6 +20,7 @@ import ProductCard from "../components/ProductCard";
 import { faAws, faHooli, faLyft, faPiedPiperHat, faRedditAlien, faStripe } from "@fortawesome/free-brands-svg-icons";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchCategory } from '../store/actions/categoryAction';
+import { fetchProduct } from '../store/actions/productAction';
 
 
 
@@ -28,13 +29,22 @@ export default function ProductList({ direction, ...args }) {
     const dispatch = useDispatch();
     const toggle = () => setDropdownOpen((prevState) => !prevState);
     const categories = useSelector(state => state.global.categories);
+    const productList = useSelector(state => state.products.productList);
 
+    useEffect(() => {
+        if (!productList || productList.length === 0) {
+            dispatch(fetchProduct());
+        }
+    }, [dispatch, productList]);
+
+    console.log(productList)
     //categories fetchle al
     useEffect(() => {
         if (!categories || categories.length === 0) {
             dispatch(fetchCategory());
         }
     }, [dispatch, categories]);
+
     return (
         <div>
             <div className="bg-[#FAFAFA] ">

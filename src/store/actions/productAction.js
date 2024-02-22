@@ -5,13 +5,9 @@ const axiosInstance = Axios.create({
 });
 
 // Thunk 
-export const fetchProduct = () => async (dispatch, getState) => {
+export const fetchProduct = () => async (dispatch) => {
     try {
-        const { products } = getState().products;
-        if (productList.length > 0) {
-            // category varmı kontrol et
-            return;
-        }
+
         const response = await axiosInstance.get("/products");
         dispatch(setProductList(response.data));
     } catch (error) {
@@ -19,7 +15,7 @@ export const fetchProduct = () => async (dispatch, getState) => {
     }
 };
 
-export const setProductList = (productList) => ({
+export const setProductList = (products) => ({
     type: 'SET_PRODUCT_LIST',
-    payload: productList
+    payload: products
 });
