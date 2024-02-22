@@ -7,12 +7,12 @@ import {
     Carousel,
     CarouselItem,
     CarouselControl,
-    CarouselCaption,
 } from 'reactstrap';
 import ProductCard from './ProductCard';
 import { faAws, faHooli, faLyft, faPiedPiperHat, faRedditAlien, faStripe } from '@fortawesome/free-brands-svg-icons';
 import { fetchProduct } from '../store/actions/productAction';
 import { useDispatch, useSelector } from 'react-redux';
+import ReactPaginate from 'react-paginate';
 
 
 function ProductDetailCard() {
@@ -37,12 +37,51 @@ function ProductDetailCard() {
         objectFit: 'cover',
         objectPosition: 'top',
     };
-
-    const customClass = "md:w-[540px] w-[350px] h-full lg:h-auto carousel-image";
     const dispatch = useDispatch();
     const productList = useSelector(state => state.products.productList);
 
     //products fetchle al productList ve Total dönüyor
+    useEffect(() => {
+        if (!productList || !productList.products || productList.products.length === 0) {
+            dispatch(fetchProduct());
+        } else {
+            sortByPopularity();
+        }
+    }, [dispatch, productList]);
+
+    // productList yüklenene kadar bekle
+    if (!productList || !productList.products || productList.products.length === 0) {
+        return <div className='flex flex-col items-center'>
+            <h1>Loading...</h1>
+            <img src='loading.gif' className='w-[200px] h-[200px]' />
+
+        </div>;
+    }
+    const customClass = "md:w-[540px] w-[350px] h-full lg:h-auto carousel-image";
+    const sortByPopularity = () => {
+        const sorted = [...productList.products].sort((a, b) => b.rating - a.rating);
+        setSortedProducts(sorted);
+    };
+    const [sortedProducts, setSortedProducts] = useState([]);
+    const [pageNumber, setPageNumber] = useState(0);
+
+    // React Pagination
+    const productsToDisplay = sortedProducts.length > 0 ? sortedProducts : productList.products;
+    const productsPerPage = 8;
+    const pagesVisited = pageNumber * productsPerPage;
+    const displayProducts = productsToDisplay && productsToDisplay.length > 0
+        ? productsToDisplay
+            .slice(pagesVisited, pagesVisited + productsPerPage)
+            .map((product) => (
+                <ProductCard key={product.id} product={product} />
+            ))
+        : null;
+
+    const handlePageChange = ({ selected }) => {
+        setPageNumber(selected);
+    };
+
+
 
     const [activeTab, setActiveTab] = useState('description');
     const [activeIndex, setActiveIndex] = useState(0);
@@ -259,9 +298,22 @@ function ProductDetailCard() {
                     </div>
                     <section className="best-seller mb-10 text-center ">
                         <div className=" flex flex-wrap flex-row gap-2 justify-between  ">
-                            {productList.products.map(product => (
-                                <ProductCard key={product.id} product={product} />
-                            ))}
+                            {displayProducts}
+                        </div>
+                        <div className="flex justify-center ">
+                            <section className="pagination">
+                                <ReactPaginate
+                                    previousLabel={'Previous'}
+                                    nextLabel={'Next'}
+                                    pageCount={Math.ceil(productsToDisplay.length / productsPerPage)}
+                                    onPageChange={handlePageChange}
+                                    containerClassName={'pagination'}
+                                    previousLinkClassName={'pagination__link'}
+                                    nextLinkClassName={'pagination__link'}
+                                    disabledClassName={'pagination__link--disabled'}
+                                    activeClassName={'pagination__link--active'}
+                                    className="bg-primaryColor flex gap-2 text-white rounded p-2 font-bold text-md" />
+                            </section>
                         </div>
                     </section>
                     <div className="flex flex-col lg:flex-row gap-5 justify-between py-5">

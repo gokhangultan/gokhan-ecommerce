@@ -8,9 +8,7 @@ export default function ProductCard({ product }) {
     const categories = {
         1: { id: 1, code: 'k:tisort' },
         2: { id: 2, code: 'k:ayakkabi' },
-        3: { id: 3, code: 'k:ceket' },
-        // Diğer kategoriler...
-        14: { id: 14, code: 'e:tisort' }
+        3: { id: 3, code: 'k:ceket' }
     };
     const categoryCode = categories[product.category_id].code;
 
