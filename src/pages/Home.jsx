@@ -4,18 +4,42 @@ import ProductCard from "../components/ProductCard";
 import FeaturedCard from "../components/FeaturedCard";
 import { Link } from "react-router-dom/cjs/react-router-dom.min";
 import { useDispatch, useSelector } from "react-redux";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { fetchProduct } from '../store/actions/productAction';
+import ReactPaginate from 'react-paginate';
 
 export default function Home() {
+    const [pageNumber, setPageNumber] = useState(0);
+    const [sortedProducts, setSortedProducts] = useState([]);
 
     const dispatch = useDispatch();
     const productList = useSelector(state => state.products.productList);
+    const sortByPopularity = () => {
+        const sorted = [...productList.products].sort((a, b) => b.rating - a.rating);
+        setSortedProducts(sorted);
+    };
+    // React Pagination
+    const productsToDisplay = sortedProducts.length > 0 ? sortedProducts : productList.products;
+    const productsPerPage = 8;
+    const pagesVisited = pageNumber * productsPerPage;
+    const displayProducts = productsToDisplay && productsToDisplay.length > 0
+        ? productsToDisplay
+            .slice(pagesVisited, pagesVisited + productsPerPage)
+            .map((product) => (
+                <ProductCard key={product.id} product={product} />
+            ))
+        : null;
+
+    const handlePageChange = ({ selected }) => {
+        setPageNumber(selected);
+    };
 
     //products fetchle al productList ve Total dönüyor
     useEffect(() => {
         if (!productList || !productList.products || productList.products.length === 0) {
             dispatch(fetchProduct());
+        } else {
+            sortByPopularity();
         }
     }, [dispatch, productList]);
 
@@ -73,11 +97,24 @@ export default function Home() {
                 <h4 className=" text-xl leading-[30px] align-middle mb-3">Featured Products</h4>
                 <h3 className="font-bold text-2xl leading-[32px]  text-[#252B42] mb-3">BESTSELLER PRODUCTS</h3>
                 <p className="text-sm leading-5 align-middle mb-5">Problems trying to resolve the conflict between</p>
-                <div className=" flex flex-wrap flex-row gap-3 justify-between  ">
-                    {productList.products.map(product => (
-                        <ProductCard key={product.id} product={product} />
-                    ))}
+                <div className=" flex flex-wrap flex-row gap-3 justify-between mb-5 ">
+                    {displayProducts}
 
+                </div>
+                <div className="flex justify-center ">
+                    <section className="pagination">
+                        <ReactPaginate
+                            previousLabel={'Previous'}
+                            nextLabel={'Next'}
+                            pageCount={Math.ceil(productsToDisplay.length / productsPerPage)}
+                            onPageChange={handlePageChange}
+                            containerClassName={'pagination'}
+                            previousLinkClassName={'pagination__link'}
+                            nextLinkClassName={'pagination__link'}
+                            disabledClassName={'pagination__link--disabled'}
+                            activeClassName={'pagination__link--active'}
+                            className="bg-primaryColor flex gap-2 text-white rounded p-2 font-bold text-md" />
+                    </section>
                 </div>
             </section>
 
