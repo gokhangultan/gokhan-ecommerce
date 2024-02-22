@@ -87,9 +87,12 @@ function App() {
         <Route path="/card" exact>
           <Card />
         </Route>
-        <Route path="/productpage" exact>
+        <Route path="/product/:category/:productId/:productNameSlug">
           <ProductDetail />
         </Route>
+        {/* <Route path="/productpage" exact>
+          <ProductDetail />
+          </Route>*/}
         <Route path="/contact" exact>
           <Contact />
         </Route>

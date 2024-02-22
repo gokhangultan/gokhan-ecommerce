@@ -3,8 +3,16 @@ import { faCartShopping, faEye, faStar, faDownload, faChartArea, faChartLine, fa
 import { faHeart, faClock } from "@fortawesome/free-regular-svg-icons";
 import { Link } from "react-router-dom";
 
-export default function ProductCard({ product }) {
 
+export default function ProductCard({ product }) {
+    const categories = {
+        1: { id: 1, code: 'k:tisort' },
+        2: { id: 2, code: 'k:ayakkabi' },
+        3: { id: 3, code: 'k:ceket' },
+        // Diğer kategoriler...
+        14: { id: 14, code: 'e:tisort' }
+    };
+    const categoryCode = categories[product.category_id].code;
 
     return (
         <div className="flex justify-between border-1 border-gray-150 shadow-sm">
@@ -37,7 +45,7 @@ export default function ProductCard({ product }) {
                         <h6 className="text-xs  leading-4 secondary-text "><FontAwesomeIcon icon={faChartLine} size="lg" style={{ color: "#E77C40", }} /> 64 Lessons</h6>
                         <h6 className="text-xs  leading-4 secondary-text "><FontAwesomeIcon icon={faChartArea} size="lg" style={{ color: "#23856D", }} /> STOCK {product.stock}</h6>
                     </div>
-                    <Link to="/productpage"><button className="product-card-more ">Learn More <FontAwesomeIcon icon={faChevronRight} /> </button></Link>
+                    <Link to={`/product/${categoryCode}/${product.id}/${product.name}/`}><button className="product-card-more ">Learn More <FontAwesomeIcon icon={faChevronRight} /> </button></Link>
                 </div>
             </div>
         </div>

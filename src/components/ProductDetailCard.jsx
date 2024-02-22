@@ -15,30 +15,30 @@ import { fetchProduct } from '../store/actions/productAction';
 import { useDispatch, useSelector } from 'react-redux';
 
 
-const items = [
-    {
-        src: 'detail1.jpeg',
-        key: 1,
-    },
-    {
-        src: 'details2.jpeg',
-        key: 2,
-    },
-    {
-        src: 'detail3.jpeg',
-        key: 3,
-    },
-];
-
-const customStyles = {
-    height: '450px',
-    objectFit: 'cover',
-    objectPosition: 'top',
-};
-
-const customClass = "md:w-[540px] w-[350px] h-full lg:h-auto carousel-image";
-
 function ProductDetailCard() {
+
+    const items = [
+        {
+            src: 'detail1.jpeg',
+            key: 1,
+        },
+        {
+            src: 'details2.jpeg',
+            key: 2,
+        },
+        {
+            src: 'detail3.jpeg',
+            key: 3,
+        },
+    ];
+
+    const customStyles = {
+        height: '450px',
+        objectFit: 'cover',
+        objectPosition: 'top',
+    };
+
+    const customClass = "md:w-[540px] w-[350px] h-full lg:h-auto carousel-image";
     const dispatch = useDispatch();
     const productList = useSelector(state => state.products.productList);
 
@@ -73,10 +73,6 @@ function ProductDetailCard() {
                 key={item.src}
             >
                 <img src={item.src} alt={item.altText} style={customStyles} className={customClass} />
-                <CarouselCaption
-                    captionText={item.caption}
-                    captionHeader={item.caption}
-                />
             </CarouselItem>
         );
     });
@@ -114,9 +110,9 @@ function ProductDetailCard() {
             <section className='bg-[#FAFAFA] product-detail-data  w-[full] px-[30px] md:px-[195px]'>
                 <div className="breadcrumb flex md:justify-between justify-center md:flex-row flex-col py-8 gap-3 ">
                     <div className="flex gap-2">
-                        <Link href="" className="font-bold text-sm leading-6 text-[#252B42] ">Home</Link>
+                        <Link to="/" className="font-bold text-sm leading-6 text-[#252B42] ">Home</Link>
                         <Link><FontAwesomeIcon icon={faChevronRight} size="lg" style={{ color: "#BDBDBD", }} /> </Link>
-                        <Link href="" className="font-bold text-sm leading-6 text-[#BDBDBD]">Shop</Link>
+                        <Link to="/products" className="font-bold text-sm leading-6 text-[#BDBDBD]">Shop</Link>
                     </div>
                 </div>
                 <div className='flex flex-col lg:flex-row gap-5 '>

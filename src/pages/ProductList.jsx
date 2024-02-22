@@ -9,12 +9,6 @@ import {
     DropdownMenu,
     DropdownItem
 } from 'reactstrap';
-import {
-    Pagination,
-    PaginationLink,
-    PaginationItem,
-
-} from 'reactstrap';
 import { useEffect, useState } from "react";
 import ProductCard from "../components/ProductCard";
 import { faAws, faHooli, faLyft, faPiedPiperHat, faRedditAlien, faStripe } from "@fortawesome/free-brands-svg-icons";
