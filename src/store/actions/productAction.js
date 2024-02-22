@@ -5,11 +5,14 @@ const axiosInstance = Axios.create({
 });
 
 // Thunk 
-export const fetchProduct = () => async (dispatch) => {
+export const fetchProduct = (/*{ limit = 25, offset = 0 }*/) => async (dispatch) => {
     try {
 
         const response = await axiosInstance.get("/products", {
-
+            /* params: {
+                 limit: limit,
+                 offset: offset
+             }*/
         });
         dispatch(setProductList(response.data));
     } catch (error) {

@@ -95,7 +95,7 @@ export default function ProductList({ direction, ...args }) {
 
     useEffect(() => {
         if (!productList || !productList.products || productList.products.length === 0) {
-            dispatch(fetchProduct());
+            dispatch(fetchProduct(/*{ limit: productsPerPage, offset: currentPage * productsPerPage }*/));
         }
     }, [dispatch, productList]);
 
