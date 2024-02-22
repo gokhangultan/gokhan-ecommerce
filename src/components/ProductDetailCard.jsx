@@ -13,6 +13,7 @@ import { faAws, faHooli, faLyft, faPiedPiperHat, faRedditAlien, faStripe } from 
 import { fetchProduct } from '../store/actions/productAction';
 import { useDispatch, useSelector } from 'react-redux';
 import ReactPaginate from 'react-paginate';
+import { useParams } from 'react-router';
 
 
 function ProductDetailCard() {
@@ -40,6 +41,8 @@ function ProductDetailCard() {
     const dispatch = useDispatch();
     const customClass = "md:w-[540px] w-[350px] h-full lg:h-auto carousel-image";
 
+    const { productId } = useParams();
+
 
     const [activeTab, setActiveTab] = useState('description');
     const [activeIndex, setActiveIndex] = useState(0);
@@ -53,7 +56,7 @@ function ProductDetailCard() {
     };
     // React Pagination
     const productsToDisplay = sortedProducts.length > 0 ? sortedProducts : productList.products;
-    const productsPerPage = 8;
+    const productsPerPage = 6;
     const pagesVisited = pageNumber * productsPerPage;
     const displayProducts = productsToDisplay && productsToDisplay.length > 0
         ? productsToDisplay
@@ -85,6 +88,10 @@ function ProductDetailCard() {
         </div>;
     }
 
+    const product = productList.products.find(product => product.id === parseInt(productId));
+    if (!product) {
+        return <div>Ürün bulunamadı</div>;
+    }
 
     const next = () => {
         if (animating) return;
@@ -108,19 +115,24 @@ function ProductDetailCard() {
             <CarouselItem
                 onExiting={() => setAnimating(true)}
                 onExited={() => setAnimating(false)}
-                key={item.src}
+                key={product.images[0].url}
             >
-                <img src={item.src} alt={item.altText} style={customStyles} className={customClass} />
+                <img src={product.images[0].url} alt={item.altText} style={customStyles} className={customClass} />
             </CarouselItem>
         );
     });
-
+    const categories = {
+        1: { id: 1, code: 'k:tisort' },
+        2: { id: 2, code: 'k:ayakkabi' },
+        3: { id: 3, code: 'k:ceket' }
+    };
+    const categoryCode = categories[product.category_id].code;
     const smallThumbnails = (
         <div className='flex flex-row gap-3'>
             {items.map((item, index) => (
                 <div key={index} className={`cursor-pointer ${index !== activeIndex ? 'inactive-thumbnail' : ''}`}>
                     <img
-                        src={item.src}
+                        src={product.images[0].url}
                         alt={item.altText}
                         onClick={() => setActiveIndex(index)}
                         className='w-[100px] h-[75px]'
@@ -167,7 +179,7 @@ function ProductDetailCard() {
                     </div>
                     <div className='basis-1/2' >
                         <div className='flex flex-col gap-3'>
-                            <h4 className='text-xl leading-8 text-textColor '>Floating Phone</h4>
+                            <h4 className='text-xl leading-8 text-textColor '>{product.name}</h4>
                             <div className='flex-row flex gap-2'>
                                 <div className='flex flex-row gap-2 mt-1'>
                                     <FontAwesomeIcon icon={faStar} style={{ color: "#F3CD03", }} />
@@ -176,16 +188,16 @@ function ProductDetailCard() {
                                     <FontAwesomeIcon icon={faStar} style={{ color: "#F3CD03", }} />
                                     <FontAwesomeIcon icon={faStarHalf} style={{ color: "#F3CD03", }} />
                                 </div>
-                                <h6 className='font-bold text-secondaryColor text-sm leading-6'>10 Reviews</h6>
+                                <h6 className='font-bold text-secondaryColor text-sm leading-6'>{product.rating}</h6>
                             </div>
                             <div className='flex-col flex gap-1 mb-4'>
-                                <h3 className='font-bold text-2xl leading text-textColor'>$1,139.33</h3>
+                                <h3 className='font-bold text-2xl leading text-textColor'>$ {product.price}</h3>
                                 <div className='flex flex-row'>
                                     <h6 className='font-bold text-sm leading-6 text-secondaryColor'>Availability  :</h6>
-                                    <h6 className='text-sm font-bold leading-6 text-primaryColor'>In Stock </h6>
+                                    <h6 className='text-sm font-bold leading-6 text-primaryColor'>In Stock # {product.stock} </h6>
                                 </div>
                             </div>
-                            <p className='text-sm leading-5 text-[#858585]'>Met minim Mollie non desert Alamo est sit cliquey dolor do met sent. RELIT official consequent door ENIM RELIT Mollie. Excitation venial consequent sent nostrum met.</p>
+                            <p className='text-sm leading-5 text-[#858585]'>{product.description}</p>
                             <div className="flex gap-1 mb-3">
                                 <button className="p-3 rounded-full bg-primaryColor"></button>
                                 <button className="p-3 rounded-full bg-[#2DC071]"></button>
@@ -225,50 +237,50 @@ function ProductDetailCard() {
                 </div>
                 <div>
                     <div className='flex flex-col md:flex-row gap-5'>
-                        <img src='detail1.jpeg' alt='Product Image' className=' w-[316px] h-[372px] rounded-md shadow-lg' />
+                        <img src={product.images[0].url} alt='Product Image' className=' w-[316px] h-[372px] rounded-md shadow-lg' />
                         <div style={{ display: activeTab === 'description' ? 'block' : 'none' }}>
                             <div className='flex-col flex gap-4'>
-                                <h3 className='font-bold text-2xl text-textColor leading-8'>the quick fox jumps over </h3>
-                                <p className='text-sm leading-5 text-secondaryColor'>Met minim Mollie non desert Alamo est sit cliquey dolor do met sent. RELIT official consequent door ENIM RELIT Mollie. Excitation venial consequent sent nostrum met.</p>
-                                <p className='text-sm leading-5 text-secondaryColor'>Met minim Mollie non desert Alamo est sit cliquey dolor do met sent. RELIT official consequent door ENIM RELIT Mollie. Excitation venial consequent sent nostrum met.</p>
-                                <p className='text-sm leading-5 text-secondaryColor'>Met minim Mollie non desert Alamo est sit cliquey dolor do met sent. RELIT official consequent door ENIM RELIT Mollie. Excitation venial consequent sent nostrum met.</p>
+                                <h3 className='font-bold text-2xl text-textColor leading-8'>{product.name} </h3>
+                                <p className='text-sm leading-5 text-secondaryColor'>{product.description}</p>
+                                <p className='text-sm leading-5 text-secondaryColor'>{product.description}</p>
+                                <p className='text-sm leading-5 text-secondaryColor'>{product.description}</p>
                             </div>
                         </div>
                         <div style={{ display: activeTab === 'additional' ? 'block' : 'none' }}>
                             <div className='flex-col flex gap-4'>
-                                <h3 className='font-bold text-2xl text-textColor leading-8'>the quick fox jumps over </h3>
+                                <h3 className='font-bold text-2xl text-textColor leading-8'>{product.name}</h3>
                                 <div className='flex flex-row gap-2'>
                                     <FontAwesomeIcon icon={faChevronRight} style={{ color: "#737373", }} />
-                                    <h6 className='text-sm leading-6 text-secondaryColor font-bold'>the quick fox jumps over the lazy dog</h6>
+                                    <h6 className='text-sm leading-6 text-secondaryColor font-bold'>StoreId: {product.store_id}</h6>
                                 </div>
                                 <div className='flex flex-row gap-2'>
                                     <FontAwesomeIcon icon={faChevronRight} style={{ color: "#737373", }} />
-                                    <h6 className='text-sm leading-6 text-secondaryColor font-bold'>the quick fox jumps over the lazy dog</h6>
+                                    <h6 className='text-sm leading-6 text-secondaryColor font-bold'>Stock: {product.stock}</h6>
                                 </div>
                                 <div className='flex flex-row gap-2'>
                                     <FontAwesomeIcon icon={faChevronRight} style={{ color: "#737373", }} />
-                                    <h6 className='text-sm leading-6 text-secondaryColor font-bold'>the quick fox jumps over the lazy dog</h6>
+                                    <h6 className='text-sm leading-6 text-secondaryColor font-bold'>Sell Count: {product.sell_count}</h6>
                                 </div>
                                 <div className='flex flex-row gap-2'>
                                     <FontAwesomeIcon icon={faChevronRight} style={{ color: "#737373", }} />
-                                    <h6 className='text-sm leading-6 text-secondaryColor font-bold'>the quick fox jumps over the lazy dog</h6>
+                                    <h6 className='text-sm leading-6 text-secondaryColor font-bold'>Category: {product.categoryCode} </h6>
                                 </div>
                             </div>
                         </div>
                         <div style={{ display: activeTab === 'reviews' ? 'block' : 'none' }}>
                             <div className='flex-col flex gap-4'>
-                                <h3 className='font-bold text-2xl text-textColor leading-8'>the quick fox jumps over </h3>
+                                <h3 className='font-bold text-2xl text-textColor leading-8'>Avg Ratio {product.name}  </h3>
                                 <div className='flex flex-row gap-2'>
                                     <FontAwesomeIcon icon={faChevronRight} style={{ color: "#737373", }} />
-                                    <h6 className='text-sm leading-6 text-secondaryColor font-bold'>the quick fox jumps over the lazy dog</h6>
+                                    <h6 className='text-sm leading-6 text-secondaryColor font-bold'>{product.rating}</h6>
                                 </div>
                                 <div className='flex flex-row gap-2'>
                                     <FontAwesomeIcon icon={faChevronRight} style={{ color: "#737373", }} />
-                                    <h6 className='text-sm leading-6 text-secondaryColor font-bold'>the quick fox jumps over the lazy dog</h6>
+                                    <h6 className='text-sm leading-6 text-secondaryColor font-bold'>{product.rating}</h6>
                                 </div>
                                 <div className='flex flex-row gap-2'>
                                     <FontAwesomeIcon icon={faChevronRight} style={{ color: "#737373", }} />
-                                    <h6 className='text-sm leading-6 text-secondaryColor font-bold'>the quick fox jumps over the lazy dog</h6>
+                                    <h6 className='text-sm leading-6 text-secondaryColor font-bold'>{product.rating}</h6>
                                 </div>
                             </div>
                         </div>
@@ -286,7 +298,7 @@ function ProductDetailCard() {
                             {displayProducts}
                         </div>
                         <div className="flex justify-center ">
-                            <section className="pagination">
+                            <section className="pagination mt-5">
                                 <ReactPaginate
                                     previousLabel={'Previous'}
                                     nextLabel={'Next'}
