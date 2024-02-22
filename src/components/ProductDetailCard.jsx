@@ -38,7 +38,34 @@ function ProductDetailCard() {
         objectPosition: 'top',
     };
     const dispatch = useDispatch();
+    const customClass = "md:w-[540px] w-[350px] h-full lg:h-auto carousel-image";
+
+
+    const [activeTab, setActiveTab] = useState('description');
+    const [activeIndex, setActiveIndex] = useState(0);
+    const [animating, setAnimating] = useState(false);
     const productList = useSelector(state => state.products.productList);
+    const [sortedProducts, setSortedProducts] = useState([]);
+    const [pageNumber, setPageNumber] = useState(0);
+    const sortByPopularity = () => {
+        const sorted = [...productList.products].sort((a, b) => b.rating - a.rating);
+        setSortedProducts(sorted);
+    };
+    // React Pagination
+    const productsToDisplay = sortedProducts.length > 0 ? sortedProducts : productList.products;
+    const productsPerPage = 8;
+    const pagesVisited = pageNumber * productsPerPage;
+    const displayProducts = productsToDisplay && productsToDisplay.length > 0
+        ? productsToDisplay
+            .slice(pagesVisited, pagesVisited + productsPerPage)
+            .map((product) => (
+                <ProductCard key={product.id} product={product} />
+            ))
+        : null;
+
+    const handlePageChange = ({ selected }) => {
+        setPageNumber(selected);
+    };
 
     //products fetchle al productList ve Total dönüyor
     useEffect(() => {
@@ -57,35 +84,7 @@ function ProductDetailCard() {
 
         </div>;
     }
-    const customClass = "md:w-[540px] w-[350px] h-full lg:h-auto carousel-image";
-    const sortByPopularity = () => {
-        const sorted = [...productList.products].sort((a, b) => b.rating - a.rating);
-        setSortedProducts(sorted);
-    };
-    const [sortedProducts, setSortedProducts] = useState([]);
-    const [pageNumber, setPageNumber] = useState(0);
 
-    // React Pagination
-    const productsToDisplay = sortedProducts.length > 0 ? sortedProducts : productList.products;
-    const productsPerPage = 8;
-    const pagesVisited = pageNumber * productsPerPage;
-    const displayProducts = productsToDisplay && productsToDisplay.length > 0
-        ? productsToDisplay
-            .slice(pagesVisited, pagesVisited + productsPerPage)
-            .map((product) => (
-                <ProductCard key={product.id} product={product} />
-            ))
-        : null;
-
-    const handlePageChange = ({ selected }) => {
-        setPageNumber(selected);
-    };
-
-
-
-    const [activeTab, setActiveTab] = useState('description');
-    const [activeIndex, setActiveIndex] = useState(0);
-    const [animating, setAnimating] = useState(false);
 
     const next = () => {
         if (animating) return;
@@ -130,20 +129,6 @@ function ProductDetailCard() {
             ))}
         </div>
     );
-    useEffect(() => {
-        if (!productList || !productList.products || productList.products.length === 0) {
-            dispatch(fetchProduct());
-        }
-    }, [dispatch, productList]);
-
-    // productList yüklenene kadar bekle
-    if (!productList || !productList.products || productList.products.length === 0) {
-        return <div className='flex flex-col items-center'>
-            <h1>Loading...</h1>
-            <img src='loading.gif' className='w-[200px] h-[200px]' />
-
-        </div>;
-    }
     return (
         <div className=''>
             <section className='bg-[#FAFAFA] product-detail-data  w-[full] px-[30px] md:px-[195px]'>
