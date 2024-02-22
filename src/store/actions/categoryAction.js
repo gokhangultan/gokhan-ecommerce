@@ -5,7 +5,7 @@ const axiosInstance = Axios.create({
 });
 
 // Thunk 
-export const postLogin = () => async (dispatch, getState) => {
+export const fetchCategory = () => async (dispatch, getState) => {
     try {
         const { categories } = getState().global;
         if (categories.length > 0) {

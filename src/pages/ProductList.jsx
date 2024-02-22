@@ -19,7 +19,7 @@ import { useEffect, useState } from "react";
 import ProductCard from "../components/ProductCard";
 import { faAws, faHooli, faLyft, faPiedPiperHat, faRedditAlien, faStripe } from "@fortawesome/free-brands-svg-icons";
 import { useDispatch, useSelector } from "react-redux";
-import { postLogin } from '../store/actions/categoryAction';
+import { fetchCategory } from '../store/actions/categoryAction';
 
 
 
@@ -32,7 +32,7 @@ export default function ProductList({ direction, ...args }) {
     //categories fetchle al
     useEffect(() => {
         if (!categories || categories.length === 0) {
-            dispatch(postLogin());
+            dispatch(fetchCategory());
         }
     }, [dispatch, categories]);
     return (
