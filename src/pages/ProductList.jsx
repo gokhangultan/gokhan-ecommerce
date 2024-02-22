@@ -21,7 +21,7 @@ import { faAws, faHooli, faLyft, faPiedPiperHat, faRedditAlien, faStripe } from 
 import { useDispatch, useSelector } from "react-redux";
 import { fetchCategory } from '../store/actions/categoryAction';
 import { fetchProduct } from '../store/actions/productAction';
-
+import ReactPaginate from 'react-paginate';
 
 
 export default function ProductList({ direction, ...args }) {
@@ -32,6 +32,7 @@ export default function ProductList({ direction, ...args }) {
     const productList = useSelector(state => state.products.productList);
     const [sortedProducts, setSortedProducts] = useState([]);
     const [sortBy, setSortBy] = useState(null);
+    const [pageNumber, setPageNumber] = useState(0);
 
     useEffect(() => {
         if (sortBy === "priceHighToLow") {
@@ -69,7 +70,22 @@ export default function ProductList({ direction, ...args }) {
         setSortedProducts(sorted);
     };
 
+    // React Pagination
     const productsToDisplay = sortedProducts.length > 0 ? sortedProducts : productList.products;
+    const productsPerPage = 6;
+    const pagesVisited = pageNumber * productsPerPage;
+    const displayProducts = productsToDisplay && productsToDisplay.length > 0
+        ? productsToDisplay
+            .slice(pagesVisited, pagesVisited + productsPerPage)
+            .map((product) => (
+                <ProductCard key={product.id} product={product} />
+            ))
+        : null;
+
+    const handlePageChange = ({ selected }) => {
+        setPageNumber(selected);
+    };
+
 
     useEffect(() => {
         if (!categories || categories.length === 0) {
@@ -124,13 +140,13 @@ export default function ProductList({ direction, ...args }) {
                     <div className="flex flex-row gap-3">
                         <Dropdown isOpen={dropdownOpen} toggle={toggle} direction={direction} className="text-sm leading-7 text-secondaryColor rounded">
                             <DropdownToggle className="text-secondaryColor border-1 border-[#DDDDDD] hover:bg-gray-300 hover:text-black py-2.5">
+                                {sortBy === null && "Order By "}
                                 {sortBy === "priceLowToHigh" && "Price Low to High"}
                                 {sortBy === "priceHighToLow" && "Price High to Low"}
                                 {sortBy === "popularity" && "Popularity"}
                                 <FontAwesomeIcon icon={faChevronDown} size="lg" />
                             </DropdownToggle>
                             <DropdownMenu {...args}>
-                                <DropdownItem header>Order By</DropdownItem>
                                 <DropdownItem onClick={handleSortByPriceLowToHigh}>Price Low to High</DropdownItem>
                                 <DropdownItem onClick={handleSortByPriceHighToLow}>Price High to Low</DropdownItem>
                                 <DropdownItem onClick={handleSortByPopularity}>Popularity</DropdownItem>
@@ -143,67 +159,23 @@ export default function ProductList({ direction, ...args }) {
             <div className="px-[10px] sm:px-[195px]">
                 <section className="best-seller mb-10 text-center">
                     <div className="flex flex-wrap flex-row gap-2 justify-between">
-                        {productsToDisplay.map(product => (
-                            <ProductCard key={product.id} product={product} />
-                        ))}
+                        {displayProducts}
                     </div>
-
                 </section>
             </div>
             <div className="flex justify-center ">
                 <section className="pagination">
-                    <Pagination
-                        aria-label="Page navigation example"
-                        size="xs"
-                    >
-                        <PaginationItem >
-                            <PaginationLink className="hover:bg-primaryColor hover:text-white"
-                                first
-                                href="#"
-                            >
-                                First
-                            </PaginationLink>
-                        </PaginationItem>
-                        <PaginationItem>
-                            <PaginationLink className="hover:bg-primaryColor hover:text-white"
-                                href="#"
-                                previous
-                            >
-                                Previous
-                            </PaginationLink>
-                        </PaginationItem>
-                        <PaginationItem>
-                            <PaginationLink href="#" className="hover:bg-primaryColor hover:text-white">
-                                1
-                            </PaginationLink>
-                        </PaginationItem>
-                        <PaginationItem>
-                            <PaginationLink href="#" className="hover:bg-primaryColor hover:text-white">
-                                2
-                            </PaginationLink>
-                        </PaginationItem>
-                        <PaginationItem>
-                            <PaginationLink href="#" className="hover:bg-primaryColor hover:text-white">
-                                3
-                            </PaginationLink>
-                        </PaginationItem>
-                        <PaginationItem>
-                            <PaginationLink className="hover:bg-primaryColor hover:text-white"
-                                href="#"
-                                next
-                            >
-                                Next
-                            </PaginationLink>
-                        </PaginationItem>
-                        <PaginationItem>
-                            <PaginationLink className="hover:bg-primaryColor hover:text-white"
-                                href="#"
-                                last
-                            >
-                                Last
-                            </PaginationLink>
-                        </PaginationItem>
-                    </Pagination>
+                    <ReactPaginate
+                        previousLabel={'Previous'}
+                        nextLabel={'Next'}
+                        pageCount={Math.ceil(productsToDisplay.length / productsPerPage)}
+                        onPageChange={handlePageChange}
+                        containerClassName={'pagination'}
+                        previousLinkClassName={'pagination__link'}
+                        nextLinkClassName={'pagination__link'}
+                        disabledClassName={'pagination__link--disabled'}
+                        activeClassName={'pagination__link--active'}
+                        className="bg-primaryColor flex gap-2 text-white rounded p-2 font-bold text-md" />
                 </section>
             </div>
             <div className="bg-[#FAFAFA] mt-5">
