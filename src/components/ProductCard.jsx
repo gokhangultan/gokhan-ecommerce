@@ -8,7 +8,7 @@ export default function ProductCard({ product }) {
 
     return (
         <div className="flex justify-between border-1 border-gray-150 shadow-sm">
-            <div className="product-card w-[328px] h-[604px] sm:w-[308px] sm:h-[820px] m-3 relative">
+            <div className="product-card w-[328px] h-[830px] sm:w-[308px] sm:h-[820px] m-3 relative">
                 <img src={product.images[0].url} alt="Product Image" className="object-contain" />
                 <button className="product-card-info">Sale</button>
                 <button className="product-card-icon left-[75px]"><FontAwesomeIcon icon={faHeart} /></button>

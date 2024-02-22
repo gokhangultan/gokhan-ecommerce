@@ -30,30 +30,57 @@ export default function ProductList({ direction, ...args }) {
     const toggle = () => setDropdownOpen((prevState) => !prevState);
     const categories = useSelector(state => state.global.categories);
     const productList = useSelector(state => state.products.productList);
+    const [sortedProducts, setSortedProducts] = useState([]);
+    const [sortBy, setSortBy] = useState(null);
 
+    useEffect(() => {
+        if (sortBy === "priceHighToLow") {
+            sortByPriceHighToLow();
+        } else if (sortBy === "priceLowToHigh") {
+            sortByPriceLowToHigh();
+        }
+    }, [sortBy]);
 
-    //categories fetchle al
+    const handleSortByPriceHighToLow = () => {
+        setSortBy("priceHighToLow");
+    };
+
+    const handleSortByPriceLowToHigh = () => {
+        setSortBy("priceLowToHigh");
+    };
+
+    const sortByPriceHighToLow = () => {
+        const sorted = [...productList.products].sort((a, b) => b.price - a.price);
+        setSortedProducts(sorted);
+    };
+
+    const sortByPriceLowToHigh = () => {
+        const sorted = [...productList.products].sort((a, b) => a.price - b.price);
+        setSortedProducts(sorted);
+    };
+
+    const productsToDisplay = sortedProducts.length > 0 ? sortedProducts : productList.products;
+
     useEffect(() => {
         if (!categories || categories.length === 0) {
             dispatch(fetchCategory());
         }
     }, [dispatch, categories]);
 
-
-    //products fetchle al productList ve Total dönüyor
     useEffect(() => {
         if (!productList || !productList.products || productList.products.length === 0) {
             dispatch(fetchProduct());
         }
     }, [dispatch, productList]);
 
-    // productList yüklenene kadar bekle
-    if (!productList || !productList.products || productList.products.length === 0) {
-        return <div className='flex flex-col items-center'>
-            <h1>Loading...</h1>
-            <img src='loading.gif' className='w-[200px] h-[200px]' />
 
-        </div>;
+    if (!productList || !productList.products || productList.products.length === 0) {
+        return (
+            <div className='flex flex-col items-center'>
+                <h1>Loading...</h1>
+                <img src='loading.gif' className='w-[200px] h-[200px]' />
+            </div>
+        );
     }
 
     return (
@@ -83,23 +110,27 @@ export default function ProductList({ direction, ...args }) {
                     <button className="border-1 p-2 border-[#ECECEC]"><FontAwesomeIcon icon={faTableCellsLarge} size="lg" /></button>
                     <button className="border-1 p-2 border-[#ECECEC]"><FontAwesomeIcon icon={faListCheck} size="lg" /></button>
                 </div>
-                <div className="flex flex-row gap-3">
-                    <Dropdown isOpen={dropdownOpen} toggle={toggle} direction={direction} className="text-sm leading-7 text-secondaryColor  rounded ">
-                        <DropdownToggle className="text-secondaryColor border-1 border-[#DDDDDD] hover:bg-gray-300 hover:text-black py-2.5">Popularity <FontAwesomeIcon icon={faChevronDown} size="lg" /></DropdownToggle>
-                        <DropdownMenu {...args}>
-                            <DropdownItem header>Order By</DropdownItem>
-                            <DropdownItem>Price Low to High</DropdownItem>
-                            <DropdownItem>Price High to Low</DropdownItem>
-                            <DropdownItem>Popularity</DropdownItem>
-                        </DropdownMenu>
-                    </Dropdown>
-                    <button className="button bg-primaryColor hover:text-primaryColor hover:bg-white rounded hover:border-primaryColor">Filter</button>
+                <div>
+                    <div className="flex flex-row gap-3">
+                        <Dropdown isOpen={dropdownOpen} toggle={toggle} direction={direction} className="text-sm leading-7 text-secondaryColor rounded">
+                            <DropdownToggle className="text-secondaryColor border-1 border-[#DDDDDD] hover:bg-gray-300 hover:text-black py-2.5">
+                                Popularity <FontAwesomeIcon icon={faChevronDown} size="lg" />
+                            </DropdownToggle>
+                            <DropdownMenu {...args}>
+                                <DropdownItem header>Order By</DropdownItem>
+                                <DropdownItem onClick={handleSortByPriceLowToHigh}>Price Low to High</DropdownItem>
+                                <DropdownItem onClick={handleSortByPriceHighToLow}>Price High to Low</DropdownItem>
+                                <DropdownItem>Popularity</DropdownItem>
+                            </DropdownMenu>
+                        </Dropdown>
+                        <button className="button bg-primaryColor hover:text-primaryColor hover:bg-white rounded hover:border-primaryColor">Filter</button>
+                    </div>
                 </div>
             </div>
             <div className="px-[10px] sm:px-[195px]">
                 <section className="best-seller mb-10 text-center">
                     <div className="flex flex-wrap flex-row gap-2 justify-between">
-                        {productList.products.map(product => (
+                        {productsToDisplay.map(product => (
                             <ProductCard key={product.id} product={product} />
                         ))}
                     </div>
@@ -174,5 +205,6 @@ export default function ProductList({ direction, ...args }) {
 
             </div>
         </div>
-    )
+    );
 }
+
