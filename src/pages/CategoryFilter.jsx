@@ -44,12 +44,15 @@ export default function ProductList({ direction, ...args }) {
     const filterProductsByCategory = () => {
         if (productList && productList.products && productList.products.length > 0) {
             if (categoryId) {
-                const filteredProducts = productList.products.filter(product => product.category_id === categoryId);
+                const filteredProducts = productList.products.filter(product => product.category_id == categoryId);
                 setSortedProducts(filteredProducts);
+                console.log(filteredProducts);
             } else {
                 // Kategori ID yoksa, tüm ürünleri göster.
                 setSortedProducts(productList.products);
             }
+            // Sayfa numarasını güncelle
+            setPageNumber(0); // veya başka bir sayfa numarası değeri
         }
     };
     //////////////////////////////////
@@ -91,7 +94,7 @@ export default function ProductList({ direction, ...args }) {
     };
 
     // React Pagination
-    const productsToDisplay = sortedProducts.length > 0 ? sortedProducts : productList.products;
+    const productsToDisplay = sortedProducts.length > 0 ? sortedProducts : productList;
     const productsPerPage = 6;
     const pagesVisited = pageNumber * productsPerPage;
     const displayProducts = productsToDisplay && productsToDisplay.length > 0
