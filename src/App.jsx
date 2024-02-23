@@ -11,6 +11,7 @@ import Login from './pages/Login';
 import Card from './pages/Card';
 import Favorites from './pages/Favorites';
 import ProductDetail from './pages/ProductDetail';
+import CategoryFilter from './pages/CategoryFilter';
 import Signup from './pages/Signup';
 import 'react-toastify/dist/ReactToastify.css';
 import { useEffect } from 'react';
@@ -89,6 +90,9 @@ function App() {
         </Route>
         <Route path="/product/:category/:productId/:productNameSlug">
           <ProductDetail />
+        </Route>
+        <Route path="/shopping/:categoryId/:category">
+          <CategoryFilter />
         </Route>
         {/* <Route path="/productpage" exact>
           <ProductDetail />

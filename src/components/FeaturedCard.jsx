@@ -3,7 +3,7 @@ import { faChartLine, faChevronRight } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Link } from "react-router-dom/cjs/react-router-dom.min";
 
-export default function CategoryCard() {
+export default function FeaturedCard() {
     return (
         <div>
             <div className="w-[328px] h-[606px] border-1 border-gray-150 shadow relative">

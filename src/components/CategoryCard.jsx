@@ -19,7 +19,7 @@ export default function CategoryCard() {
                 </DropdownToggle>
                 <DropdownMenu>
                     {category.map(category => (
-                        <DropdownItem key={category.id} tag={Link} to={`/shopping/${category.gender}/${category.code}`}>
+                        <DropdownItem key={category.id} tag={Link} to={`/shopping/${category.id}/${category.code}`}>
                             {category.title}
                         </DropdownItem>
                     ))}
@@ -28,7 +28,7 @@ export default function CategoryCard() {
             <div className="flex md:flex-row flex-col gap-3 px-[50px] sm:px-[205px] justify-between">
                 {topCategories.map(category => (
                     <div key={category.id} className="relative">
-                        <Link to={`/shopping/${category.gender}/${category.code}`} className="flex flex-col">
+                        <Link to={`/shopping/${category.id}/${category.code}`} className="flex flex-col">
                             <img src={category.img} alt={category.title} className="md:w-[305px] md:h-[223px] w-[305px] h-[323px]" />
                             <div className=" absolute inset-0 flex flex-col justify-center items-center text-center bg-opacity-40 ">
                                 <h5 className="z-10 text-white font-bold text-base leading-6 bg-gray-400 rounded-sm px-1">{category.title}</h5>

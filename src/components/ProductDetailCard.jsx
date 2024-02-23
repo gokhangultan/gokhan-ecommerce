@@ -87,7 +87,7 @@ function ProductDetailCard() {
 
         </div>;
     }
-
+    //url hacking :)
     const product = productList.products.find(product => product.id === parseInt(productId));
     if (!product) {
         return <div>Ürün bulunamadı</div>;
