@@ -52,8 +52,6 @@ export default function ProductList({ direction, ...args }) {
             setPageNumber(0); // veya başka bir sayfa numarası değeri
         }
     };
-    //////////////////////////////////
-
 
     useEffect(() => {
         if (sortBy === "priceHighToLow") {
