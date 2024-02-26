@@ -1,1 +1,0 @@
-# Gokhan Ecommerce project testing pull request 2
