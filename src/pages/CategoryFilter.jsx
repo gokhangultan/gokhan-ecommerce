@@ -21,8 +21,6 @@ import { useParams } from "react-router-dom";
 
 export default function ProductList({ direction, ...args }) {
     const { categoryId, category } = useParams();
-    console.log("categoryId:", categoryId);
-    console.log("category_code:", category);
     const [dropdownOpen, setDropdownOpen] = useState(false);
     const dispatch = useDispatch();
     const toggle = () => setDropdownOpen((prevState) => !prevState);
@@ -46,7 +44,6 @@ export default function ProductList({ direction, ...args }) {
             if (categoryId) {
                 const filteredProducts = productList.products.filter(product => product.category_id == categoryId);
                 setSortedProducts(filteredProducts);
-                console.log(filteredProducts);
             } else {
                 // Kategori ID yoksa, tüm ürünleri göster.
                 setSortedProducts(productList.products);
