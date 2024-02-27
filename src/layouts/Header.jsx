@@ -82,14 +82,14 @@ export default function Header({ direction, ...args }) {
                         <Link to="/"><button className="py-1.5">Pages</button></Link>
                     </nav>
                 </div >
-                <div className='flex basis-2/5 mx-1'>
-                    <div className=' hidden  sm:hidden xl:flex lg:flex md:hidden gap-4 '>
+                <div className='flex basis-2/5 mx-1 '>
+                    <div className=' hidden  sm:hidden xl:flex lg:flex md:hidden gap-4 w-[280px]'>
                         <Link to={userName ? "/" : "/login"} className="header-link">
                             <div className="flex-row flex">
                                 {/* Eğer token varsa Gravatar resmini, yoksa faUser ikonunu göster */}
                                 {userName ? <img src={gravatarUrl} alt="User Avatar" className="avatar w-10 h-10" /> : <FontAwesomeIcon icon={faUser} />}
-                                <button className='header-button' onClick={token && handleLogout}>
-                                    {userName ? `${userName} - Logout` : 'Login / Register'}
+                                <button className='header-button border-1 border-primaryColor ml-3' onClick={token && handleLogout}>
+                                    {userName ? `${userName}  Logout` : 'Login / Register'}
                                 </button>
                             </div>
                         </Link>
@@ -120,6 +120,7 @@ export default function Header({ direction, ...args }) {
                     <div className='flex gap-4 '>
 
                         <button onClick={toggleMenuVisibility} className="text-secondaryColor" ><FontAwesomeIcon icon={faBars} /></button>
+
                     </div>
                 </div>
             </div>
@@ -141,16 +142,16 @@ export default function Header({ direction, ...args }) {
                     <Link to="/team"><button className='text-[30px] leading-[45px]  text-secondaryColor'>Team</button></Link>
                     <Link to="/contact"><button className='text-[30px] leading-[45px]  text-secondaryColor'>Contact</button></Link>
 
-                    <div className=' flex flex-col items-center  lg:hidden  gap-1 '>
+                    <div className=' flex flex-col items-center  lg:hidden  gap-2 '>
                         <Link to={userName ? "/" : "/login"} className="header-link">
                             <div className="flex-row flex">
                                 {/* Eğer token varsa Gravatar resmini, yoksa faUser ikonunu göster */}
-                                {userName ? <img src={gravatarUrl} alt="User Avatar" className="avatar w-10 h-10" /> : <FontAwesomeIcon icon={faUser} />}
+                                {userName ? <img src={gravatarUrl} alt="User Avatar" className="avatar w-10 h-10 " /> : <FontAwesomeIcon icon={faUser} />}
                                 <button className='header-button' onClick={token && handleLogout}>
                                     {userName ? `${userName} - Logout` : 'Login / Register'}
                                 </button>
                             </div>
-                        </Link>                        <button className=' header-button' onClick={toggleSearch}><FontAwesomeIcon icon={faMagnifyingGlass} /> </button>
+                        </Link><button className=' header-button' onClick={toggleSearch}><FontAwesomeIcon icon={faMagnifyingGlass} /> </button>
                         {isSearchOpen && (
                             <div>
                                 <form onSubmit={handleSubmit}>

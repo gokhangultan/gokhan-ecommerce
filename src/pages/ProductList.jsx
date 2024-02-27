@@ -1,4 +1,4 @@
-import { faChevronDown, faChevronRight } from "@fortawesome/free-solid-svg-icons";
+import { faChevronDown, faChevronRight, faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Link } from "react-router-dom/cjs/react-router-dom.min";
 import CategoryCard from "../components/CategoryCard";
@@ -11,11 +11,11 @@ import {
 } from 'reactstrap';
 import { useEffect, useState } from "react";
 import ProductCard from "../components/ProductCard";
-import { faAws, faHooli, faLyft, faPiedPiperHat, faRedditAlien, faStripe } from "@fortawesome/free-brands-svg-icons";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchCategory } from '../store/actions/categoryAction';
 import { fetchProduct } from '../store/actions/productAction';
 import ReactPaginate from 'react-paginate';
+import Companies from "../components/Companies";
 
 
 export default function ProductList({ direction, ...args }) {
@@ -27,6 +27,8 @@ export default function ProductList({ direction, ...args }) {
     const [sortedProducts, setSortedProducts] = useState([]);
     const [sortBy, setSortBy] = useState(null);
     const [pageNumber, setPageNumber] = useState(0);
+    const [isSearchOpen, setSearchOpen] = useState(false);
+    const [searchValue, setSearchValue] = useState('');
 
     useEffect(() => {
         if (sortBy === "priceHighToLow") {
@@ -37,6 +39,20 @@ export default function ProductList({ direction, ...args }) {
             sortByPopularity();
         }
     }, [sortBy, productList.products]);
+
+    const toggleSearch = () => {
+        setSearchOpen(!isSearchOpen);
+    };
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        console.log('Arama yapılıyor:', searchValue);
+        const filtered = productList.products.filter(product => product.name.toLowerCase().includes(searchValue.toLowerCase()));
+        setSortedProducts(filtered);
+    };
+    const handleChange = (e) => {
+        setSearchValue(e.target.value);
+    };
 
     const handleSortByPriceHighToLow = () => {
         setSortBy("priceHighToLow");
@@ -146,7 +162,22 @@ export default function ProductList({ direction, ...args }) {
                                 <DropdownItem onClick={handleSortByPopularity}>Popularity</DropdownItem>
                             </DropdownMenu>
                         </Dropdown>
-                        <button className="button bg-primaryColor hover:text-primaryColor hover:bg-white rounded hover:border-primaryColor">Filter</button>
+                        <div>
+                            <button className=' button bg-primaryColor hover:text-primaryColor hover:bg-white rounded hover:border-primaryColor' onClick={toggleSearch}>Filter</button>
+                            {isSearchOpen && (
+                                <div>
+                                    <form onSubmit={handleSubmit} className="flex flex-row" >
+                                        <input
+                                            type="text"
+                                            value={searchValue}
+                                            onChange={handleChange}
+                                            placeholder="Ne aramıştınız..."
+                                            className="bg-white p-2 rounded text-black text-base border-2"
+                                        />
+                                        <button type="submit" className="button bg-primaryColor hover:text-primaryColor hover:bg-white rounded hover:border-primaryColor">Sitede Bul</button>
+                                    </form>
+                                </div>
+                            )}</div>
                     </div>
                 </div>
             </div>
@@ -172,15 +203,8 @@ export default function ProductList({ direction, ...args }) {
                         className="bg-primaryColor flex gap-2 text-white rounded p-2 font-bold text-md" />
                 </section>
             </div>
-            <div className="bg-[#FAFAFA] mt-5">
-                <div className="flex flex-col lg:flex-row gap-5 px-[50px] sm:px-[195px] justify-between ">
-                    <FontAwesomeIcon icon={faHooli} size="6x" style={{ color: "#737373", }} />
-                    <FontAwesomeIcon icon={faLyft} size="6x" style={{ color: "#737373", }} />
-                    <FontAwesomeIcon icon={faPiedPiperHat} size="6x" style={{ color: "#737373", }} />
-                    <FontAwesomeIcon icon={faStripe} size="6x" style={{ color: "#737373", }} />
-                    <FontAwesomeIcon icon={faAws} size="6x" style={{ color: "#737373", }} />
-                    <FontAwesomeIcon icon={faRedditAlien} size="6x" style={{ color: "#737373", }} />
-                </div>
+            <div className="bg-[#FAFAFA] py-5 mt-5">
+                <Companies />
 
             </div>
         </div>

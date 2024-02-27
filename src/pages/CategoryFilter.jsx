@@ -11,12 +11,12 @@ import {
 } from 'reactstrap';
 import { useEffect, useState } from "react";
 import ProductCard from "../components/ProductCard";
-import { faAws, faHooli, faLyft, faPiedPiperHat, faRedditAlien, faStripe } from "@fortawesome/free-brands-svg-icons";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchCategory } from '../store/actions/categoryAction';
 import { fetchProduct } from '../store/actions/productAction';
 import ReactPaginate from 'react-paginate';
 import { useParams } from "react-router-dom";
+import Companies from "../components/Companies";
 
 
 export default function ProductList({ direction, ...args }) {
@@ -169,7 +169,7 @@ export default function ProductList({ direction, ...args }) {
                     </div>
                 </div>
             </div>
-            <div className="px-[10px] sm:px-[195px]">
+            <div className="container">
                 <section className="best-seller mb-10 text-center">
                     <div className="flex flex-wrap flex-row gap-2 justify-between">
                         {displayProducts}
@@ -191,15 +191,8 @@ export default function ProductList({ direction, ...args }) {
                         className="bg-primaryColor flex gap-2 text-white rounded p-2 font-bold text-md" />
                 </section>
             </div>
-            <div className="bg-[#FAFAFA] mt-5">
-                <div className="flex flex-col lg:flex-row gap-5 px-[50px] sm:px-[195px] justify-between ">
-                    <FontAwesomeIcon icon={faHooli} size="6x" style={{ color: "#737373", }} />
-                    <FontAwesomeIcon icon={faLyft} size="6x" style={{ color: "#737373", }} />
-                    <FontAwesomeIcon icon={faPiedPiperHat} size="6x" style={{ color: "#737373", }} />
-                    <FontAwesomeIcon icon={faStripe} size="6x" style={{ color: "#737373", }} />
-                    <FontAwesomeIcon icon={faAws} size="6x" style={{ color: "#737373", }} />
-                    <FontAwesomeIcon icon={faRedditAlien} size="6x" style={{ color: "#737373", }} />
-                </div>
+            <div className="bg-[#FAFAFA] py-5 mt-5">
+                <Companies />
 
             </div>
         </div>
