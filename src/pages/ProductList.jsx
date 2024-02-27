@@ -16,6 +16,7 @@ import { fetchCategory } from '../store/actions/categoryAction';
 import { fetchProduct } from '../store/actions/productAction';
 import ReactPaginate from 'react-paginate';
 import Companies from "../components/Companies";
+import { ToastContainer, toast } from "react-toastify";
 
 
 export default function ProductList({ direction, ...args }) {
@@ -46,8 +47,9 @@ export default function ProductList({ direction, ...args }) {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        console.log('Arama yapılıyor:', searchValue);
-        const filtered = productList.products.filter(product => product.name.toLowerCase().includes(searchValue.toLowerCase()));
+        toast.success("Ürünleriniz Filtreleniyor..", {
+            position: "top-right"
+        }); const filtered = productList.products.filter(product => product.name.toLowerCase().includes(searchValue.toLowerCase()));
         setSortedProducts(filtered);
     };
     const handleChange = (e) => {
@@ -175,6 +177,8 @@ export default function ProductList({ direction, ...args }) {
                                             className="bg-white p-2 rounded text-black text-base border-2"
                                         />
                                         <button type="submit" className="button bg-primaryColor hover:text-primaryColor hover:bg-white rounded hover:border-primaryColor">Sitede Bul</button>
+                                        <ToastContainer position="top-right" autoClose={5000} />
+
                                     </form>
                                 </div>
                             )}</div>
