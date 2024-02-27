@@ -72,7 +72,7 @@ export default function Footer() {
                 </div>
             </div>
             <div className="w-[full] px-[50px] sm:px-[195px] py-4 bg-[#FAFAFA]">
-                <h6 className="font-bold leading-6 text-sm secondary-text  text-center ">Made With Love By Gokhan Gultan All Right Reserved </h6>
+                <h6 className="font-bold leading-6 text-sm secondary-text  collection-text ">Made With Love By Gokhan Gultan All Right Reserved </h6>
             </div>
         </div>
     )

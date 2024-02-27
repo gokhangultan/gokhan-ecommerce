@@ -14,7 +14,7 @@
 }
 
 .product-card-icon {
-  @apply absolute top-[160px] p-2 rounded-full bg-white w-[40px] h-[40px] hover:text-red-600;
+  @apply absolute top-[350px] p-2 rounded-full bg-white w-[40px] h-[40px] hover:text-red-600;
 }
 
 .product-card-more {
@@ -61,8 +61,12 @@
   @apply text-[#23A6F0];
 }
 
+.company-button {
+  @apply hover:bg-gray-300 cursor-pointer rounded-full px-3;
+}
+
 .editor-button {
-  @apply absolute bg-white mt-[434px] xl:ml-[31px] sm:ml-[11px] xl:w-[170px] xl:h-[48px] sm:w-[105px] sm:h-[28px] lg:w-[135px] lg:h-[36px] md:sm:w-[125px] md:h-[32px] w-[85px] h-[24px] z-10 font-bold xl:text-[16px] sm:text-[10px] lg:text-sm md:text-xs text-[10px] hover:text-[#2DC071]
+  @apply absolute bg-white mt-[434px] xl:ml-[31px] sm:ml-[11px] xl:w-[170px] xl:h-[48px] sm:w-[105px] sm:h-[28px] lg:w-[135px] lg:h-[36px] md:sm:w-[125px] md:h-[32px] w-[125px] h-[30px] z-10 font-bold xl:text-[16px] sm:text-[10px] lg:text-sm md:text-xs text-base rounded-sm hover:border-primaryColor hover:text-primaryColor
 }
 
 .text-textColor {

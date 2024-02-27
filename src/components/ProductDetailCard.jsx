@@ -9,11 +9,11 @@ import {
     CarouselControl,
 } from 'reactstrap';
 import ProductCard from './ProductCard';
-import { faAws, faHooli, faLyft, faPiedPiperHat, faRedditAlien, faStripe } from '@fortawesome/free-brands-svg-icons';
 import { fetchProduct } from '../store/actions/productAction';
 import { useDispatch, useSelector } from 'react-redux';
 import ReactPaginate from 'react-paginate';
 import { useParams } from 'react-router';
+import Companies from './Companies';
 
 
 function ProductDetailCard() {
@@ -237,7 +237,7 @@ function ProductDetailCard() {
                 </div>
                 <div>
                     <div className='flex flex-col md:flex-row gap-5'>
-                        <img src={product.images[0].url} alt='Product Image' className=' w-[316px] h-[372px] rounded-md shadow-lg' />
+                        <img src={product.images[0].url} alt='Product Image' className=' w-[316px] h-[472px] rounded-md shadow-lg object-contain' />
                         <div style={{ display: activeTab === 'description' ? 'block' : 'none' }}>
                             <div className='flex-col flex gap-4'>
                                 <h3 className='font-bold text-2xl text-textColor leading-8'>{product.name} </h3>
@@ -287,10 +287,10 @@ function ProductDetailCard() {
                     </div>
                 </div>
             </section>
-            <section className='bestseller px-[10px] sm:px-[195px] mt-5 bg-[#FAFAFA]'>
+            <section className='bestseller container mt-5'>
                 <div className="">
                     <h3 className='text-textColor font-bold text-2xl'>BESTSELLER PRODUCTS</h3>
-                    <div className="flex items-center my-4">
+                    <div className="flex items-center my-5">
                         <div className="w-full border-t border-[#ECECEC]"></div>
                     </div>
                     <section className="best-seller mb-10 text-center ">
@@ -313,14 +313,7 @@ function ProductDetailCard() {
                             </section>
                         </div>
                     </section>
-                    <div className="flex flex-col lg:flex-row gap-5 justify-between py-5">
-                        <FontAwesomeIcon icon={faHooli} size="5x" style={{ color: "#737373", }} />
-                        <FontAwesomeIcon icon={faLyft} size="5x" style={{ color: "#737373", }} />
-                        <FontAwesomeIcon icon={faPiedPiperHat} size="5x" style={{ color: "#737373", }} />
-                        <FontAwesomeIcon icon={faStripe} size="5x" style={{ color: "#737373", }} />
-                        <FontAwesomeIcon icon={faAws} size="5x" style={{ color: "#737373", }} />
-                        <FontAwesomeIcon icon={faRedditAlien} size="5x" style={{ color: "#737373", }} />
-                    </div>
+                    <Companies />
                 </div>
             </section>
         </div>
