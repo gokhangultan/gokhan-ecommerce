@@ -17,6 +17,7 @@ import { fetchProduct } from '../store/actions/productAction';
 import ReactPaginate from 'react-paginate';
 import { useParams } from "react-router-dom";
 import Companies from "../components/Companies";
+import { ToastContainer, toast } from "react-toastify";
 
 
 export default function ProductList({ direction, ...args }) {
@@ -29,6 +30,8 @@ export default function ProductList({ direction, ...args }) {
     const [sortedProducts, setSortedProducts] = useState([]);
     const [sortBy, setSortBy] = useState(null);
     const [pageNumber, setPageNumber] = useState(0);
+    const [isSearchOpen, setSearchOpen] = useState(false);
+    const [searchValue, setSearchValue] = useState('');
 
     useEffect(() => {
         dispatch(fetchProduct({ category_id: categoryId }));
@@ -51,6 +54,22 @@ export default function ProductList({ direction, ...args }) {
             // Sayfa numarasını güncelle
             setPageNumber(0); // veya başka bir sayfa numarası değeri
         }
+    };
+
+    const toggleSearch = () => {
+        setSearchOpen(!isSearchOpen);
+    };
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        toast.success("Ürünleriniz Filtreleniyor..", {
+            position: "top-right"
+        });
+        const filtered = productList.products.filter(product => product.name.toLowerCase().includes(searchValue.toLowerCase()));
+        setSortedProducts(filtered);
+    };
+    const handleChange = (e) => {
+        setSearchValue(e.target.value);
     };
 
     useEffect(() => {
@@ -165,8 +184,23 @@ export default function ProductList({ direction, ...args }) {
                                 <DropdownItem onClick={handleSortByPopularity}>Popularity</DropdownItem>
                             </DropdownMenu>
                         </Dropdown>
-                        <button className="button bg-primaryColor hover:text-primaryColor hover:bg-white rounded hover:border-primaryColor">Filter</button>
-                    </div>
+                        <div>
+                            <button className=' button bg-primaryColor hover:text-primaryColor hover:bg-white rounded hover:border-primaryColor' onClick={toggleSearch}>Filter</button>
+                            {isSearchOpen && (
+                                <div>
+                                    <form onSubmit={handleSubmit} className="flex flex-row" >
+                                        <input
+                                            type="text"
+                                            value={searchValue}
+                                            onChange={handleChange}
+                                            placeholder="Ne aramıştınız..."
+                                            className="bg-white p-2 rounded text-black text-base border-2"
+                                        />
+                                        <button type="submit" className="button bg-primaryColor hover:text-primaryColor hover:bg-white rounded hover:border-primaryColor">Sitede Bul</button>
+                                        <ToastContainer position="top-right" autoClose={5000} />
+                                    </form>
+                                </div>
+                            )}</div>                    </div>
                 </div>
             </div>
             <div className="container">
