@@ -1,3 +1,11 @@
+---
+ProjectName: Gokhan E-commerce
+Development Process Time: '2024-07-02 / 2024-07-03'
+spoiler: Dynamic With React & Spring
+FE, BE: ["React", "Spring"]
+githubUsername: 'gokhangultan'
+---
+
 <!-- Greeting -->
 # Hey ! 👋
 
@@ -24,6 +32,10 @@ npm run dev
 or
 yarn dev
 ```
+
+
+
+# About Developer ! 👨‍💻
 
 <!--Introduction -->
 Hello, I'm Gökhan. I graduated from Celal Bayar University, Department of Computer Engineering 💻 in 2018. I have been working on blockchain-based crypto projects with my team and friends for many years. I provided outsourcing to corporate companies. In 2023, I wanted to make big changes in my life and started my life as a full-stack developer 🌟 . At the end of my 6-month React Spring JavaScript training, I am working on projects as a Jr full stack developer. With my experience in the sector, I provide you with professional software at the corporate level.
