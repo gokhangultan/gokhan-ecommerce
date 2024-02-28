@@ -146,7 +146,7 @@ export default function Header({ direction, ...args }) {
                         <Link to={userName ? "/" : "/login"} className="header-link">
                             <div className="flex-row flex">
                                 {/* Eğer token varsa Gravatar resmini, yoksa faUser ikonunu göster */}
-                                {userName ? <img src={gravatarUrl} alt="User Avatar" className="avatar w-10 h-10 " /> : <FontAwesomeIcon icon={faUser} />}
+                                {userName ? <img src={gravatarUrl} alt="User Avatar" className="avatar w-10 h-10 rounded-full" /> : <FontAwesomeIcon icon={faUser} />}
                                 <button className='header-button' onClick={token && handleLogout}>
                                     {userName ? `${userName} - Logout` : 'Login / Register'}
                                 </button>
