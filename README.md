@@ -27,9 +27,9 @@ yarn dev
 
 ---
 ProjectName: Gokhan E-commerce
-Development Process Time: '2024-07-02 / 2024-07-03'
+Process: '2024-07-02 / 2024-07-03'
 spoiler: Dynamic E-commerce With React & Spring
-FE, BE: ["React", "Spring"]
+FE-BE: ["React", "Spring"]
 githubUsername: 'gokhangultan'
 ---
 
@@ -88,5 +88,5 @@ Hello, I'm Gökhan. I graduated from Celal Bayar University, Department of Compu
 <h4 align="center"> Thanks for Visiting!</h4>
 
 - 📫 How to reach me: ...
-- <code><a href="mailto:gultangokhan@gmail.com" target="_blank">Via Email 📫 </a></code>
-- <code><a href="tel:+905050279494" target="_blank">Via Phone 📞 </a></code>
+<code><a href="mailto:gultangokhan@gmail.com" target="_blank">Via Email 📫 </a></code>
+<code><a href="tel:+905050279494" target="_blank">Via Phone 📞 </a></code>
