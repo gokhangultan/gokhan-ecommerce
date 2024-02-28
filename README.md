@@ -26,10 +26,10 @@ yarn dev
 ```
 
 ---
-ProjectName: Gokhan E-commerce
-Process: '2024-07-02 / 2024-07-03'
+projectName: Gokhan E-commerce
+process: '2024-07-02 / 2024-07-03'
 spoiler: Dynamic E-commerce With React & Spring
-FE-BE: ["React", "Spring"]
+febe ["React", "Spring"]
 githubUsername: 'gokhangultan'
 ---
 
