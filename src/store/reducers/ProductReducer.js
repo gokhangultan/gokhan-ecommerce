@@ -1,6 +1,7 @@
 export const GlobalAction = {
     SET_PRODUCT_LIST: "SET_PRODUCT_LIST",
-    SET_FETCH_STATE: "SET_FETCH_STATE"
+    SET_FETCH_STATE: "SET_FETCH_STATE",
+    SET_TOTAL_STATE: "SET_TOTAL_STATE"
 };
 
 // Fetch durumları
@@ -31,6 +32,11 @@ export const productReducer = (state = initialState, action) => {
             return {
                 ...state,
                 fetchState: action.payload
+            };
+        case GlobalAction.SET_TOTAL_STATE:
+            return {
+                ...state,
+                totalProductCount: action.payload
             };
         default:
             return state;

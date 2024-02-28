@@ -21,7 +21,7 @@ import { ToastContainer, toast } from "react-toastify";
 
 
 export default function ProductList({ direction, ...args }) {
-    const { categoryId, category } = useParams();
+    const { categoryId } = useParams();
     const [dropdownOpen, setDropdownOpen] = useState(false);
     const dispatch = useDispatch();
     const toggle = () => setDropdownOpen((prevState) => !prevState);
@@ -32,6 +32,7 @@ export default function ProductList({ direction, ...args }) {
     const [pageNumber, setPageNumber] = useState(0);
     const [isSearchOpen, setSearchOpen] = useState(false);
     const [searchValue, setSearchValue] = useState('');
+    const totalProductCount = productList.products.length;
 
     useEffect(() => {
         dispatch(fetchProduct({ category_id: categoryId }));
@@ -162,7 +163,7 @@ export default function ProductList({ direction, ...args }) {
 
             </div>
             <div className="flex flex-col lg:flex-row gap-4 justify-between px-[100px] sm:px-[195px] py-8 items-center ">
-                <h6 className="font-bold text-sm leading-6 text-secondaryColor">Showing all 12 results</h6>
+                <h6 className="font-bold text-sm leading-6 text-secondaryColor">Showing all {totalProductCount} results</h6>
                 <div className="flex flex-row gap-3">
                     <h5 className="text-sm font-bold text-secondaryColor leading-6 mt-2">Views:</h5>
                     <button className="border-1 p-2 border-[#ECECEC]"><FontAwesomeIcon icon={faTableCellsLarge} size="lg" /></button>
@@ -197,7 +198,7 @@ export default function ProductList({ direction, ...args }) {
                                             className="bg-white p-2 rounded text-black text-base border-2"
                                         />
                                         <button type="submit" className="button bg-primaryColor hover:text-primaryColor hover:bg-white rounded hover:border-primaryColor">Sitede Bul</button>
-                                        <ToastContainer position="top-right" autoClose={5000} />
+                                        <ToastContainer position="top-right" autoClose={2000} />
                                     </form>
                                 </div>
                             )}</div>                    </div>
