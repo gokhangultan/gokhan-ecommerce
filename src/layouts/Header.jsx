@@ -1,6 +1,6 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUser, faHeart } from "@fortawesome/free-regular-svg-icons";
-import { faMagnifyingGlass, faCartShopping, faBars } from "@fortawesome/free-solid-svg-icons";
+import { faMagnifyingGlass, faCartShopping, faBars, faCancel, faX } from "@fortawesome/free-solid-svg-icons";
 import React, { useEffect, useState } from 'react';
 import { useGravatar } from 'use-gravatar';
 
@@ -9,7 +9,7 @@ import {
     DropdownToggle,
     DropdownMenu,
     DropdownItem,
-    NavLink,
+    Collapse, Button, CardBody, Card
 } from 'reactstrap';
 import { Link } from "react-router-dom/cjs/react-router-dom.min";
 import { useSelector } from "react-redux";
@@ -21,8 +21,14 @@ export default function Header({ direction, ...args }) {
     //localStorage.removeItem('userName'); logout da eklemeyi unutma
     const userName = useSelector(state => state.user.user.name);
     const userEmail = useSelector(state => state.user.user.email);
+    const cart = useSelector(state => state.shoppingCard.cart);
     const gravatarUrl = useGravatar(userEmail);
     const history = useHistory();
+    const [isOpen, setIsOpen] = useState(false);
+    const toggleCart = () => setIsOpen(!isOpen);
+    const closeCart = () => setIsOpen(false);
+    const totalItemCount = cart.reduce((total, item) => total + item.count, 0);
+
 
     const handleLogout = () => {
         // Redux store'u güncellemeden logout icin tokenı sil
@@ -107,7 +113,42 @@ export default function Header({ direction, ...args }) {
                                 </form>
                             </div>
                         )}
-                        <Link to="/card"><button className=' header-button'><FontAwesomeIcon icon={faCartShopping} /> 1</button></Link>
+                        <button className=' header-button' onClick={toggleCart} ><FontAwesomeIcon icon={faCartShopping} /> {totalItemCount}</button>
+                        <Collapse isOpen={isOpen} {...args}>
+                            <Card className="w-[380px] absolute z-10 left-[70%] top-[9%]">
+                                <CardBody className="flex flex-col gap-2">
+                                    <div className="flex flex-row justify-between">
+                                        <h2>Sepetim ({totalItemCount} ürün)</h2>
+                                        <button
+                                            className="bg-gray-300 rounded-full p-2 hover:bg-primaryColor"
+                                            onClick={closeCart}
+                                        ><FontAwesomeIcon icon={faX} /></button>
+                                    </div>                                    {cart.map(item => (
+                                        <div key={item.product.id} className=" bg-gray-50 flex flex-row gap-3 p-2 border-1 rounded-md border-primaryColor">
+                                            <div className="flex basis-1/4 justify-center items-center">
+                                                <img src={item.product.images[0].url} className="object-contain w-[100px] h-[100px]" alt="product" />
+                                            </div>
+                                            <div className="flex flex-col basis-3/4">
+                                                <div>{item.product.name}</div>
+                                                <div className="flex flex-row gap-3">
+                                                    <div>Price: ${item.product.price}</div>
+                                                    <div>Count: {item.count}</div>
+                                                </div>
+                                                <div className="text-primaryColor text-2xl">
+                                                    ${(item.count * item.product.price).toFixed(2)}
+                                                </div>
+
+                                                <div className="flex flex-row gap-2">
+                                                    <Link to="/cart"><button className="button bg-gray-300 text-black hover:bg-primaryColor px-2 py-2">Sepete Git</button></Link>
+                                                    <Link to="/confirm"> <button className="button bg-primaryColor text-black hover:bg-gray-300 px-2 py-2">Siparişi Tamamla</button></Link>
+                                                </div>
+                                                <div className="border-2"></div>
+                                            </div>
+                                        </div>
+                                    ))}
+                                </CardBody>
+                            </Card>
+                        </Collapse>
                         <Link to="/favorites"><button className=' header-button'><FontAwesomeIcon icon={faHeart} /> 1</button></Link>
                     </div>
                 </div>
@@ -165,8 +206,43 @@ export default function Header({ direction, ...args }) {
                                 </form>
                             </div>
                         )}
-                        <Link to="/card"><button className=' header-button'><FontAwesomeIcon icon={faCartShopping} /> 1</button></Link>
-                        <Link to="/favorites"><button className=' header-button'><FontAwesomeIcon icon={faHeart} /> 1</button></Link>
+                        <button className=' header-button' onClick={toggleCart} ><FontAwesomeIcon icon={faCartShopping} /> {totalItemCount}</button>
+                        <Collapse isOpen={isOpen} {...args}>
+                            <Card className="w-[380px] absolute z-10 left-[1%] top-[6%]">
+                                <CardBody className="flex flex-col gap-2">
+                                    <div className="flex flex-row justify-between">
+                                        <h2>Sepetim ({totalItemCount} ürün)</h2>
+                                        <button
+                                            className="bg-gray-300 rounded-full p-2 hover:bg-primaryColor"
+                                            onClick={closeCart}
+                                        ><FontAwesomeIcon icon={faX} /></button>
+                                    </div>
+                                    {cart.map(item => (
+                                        <div key={item.product.id} className=" bg-gray-50 flex flex-row gap-3 p-2 border-1 rounded-md border-primaryColor">
+                                            <div className="flex basis-1/4 justify-center items-center">
+                                                <img src={item.product.images[0].url} className="object-contain w-[100px] h-[100px]" alt="product" />
+                                            </div>
+                                            <div className="flex flex-col basis-3/4">
+                                                <div>{item.product.name}</div>
+                                                <div className="flex flex-row gap-3">
+                                                    <div>Price: ${item.product.price}</div>
+                                                    <div>Count: {item.count}</div>
+                                                </div>
+                                                <div className="text-primaryColor text-2xl">
+                                                    ${(item.count * item.product.price).toFixed(2)}
+                                                </div>
+
+                                                <div className="flex flex-row gap-2">
+                                                    <Link to="/cart"><button className="button bg-gray-300 text-black hover:bg-primaryColor px-2 py-2">Sepete Git</button></Link>
+                                                    <Link to="/confirm"> <button className="button bg-primaryColor text-black hover:bg-gray-300 px-2 py-2">Siparişi Tamamla</button></Link>
+                                                </div>
+                                                <div className="border-2"></div>
+                                            </div>
+                                        </div>
+                                    ))}
+                                </CardBody>
+                            </Card>
+                        </Collapse>                        <Link to="/favorites"><button className=' header-button'><FontAwesomeIcon icon={faHeart} /> 1</button></Link>
                     </div>
 
                 </nav>

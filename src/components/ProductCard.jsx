@@ -2,9 +2,13 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCartShopping, faEye, faStar, faDownload, faChartArea, faChartLine, faChevronRight } from "@fortawesome/free-solid-svg-icons";
 import { faHeart, faClock } from "@fortawesome/free-regular-svg-icons";
 import { Link } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { GlobalAction } from "../store/reducers/ShoppingCardReducer";
 
 
 export default function ProductCard({ product }) {
+    const dispatch = useDispatch();
+    const cart = useSelector(state => state.shoppingCard.cart);
     const categories = {
         1: { id: 1, code: 'k:tisort' },
         2: { id: 2, code: 'k:ayakkabi' },
@@ -12,13 +16,18 @@ export default function ProductCard({ product }) {
     };
     const categoryCode = categories[product.category_id].code;
 
+    const handleAddToCart = () => {
+        dispatch({ type: GlobalAction.setAddCard, payload: product });
+    };
+
+
     return (
         <div className="flex justify-between border-1 border-gray-150 shadow-sm">
             <div className="product-card w-[328px] h-[830px] sm:w-[308px] sm:h-[820px] m-3 relative">
                 <img src={product.images[0].url} alt="Product Image" className="object-contain" />
                 <button className="product-card-info">Sale</button>
                 <button className="product-card-icon left-[75px]"><FontAwesomeIcon icon={faHeart} /></button>
-                <button className="product-card-icon left-[125px] "><FontAwesomeIcon icon={faCartShopping} /></button>
+                <button className="product-card-icon left-[125px]  " onClick={handleAddToCart}><FontAwesomeIcon icon={faCartShopping} /></button>
                 <button className="product-card-icon left-[175px] "><FontAwesomeIcon icon={faEye} /></button>
                 <div className="flex-col text-left m-3">
                     <div className="flex justify-between mb-3">
