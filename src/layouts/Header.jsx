@@ -9,7 +9,7 @@ import {
     DropdownToggle,
     DropdownMenu,
     DropdownItem,
-    NavLink,
+    Collapse, Button, CardBody, Card
 } from 'reactstrap';
 import { Link } from "react-router-dom/cjs/react-router-dom.min";
 import { useSelector } from "react-redux";
@@ -21,8 +21,13 @@ export default function Header({ direction, ...args }) {
     //localStorage.removeItem('userName'); logout da eklemeyi unutma
     const userName = useSelector(state => state.user.user.name);
     const userEmail = useSelector(state => state.user.user.email);
+    const cart = useSelector(state => state.shoppingCard.cart);
     const gravatarUrl = useGravatar(userEmail);
     const history = useHistory();
+    const [isOpen, setIsOpen] = useState(false);
+    const toggleCart = () => setIsOpen(!isOpen);
+    const totalItemCount = cart.reduce((total, item) => total + item.count, 0);
+
 
     const handleLogout = () => {
         // Redux store'u güncellemeden logout icin tokenı sil
@@ -107,7 +112,30 @@ export default function Header({ direction, ...args }) {
                                 </form>
                             </div>
                         )}
-                        <Link to="/card"><button className=' header-button'><FontAwesomeIcon icon={faCartShopping} /> 1</button></Link>
+                        <button className=' header-button' onClick={toggleCart} ><FontAwesomeIcon icon={faCartShopping} /> 1</button>
+                        <Collapse isOpen={isOpen} {...args}>
+                            <Card className="w-[400px] absolute z-10 left-[70%] top-[9%]">
+                                <CardBody className="flex flex-col gap-2">
+                                    <h2>Sepetim ({totalItemCount} ürün)</h2>
+                                    {cart.map(item => (
+                                        <div key={item.product.id} className=" bg-gray-50 flex flex-row gap-3 p-2 border-1 rounded-md border-primaryColor">
+                                            <div className="flex basis-1/4 justify-center items-center">
+                                                <img src={item.product.images[0].url} className="object-contain w-[100px] h-[100px]" alt="product" />
+                                            </div>
+                                            <div className="flex flex-col basis-3/4">
+                                                <div>{item.product.name}</div>
+                                                <div className="flex flex-row gap-3">
+                                                    <div>Price: ${item.product.price}</div>
+                                                    <div>Count: {item.count}</div>
+                                                </div>
+                                                <div className="text-primaryColor text-2xl">${item.count * item.product.price}</div>
+                                                <div className="border-2"></div>
+                                            </div>
+                                        </div>
+                                    ))}
+                                </CardBody>
+                            </Card>
+                        </Collapse>
                         <Link to="/favorites"><button className=' header-button'><FontAwesomeIcon icon={faHeart} /> 1</button></Link>
                     </div>
                 </div>
