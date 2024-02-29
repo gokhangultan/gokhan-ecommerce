@@ -210,23 +210,23 @@ export default function Header({ direction, ...args }) {
                           ${(item.count * item.product.price).toFixed(2)}
                         </div>
 
-                        <div className="flex flex-row gap-2">
-                          <Link to="/cart">
-                            <button className="button bg-gray-300 text-black hover:bg-primaryColor px-2 py-2">
-                              Sepete Git
-                            </button>
-                          </Link>
-                          <Link to="/confirm">
-                            {" "}
-                            <button className="button bg-primaryColor text-black hover:bg-gray-300 px-2 py-2">
-                              Siparişi Tamamla
-                            </button>
-                          </Link>
-                        </div>
                         <div className="border-2"></div>
                       </div>
                     </div>
                   ))}
+                  <div className="flex flex-row gap-2 justify-center">
+                    <Link to="/cart">
+                      <button className="button bg-gray-300 text-black hover:bg-primaryColor px-2 py-2">
+                        Sepete Git
+                      </button>
+                    </Link>
+                    <Link to="/confirm">
+                      {" "}
+                      <button className="button bg-primaryColor text-black hover:bg-gray-300 px-2 py-2">
+                        Siparişi Tamamla
+                      </button>
+                    </Link>
+                  </div>
                 </CardBody>
               </Card>
             </Collapse>
@@ -388,23 +388,23 @@ export default function Header({ direction, ...args }) {
                           ${(item.count * item.product.price).toFixed(2)}
                         </div>
 
-                        <div className="flex flex-row gap-2">
-                          <Link to="/cart">
-                            <button className="button bg-gray-300 text-black hover:bg-primaryColor px-2 py-2">
-                              Sepete Git
-                            </button>
-                          </Link>
-                          <Link to="/confirm">
-                            {" "}
-                            <button className="button bg-primaryColor text-black hover:bg-gray-300 px-2 py-2">
-                              Siparişi Tamamla
-                            </button>
-                          </Link>
-                        </div>
                         <div className="border-2"></div>
                       </div>
                     </div>
                   ))}
+                  <div className="flex flex-row gap-2 justify-center">
+                    <Link to="/cart">
+                      <button className="button bg-gray-300 text-black hover:bg-primaryColor px-2 py-2">
+                        Sepete Git
+                      </button>
+                    </Link>
+                    <Link to="/confirm">
+                      {" "}
+                      <button className="button bg-primaryColor text-black hover:bg-gray-300 px-2 py-2">
+                        Siparişi Tamamla
+                      </button>
+                    </Link>
+                  </div>
                 </CardBody>
               </Card>
             </Collapse>{" "}
