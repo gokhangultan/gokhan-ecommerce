@@ -8,7 +8,7 @@ import Team from './pages/Team';
 import About from './pages/About';
 import Contact from './pages/Contact';
 import Login from './pages/Login';
-import Card from './pages/Card';
+import Cart from './pages/Cart';
 import Favorites from './pages/Favorites';
 import ProductDetail from './pages/ProductDetail';
 import CategoryFilter from './pages/CategoryFilter';
@@ -18,6 +18,7 @@ import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import Axios from 'axios';
 import { useHistory } from 'react-router';
+import ConfirmOrder from './pages/ConfirmOrder';
 
 function App() {
   const dispatch = useDispatch();
@@ -85,8 +86,11 @@ function App() {
         <Route path="/favorites" exact>
           <Favorites />
         </Route>
-        <Route path="/card" exact>
-          <Card />
+        <Route path="/cart" exact>
+          <Cart />
+        </Route>
+        <Route path="/confirm" exact>
+          <ConfirmOrder />
         </Route>
         <Route path="/product/:category/:productId/:productNameSlug">
           <ProductDetail />
