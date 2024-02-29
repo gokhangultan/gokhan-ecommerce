@@ -1,21 +1,54 @@
-import { faFacebook, faInstagram, faTwitter } from "@fortawesome/free-brands-svg-icons";
+import {
+  faFacebook,
+  faInstagram,
+  faTwitter,
+} from "@fortawesome/free-brands-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { Link } from "react-router-dom/cjs/react-router-dom.min";
 
 export default function CategoryCard() {
-    return (
-        <div className="shadow-sm bg-[#FFFFFF] w-[305px] md:h-[383px] h-[483px]">
-
-            <img src="team.jpeg" className="md:w-[316px] md:h-[231px] w-[305px] h-[323px]" />
-            <div className="flex-col flex items-center gap-3 mt-4">
-                <h5 className="font-bold text-base leading-6 text-[#252B42]">Username</h5>
-                <h6 className="font-bold text-sm text-secondaryColor leading-6">Profession</h6>
-                <div className="flex flex-row gap-4 ">
-                    <a href="" target="_blank"><button className="hover:bg-gray-300 rounded-full p-1"><FontAwesomeIcon icon={faFacebook} size="lg" style={{ color: "#23A6F0" }} /></button></a>
-                    <a href="" target="_blank"><button className="hover:bg-gray-300 rounded-full p-1"><FontAwesomeIcon icon={faInstagram} size="lg" style={{ color: "#23A6F0" }} /></button></a>
-                    <a href="" target="_blank"><button className="hover:bg-gray-300 rounded-full p-1"><FontAwesomeIcon icon={faTwitter} size="lg" style={{ color: "#23A6F0" }} /></button></a>
-                </div>
-            </div>
+  return (
+    <div className="shadow-sm bg-[#FFFFFF] w-[305px] md:h-[383px] h-[483px]">
+      <img
+        src="team.jpeg"
+        className="md:w-[316px] md:h-[231px] w-[305px] h-[323px]"
+      />
+      <div className="flex-col flex items-center gap-3 mt-4">
+        <h5 className="font-bold text-base leading-6 text-[#252B42]">
+          Username
+        </h5>
+        <h6 className="font-bold text-sm text-secondaryColor leading-6">
+          Profession
+        </h6>
+        <div className="flex flex-row gap-4 ">
+          <a href="" target="_blank">
+            <button className="hover:bg-gray-300 rounded-full p-1">
+              <FontAwesomeIcon
+                icon={faFacebook}
+                size="lg"
+                style={{ color: "#23A6F0" }}
+              />
+            </button>
+          </a>
+          <a href="" target="_blank">
+            <button className="hover:bg-gray-300 rounded-full p-1">
+              <FontAwesomeIcon
+                icon={faInstagram}
+                size="lg"
+                style={{ color: "#23A6F0" }}
+              />
+            </button>
+          </a>
+          <a href="" target="_blank">
+            <button className="hover:bg-gray-300 rounded-full p-1">
+              <FontAwesomeIcon
+                icon={faTwitter}
+                size="lg"
+                style={{ color: "#23A6F0" }}
+              />
+            </button>
+          </a>
         </div>
-    );
+      </div>
+    </div>
+  );
 }

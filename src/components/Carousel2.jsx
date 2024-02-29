@@ -1,6 +1,6 @@
-import React from 'react';
-import 'bootstrap/dist/css/bootstrap.min.css';
-import { UncontrolledCarousel } from 'reactstrap';
+import React from "react";
+import "bootstrap/dist/css/bootstrap.min.css";
+import { UncontrolledCarousel } from "reactstrap";
 
 function CustomCarousel() {
   return (
@@ -12,22 +12,21 @@ function CustomCarousel() {
           background: #23856D; 
         }
       `}</style>
-      <div className=''>
+      <div className="">
         <UncontrolledCarousel
           items={[
             {
-              altText: '',
-              caption: '',
+              altText: "",
+              caption: "",
               key: 1,
-              src: 'slider2.png'
+              src: "slider2.png",
             },
             {
-              altText: '',
-              caption: '',
+              altText: "",
+              caption: "",
               key: 2,
-              src: 'slider2.png'
+              src: "slider2.png",
             },
-
           ]}
         />
       </div>
