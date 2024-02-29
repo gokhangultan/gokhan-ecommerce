@@ -33,7 +33,7 @@ export const shoppingCartReducer = (state = initialState, action) => {
                     cart: [...state.cart, { count: 1, checked: true, product: action.payload }]
                 };
             }
-        case 'REMOVE_FROM_CART':
+        case GlobalAction.setRemoveCard:
             return {
                 ...state,
                 cart: state.cart.filter(item => item.product.id !== action.payload)
@@ -50,13 +50,13 @@ export const shoppingCartReducer = (state = initialState, action) => {
                 )
             };
 
-        case 'SET_PAYMENT_INFO':
+        case GlobalAction.setPaymentInfo:
             // Ödeme bilgilerini güncelleme
             return {
                 ...state,
                 payment: action.payload
             };
-        case 'SET_ADDRESS_INFO':
+        case GlobalAction.setAddressInfo:
             // Adres bilgilerini güncelleme
             return {
                 ...state,

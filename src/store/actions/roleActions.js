@@ -1,4 +1,5 @@
 import Axios from 'axios';
+import { GlobalActions } from '../reducers/GlobalReducer';
 
 const axiosInstance = Axios.create({
     baseURL: "https://workintech-fe-ecommerce.onrender.com"
@@ -22,6 +23,6 @@ export const fetchRoles = () => async (dispatch, getState) => {
 };
 
 export const setRoles = (roles) => ({
-    type: 'SET_ROLES',
+    type: GlobalActions.setRole,
     payload: roles
 });

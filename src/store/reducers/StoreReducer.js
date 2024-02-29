@@ -13,7 +13,7 @@ const initialState = {
 
 export const storeReducer = (state = initialState, action) => {
     switch (action.type) {
-        case 'SET_STORE_INFO':
+        case GlobalAction.setStoreInfo:
             return {
                 ...state,
                 sellerStore: action.payload
