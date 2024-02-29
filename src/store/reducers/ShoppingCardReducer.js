@@ -12,11 +12,24 @@ const initialState = {
 
 export const shoppingCartReducer = (state = initialState, action) => {
     switch (action.type) {
-        case 'ADD_TO_CART':
-            return {
-                ...state,
-                cart: [...state.cart, action.payload]
-            };
+        case GlobalAction.setAddCard:
+            const existingIndex = state.cart.findIndex(item => item.product.id === action.payload.id);
+            if (existingIndex !== -1) {
+                const updatedCart = [...state.cart];
+                updatedCart[existingIndex] = {
+                    ...updatedCart[existingIndex],
+                    count: updatedCart[existingIndex].count + 1
+                };
+                return {
+                    ...state,
+                    cart: updatedCart
+                };
+            } else {
+                return {
+                    ...state,
+                    cart: [...state.cart, { count: 1, checked: true, product: action.payload }]
+                };
+            }
         case 'REMOVE_FROM_CART':
             return {
                 ...state,
