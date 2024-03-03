@@ -1,14 +1,11 @@
-import {
-  faChevronDown,
-  faChevronRight,
-  faMagnifyingGlass,
-} from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { Link } from "react-router-dom/cjs/react-router-dom.min";
+import { useEffect, useState } from "react";
+import { Link, useParams, useHistory } from "react-router-dom";
 import CategoryCard from "../components/CategoryCard";
 import {
   faTableCellsLarge,
   faListCheck,
+  faChevronDown,
+  faChevronRight,
 } from "@fortawesome/free-solid-svg-icons";
 import {
   Dropdown,
@@ -16,18 +13,20 @@ import {
   DropdownMenu,
   DropdownItem,
 } from "reactstrap";
-import { useEffect, useState } from "react";
-import ProductCard from "../components/ProductCard";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchCategory } from "../store/actions/categoryAction";
-import { fetchProduct } from "../store/actions/productAction";
+import { fetchProduct, setProductList } from "../store/actions/productAction";
 import ReactPaginate from "react-paginate";
+import ProductCard from "../components/ProductCard";
 import Companies from "../components/Companies";
 import { ToastContainer, toast } from "react-toastify";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 export default function ProductList({ direction, ...args }) {
   const [dropdownOpen, setDropdownOpen] = useState(false);
+  const { category, filter, sort } = useParams();
   const dispatch = useDispatch();
+  const history = useHistory(); // useHistory hook'unu kullanarak history alıyoruz
   const toggle = () => setDropdownOpen((prevState) => !prevState);
   const categories = useSelector((state) => state.global.categories);
   const productList = useSelector((state) => state.products.productList);
@@ -36,64 +35,37 @@ export default function ProductList({ direction, ...args }) {
   const [pageNumber, setPageNumber] = useState(0);
   const [isSearchOpen, setSearchOpen] = useState(false);
   const [searchValue, setSearchValue] = useState("");
+  const filterProducts = (products, filterText) => {
+    if (!products) return []; // Eğer products boşsa boş bir dizi döndür
+    return products.filter((product) =>
+      product.name.toLowerCase().includes(filterText.toLowerCase())
+    );
+  };
   const totalProductCount = productList.products
     ? productList.products.length
     : 0;
-
-  useEffect(() => {
-    if (sortBy === "priceHighToLow") {
-      sortByPriceHighToLow();
-    } else if (sortBy === "priceLowToHigh") {
-      sortByPriceLowToHigh();
-    } else if (sortBy === "popularity") {
-      sortByPopularity();
-    }
-  }, [sortBy, productList.products]);
 
   const toggleSearch = () => {
     setSearchOpen(!isSearchOpen);
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    toast.success("Ürünleriniz Filtreleniyor..", {
-      position: "top-right",
-    });
-    const filtered = productList.products.filter((product) =>
-      product.name.toLowerCase().includes(searchValue.toLowerCase())
-    );
-    setSortedProducts(filtered);
-  };
   const handleChange = (e) => {
     setSearchValue(e.target.value);
   };
 
-  const handleSortByPriceHighToLow = () => {
-    setSortBy("priceHighToLow");
-  };
+  const handleSubmit = async (searchValue, dispatch) => {
+    toast.success("Ürünleriniz Filtreleniyor..", {
+      position: "top-right",
+    });
 
-  const handleSortByPriceLowToHigh = () => {
-    setSortBy("priceLowToHigh");
-  };
-
-  const handleSortByPopularity = () => {
-    setSortBy("popularity");
-  };
-  const sortByPriceHighToLow = () => {
-    const sorted = [...productList.products].sort((a, b) => b.price - a.price);
-    setSortedProducts(sorted);
-  };
-
-  const sortByPriceLowToHigh = () => {
-    const sorted = [...productList.products].sort((a, b) => a.price - b.price);
-    setSortedProducts(sorted);
-  };
-
-  const sortByPopularity = () => {
-    const sorted = [...productList.products].sort(
-      (a, b) => b.rating - a.rating
-    );
-    setSortedProducts(sorted);
+    try {
+      // Filtreleme isteğini backend'e gönder
+      const response = await fetchProduct({ filter: searchValue });
+      console.log(response);
+    } catch (error) {
+      console.error("Ürünler alınamadı.", error);
+      toast.error("Ürünler alınamadı.", { position: "top-right" });
+    }
   };
 
   // React Pagination
@@ -152,20 +124,18 @@ export default function ProductList({ direction, ...args }) {
           </h3>
           <div className="flex gap-2">
             <Link
-              href=""
+              to="/"
               className="font-bold text-sm leading-6 text-[#252B42] "
             >
               Home
             </Link>
-            <Link>
-              <FontAwesomeIcon
-                icon={faChevronRight}
-                size="lg"
-                style={{ color: "#BDBDBD" }}
-              />{" "}
-            </Link>
+            <FontAwesomeIcon
+              icon={faChevronRight}
+              size="lg"
+              style={{ color: "#BDBDBD" }}
+            />{" "}
             <Link
-              href=""
+              to="/products"
               className="font-bold text-sm leading-6 text-[#BDBDBD]"
             >
               Shop
@@ -211,15 +181,9 @@ export default function ProductList({ direction, ...args }) {
                 <FontAwesomeIcon icon={faChevronDown} size="lg" />
               </DropdownToggle>
               <DropdownMenu {...args}>
-                <DropdownItem onClick={handleSortByPriceLowToHigh}>
-                  Price Low to High
-                </DropdownItem>
-                <DropdownItem onClick={handleSortByPriceHighToLow}>
-                  Price High to Low
-                </DropdownItem>
-                <DropdownItem onClick={handleSortByPopularity}>
-                  Popularity
-                </DropdownItem>
+                <DropdownItem>Price Low to High</DropdownItem>
+                <DropdownItem>Price High to Low</DropdownItem>
+                <DropdownItem>Popularity</DropdownItem>
               </DropdownMenu>
             </Dropdown>
             <div>
@@ -231,7 +195,10 @@ export default function ProductList({ direction, ...args }) {
               </button>
               {isSearchOpen && (
                 <div>
-                  <form onSubmit={handleSubmit} className="flex flex-row">
+                  <form
+                    onSubmit={handleSubmit(searchValue, dispatch)}
+                    className="flex flex-row"
+                  >
                     <input
                       type="text"
                       value={searchValue}

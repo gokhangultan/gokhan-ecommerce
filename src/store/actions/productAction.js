@@ -4,21 +4,23 @@ const axiosInstance = Axios.create({
     baseURL: "https://workintech-fe-ecommerce.onrender.com"
 });
 
-// Thunk 
-export const fetchProduct = (/*{ limit = 25, offset = 0 }*/) => async (dispatch) => {
+export const fetchProduct = ({ limit = 50, offset = 0, category, filter, sort } = {}) => async (dispatch) => {
     try {
-
         const response = await axiosInstance.get("/products", {
-            /* params: {
-                 limit: limit,
-                 offset: offset
-             }*/
+            params: {
+                limit: limit,
+                offset: offset,
+                category: category,
+                filter: filter,
+                sort: sort
+            }
         });
         dispatch(setProductList(response.data));
     } catch (error) {
         console.error("Ürünlere erişemiyorum.", error);
     }
 };
+
 
 export const setProductList = (products) => ({
     type: 'SET_PRODUCT_LIST',

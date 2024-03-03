@@ -69,7 +69,7 @@ export default function Header({ direction, ...args }) {
 
   return (
     <header
-      className={`xl:mx-[118px] lg:mx-[30px] md:mx-[15px] mx-[10px] lg:h-[91px]   ${
+      className={`xl:mx-[118px] lg:mx-[30px] md:mx-[15px]               mx-[10px] lg:h-[91px]   ${
         isMenuVisible ? "h-[501px]" : ""
       } pt-4`}
     >
