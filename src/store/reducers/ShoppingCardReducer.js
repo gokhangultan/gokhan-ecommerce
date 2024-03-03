@@ -13,6 +13,21 @@ const initialState = {
     address: {}
 };
 
+
+//Carttaki ürünler hard rendering refreshde gidiyor cözüm middleware localstorage mı kaydetmek ?
+{/*const localStorageMiddleware = store => next => action => {
+    const result = next(action);
+    // Her durum güncellendiğinde local'e kaydet session storage da güzel bir opsiyon
+
+    localStorage.setItem('reduxState', JSON.stringify(store.getState()));
+    sessionStorage.setItem('reduxState', JSON.stringify(store.getState()));
+
+    return result;
+  };
+  
+  // Redux başlangıç durumu ?
+  const initialState = JSON.parse(localStorage.getItem('reduxState')) || initialState; */}
+
 export const shoppingCartReducer = (state = initialState, action) => {
     switch (action.type) {
         case GlobalAction.setAddCard:
