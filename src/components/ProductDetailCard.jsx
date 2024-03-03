@@ -18,6 +18,7 @@ import { useDispatch, useSelector } from "react-redux";
 import ReactPaginate from "react-paginate";
 import { useParams } from "react-router";
 import Companies from "./Companies";
+import { GlobalAction } from "../store/reducers/ShoppingCardReducer";
 
 function ProductDetailCard() {
   const items = [
@@ -41,15 +42,13 @@ function ProductDetailCard() {
     objectPosition: "top",
   };
   const dispatch = useDispatch();
-  const customClass = "md:w-[540px] w-[350px] h-full lg:h-auto carousel-image";
 
   const { productId } = useParams();
-
+  const [sortedProducts, setSortedProducts] = useState([]);
   const [activeTab, setActiveTab] = useState("description");
   const [activeIndex, setActiveIndex] = useState(0);
   const [animating, setAnimating] = useState(false);
   const productList = useSelector((state) => state.products.productList);
-  const [sortedProducts, setSortedProducts] = useState([]);
   const [pageNumber, setPageNumber] = useState(0);
   const sortByPopularity = () => {
     const sorted = [...productList.products].sort(
@@ -57,6 +56,19 @@ function ProductDetailCard() {
     );
     setSortedProducts(sorted);
   };
+
+  useEffect(() => {
+    if (
+      !productList ||
+      !productList.products ||
+      productList.products.length === 0
+    ) {
+      dispatch(fetchProduct());
+    } else {
+      sortByPopularity();
+    }
+  }, [dispatch, productList]);
+
   // React Pagination
   const productsToDisplay =
     sortedProducts.length > 0 ? sortedProducts : productList.products;
@@ -72,19 +84,6 @@ function ProductDetailCard() {
   const handlePageChange = ({ selected }) => {
     setPageNumber(selected);
   };
-
-  //products fetchle al productList ve Total dönüyor
-  useEffect(() => {
-    if (
-      !productList ||
-      !productList.products ||
-      productList.products.length === 0
-    ) {
-      dispatch(fetchProduct());
-    } else {
-      sortByPopularity();
-    }
-  }, [dispatch, productList]);
 
   // productList yüklenene kadar bekle
   if (
@@ -123,29 +122,22 @@ function ProductDetailCard() {
     if (animating) return;
     setActiveIndex(newIndex);
   };
-
-  const slides = items.map((item) => {
+  const slides = items.map((item, index) => {
     return (
       <CarouselItem
         onExiting={() => setAnimating(true)}
         onExited={() => setAnimating(false)}
-        key={product.images[0].url}
+        key={`${item.src}_${index}`}
       >
         <img
           src={product.images[0].url}
           alt={item.altText}
           style={customStyles}
-          className={customClass}
+          className="object-contain md:w-[540px] w-[350px] h-full lg:h-auto carousel-image"
         />
       </CarouselItem>
     );
   });
-  const categories = {
-    1: { id: 1, code: "k:tisort" },
-    2: { id: 2, code: "k:ayakkabi" },
-    3: { id: 3, code: "k:ceket" },
-  };
-  const categoryCode = categories[product.category_id].code;
   const smallThumbnails = (
     <div className="flex flex-row gap-3">
       {items.map((item, index) => (
@@ -159,12 +151,16 @@ function ProductDetailCard() {
             src={product.images[0].url}
             alt={item.altText}
             onClick={() => setActiveIndex(index)}
-            className="w-[100px] h-[75px]"
+            className="w-[100px] h-[75px] object-contain"
           />
         </div>
       ))}
     </div>
   );
+
+  const handleAddToCart = () => {
+    dispatch({ type: GlobalAction.setAddCard, payload: product });
+  };
   return (
     <div className="">
       <section className="bg-[#FAFAFA] product-detail-data  w-[full] px-[30px] md:px-[195px]">
@@ -212,6 +208,7 @@ function ProductDetailCard() {
                   onClickHandler={next}
                 />
               </Carousel>
+
               <div style={{ marginTop: "20px" }}>{smallThumbnails}</div>
             </div>
           </div>
@@ -267,7 +264,10 @@ function ProductDetailCard() {
                 <button className="bg-white rounded-full px-2 py-1 border-1 border-[#E8E8E8]">
                   <FontAwesomeIcon icon={faHeart} />
                 </button>
-                <button className="bg-white rounded-full px-2 py-1 border-1 border-[#E8E8E8]">
+                <button
+                  className="bg-white rounded-full px-2 py-1 border-1 border-[#E8E8E8]"
+                  onClick={handleAddToCart}
+                >
                   <FontAwesomeIcon icon={faCartShopping} />
                 </button>
                 <button className="bg-white rounded-full px-2 py-1 border-1 border-[#E8E8E8]">
@@ -436,12 +436,12 @@ function ProductDetailCard() {
           <div className="flex items-center my-5">
             <div className="w-full border-t border-[#ECECEC]"></div>
           </div>
-          <section className="best-seller mb-10 text-center ">
-            <div className=" flex flex-wrap flex-row gap-2 justify-between  ">
+          <section className="best-seller mb-10 text-center container ">
+            <div className=" flex flex-wrap flex-row gap-3 justify-between mb-5 ">
               {displayProducts}
             </div>
             <div className="flex justify-center ">
-              <section className="pagination mt-5">
+              <section className="pagination">
                 <ReactPaginate
                   previousLabel={"Previous"}
                   nextLabel={"Next"}

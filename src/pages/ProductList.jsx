@@ -37,7 +37,7 @@ export default function ProductList(direction) {
   const toggle = () => setDropdownOpen((prevState) => !prevState);
   const categories = useSelector((state) => state.global.categories);
   const productList = useSelector((state) => state.products.productList);
-  const [sortBy, setSortBy] = useState(null);
+  const [orderBy, setOrderBy] = useState(null);
   const [pageNumber, setPageNumber] = useState(0);
   const [isSearchOpen, setSearchOpen] = useState(false);
   const [searchValue, setSearchValue] = useState("");
@@ -52,7 +52,9 @@ export default function ProductList(direction) {
   const handleChange = (e) => {
     setSearchValue(e.target.value);
   };
-
+  const handleOrder = (newOrder) => {
+    setOrderBy(newOrder);
+  };
   //Filter Submit
   const handleSubmit = async (searchValue, dispatch) => {
     toast.success("Ürünleriniz Filtreleniyor..", { position: "top-right" });
@@ -181,21 +183,27 @@ export default function ProductList(direction) {
             <Dropdown
               isOpen={dropdownOpen}
               toggle={toggle}
-              direction={direction}
+              direction="left"
               className="text-sm leading-7 text-secondaryColor rounded"
             >
               <DropdownToggle className="text-secondaryColor border-1 border-[#DDDDDD] hover:bg-gray-300 hover:text-black py-2.5">
-                {sortBy === null && "Order By "}
-                {sortBy === "price:asc" && "Price Low to High"}
-                {sortBy === "price:desc" && "Price High to Low"}
-                {sortBy === "rating:asc" && "Rating Low to High"}
-                {sortBy === "rating:desc" &&
-                  "Rating                High to Low"}
+                {orderBy === "Order By "}
+                {orderBy === "price:asc" && "Price Low to High"}
+                {orderBy === "price:desc" && "Price High to Low"}
+                {orderBy === "rating:asc" && "Rating Low to High"}
+                {orderBy === "rating:desc" && "Rating High to Low"}
                 <FontAwesomeIcon icon={faChevronDown} size="lg" />
+                <span onClick={setOrderBy}> Order By</span>
               </DropdownToggle>
               <DropdownMenu>
                 {navItems.map((item, index) => (
-                  <DropdownItem key={index} onClick={() => handleSort(item[1])}>
+                  <DropdownItem
+                    key={index}
+                    onClick={() => {
+                      handleSort(item[1]);
+                      handleOrder();
+                    }}
+                  >
                     {item[0]}
                   </DropdownItem>
                 ))}

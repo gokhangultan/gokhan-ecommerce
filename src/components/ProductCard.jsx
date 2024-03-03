@@ -10,12 +10,11 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { faHeart, faClock } from "@fortawesome/free-regular-svg-icons";
 import { Link } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { GlobalAction } from "../store/reducers/ShoppingCardReducer";
 
 export default function ProductCard({ product }) {
   const dispatch = useDispatch();
-  const cart = useSelector((state) => state.shoppingCard.cart);
   const categories = {
     1: { id: 1, code: "k:tisort" },
     2: { id: 2, code: "k:ayakkabi" },
