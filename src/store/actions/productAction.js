@@ -4,8 +4,10 @@ const axiosInstance = Axios.create({
     baseURL: "https://workintech-fe-ecommerce.onrender.com"
 });
 
-export const fetchProduct = ({ limit = 50, offset = 0, category, filter, sort } = {}) => async (dispatch) => {
+export const fetchProduct = (limit = "50", offset = 0, category = null, filter = null, sort = null) => async (dispatch) => {
+    console.log(limit, offset)
     try {
+        console.log("fetch")
         const response = await axiosInstance.get("/products", {
             params: {
                 limit: limit,

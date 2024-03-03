@@ -21,7 +21,7 @@ export default function ProductCard({ product }) {
     2: { id: 2, code: "k:ayakkabi" },
     3: { id: 3, code: "k:ceket" },
   };
-  const categoryCode = categories[product.category_id].code;
+  const categoryCode = categories[product.category_id];
 
   const handleAddToCart = () => {
     dispatch({ type: GlobalAction.setAddCard, payload: product });

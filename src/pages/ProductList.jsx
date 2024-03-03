@@ -15,32 +15,32 @@ import {
 } from "reactstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchCategory } from "../store/actions/categoryAction";
-import { fetchProduct, setProductList } from "../store/actions/productAction";
+import { fetchProduct } from "../store/actions/productAction";
 import ReactPaginate from "react-paginate";
 import ProductCard from "../components/ProductCard";
 import Companies from "../components/Companies";
 import { ToastContainer, toast } from "react-toastify";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-export default function ProductList({ direction, ...args }) {
+export default function ProductList(direction) {
+  const navItems = [
+    ["Default", ""],
+    ["Price Low to High", "price:asc"],
+    ["Price High to Low", "price:desc"],
+    ["Rating Low to High", "rating:asc"],
+    ["Rating High to Low", "rating:desc"],
+  ];
   const [dropdownOpen, setDropdownOpen] = useState(false);
-  const { category, filter, sort } = useParams();
+  const { category } = useParams();
   const dispatch = useDispatch();
-  const history = useHistory(); // useHistory hook'unu kullanarak history alıyoruz
+  const history = useHistory();
   const toggle = () => setDropdownOpen((prevState) => !prevState);
   const categories = useSelector((state) => state.global.categories);
   const productList = useSelector((state) => state.products.productList);
-  const [sortedProducts, setSortedProducts] = useState([]);
   const [sortBy, setSortBy] = useState(null);
   const [pageNumber, setPageNumber] = useState(0);
   const [isSearchOpen, setSearchOpen] = useState(false);
   const [searchValue, setSearchValue] = useState("");
-  const filterProducts = (products, filterText) => {
-    if (!products) return []; // Eğer products boşsa boş bir dizi döndür
-    return products.filter((product) =>
-      product.name.toLowerCase().includes(filterText.toLowerCase())
-    );
-  };
   const totalProductCount = productList.products
     ? productList.products.length
     : 0;
@@ -53,24 +53,37 @@ export default function ProductList({ direction, ...args }) {
     setSearchValue(e.target.value);
   };
 
+  //Filter Submit
   const handleSubmit = async (searchValue, dispatch) => {
-    toast.success("Ürünleriniz Filtreleniyor..", {
-      position: "top-right",
-    });
-
+    toast.success("Ürünleriniz Filtreleniyor..", { position: "top-right" });
     try {
-      // Filtreleme isteğini backend'e gönder
-      const response = await fetchProduct({ filter: searchValue });
-      console.log(response);
+      const response = await dispatch(
+        fetchProduct(50, 0, null, searchValue, null)
+      );
+      history.push(`/products?filter=${encodeURIComponent(searchValue)}`);
     } catch (error) {
       console.error("Ürünler alınamadı.", error);
       toast.error("Ürünler alınamadı.", { position: "top-right" });
     }
   };
 
+  //Sort Submit
+  const handleSort = async (sortType) => {
+    toast.success("Ürünleriniz Sıralanıyor..", { position: "top-right" });
+    try {
+      const response = await dispatch(
+        fetchProduct(50, 0, null, null, sortType)
+      );
+      console.log(response);
+      history.push(`/products?sort=${sortType}`);
+    } catch (error) {
+      console.error("Ürünler sıralanamadı.", error);
+      toast.error("Ürünler sıralanamadı.", { position: "top-right" });
+    }
+  };
+
   // React Pagination
-  const productsToDisplay =
-    sortedProducts.length > 0 ? sortedProducts : productList.products;
+  const productsToDisplay = productList.products;
   const productsPerPage = 6;
   const pagesVisited = pageNumber * productsPerPage;
   const displayProducts =
@@ -96,9 +109,7 @@ export default function ProductList({ direction, ...args }) {
       !productList.products ||
       productList.products.length === 0
     ) {
-      dispatch(
-        fetchProduct(/*{ limit: productsPerPage, offset: currentPage * productsPerPage }*/)
-      );
+      dispatch(fetchProduct());
     }
   }, [dispatch, productList]);
 
@@ -175,45 +186,45 @@ export default function ProductList({ direction, ...args }) {
             >
               <DropdownToggle className="text-secondaryColor border-1 border-[#DDDDDD] hover:bg-gray-300 hover:text-black py-2.5">
                 {sortBy === null && "Order By "}
-                {sortBy === "priceLowToHigh" && "Price Low to High"}
-                {sortBy === "priceHighToLow" && "Price High to Low"}
-                {sortBy === "popularity" && "Popularity"}
+                {sortBy === "price:asc" && "Price Low to High"}
+                {sortBy === "price:desc" && "Price High to Low"}
+                {sortBy === "rating:asc" && "Rating Low to High"}
+                {sortBy === "rating:desc" &&
+                  "Rating                High to Low"}
                 <FontAwesomeIcon icon={faChevronDown} size="lg" />
               </DropdownToggle>
-              <DropdownMenu {...args}>
-                <DropdownItem>Price Low to High</DropdownItem>
-                <DropdownItem>Price High to Low</DropdownItem>
-                <DropdownItem>Popularity</DropdownItem>
+              <DropdownMenu>
+                {navItems.map((item, index) => (
+                  <DropdownItem key={index} onClick={() => handleSort(item[1])}>
+                    {item[0]}
+                  </DropdownItem>
+                ))}
               </DropdownMenu>
             </Dropdown>
             <div>
               <button
-                className=" button bg-primaryColor hover:text-primaryColor hover:bg-white rounded hover:border-primaryColor"
+                className="button bg-primaryColor hover:text-primaryColor hover:bg-white rounded hover:border-primaryColor"
                 onClick={toggleSearch}
               >
                 Filter
               </button>
               {isSearchOpen && (
                 <div>
-                  <form
-                    onSubmit={handleSubmit(searchValue, dispatch)}
-                    className="flex flex-row"
+                  <input
+                    type="text"
+                    value={searchValue}
+                    onChange={handleChange}
+                    placeholder="Ne aramıştınız..."
+                    className="bg-white p-2 rounded text-black text-base border-2"
+                  />
+                  <button
+                    type="submit"
+                    className="button bg-primaryColor hover:text-primaryColor hover:bg-white rounded hover:border-primaryColor"
+                    onClick={() => handleSubmit(searchValue, dispatch)}
                   >
-                    <input
-                      type="text"
-                      value={searchValue}
-                      onChange={handleChange}
-                      placeholder="Ne aramıştınız..."
-                      className="bg-white p-2 rounded text-black text-base border-2"
-                    />
-                    <button
-                      type="submit"
-                      className="button bg-primaryColor hover:text-primaryColor hover:bg-white rounded hover:border-primaryColor"
-                    >
-                      Sitede Bul
-                    </button>
-                    <ToastContainer position="top-right" autoClose={2000} />
-                  </form>
+                    Sitede Bul
+                  </button>
+                  <ToastContainer position="top-right" autoClose={2000} />
                 </div>
               )}
             </div>
