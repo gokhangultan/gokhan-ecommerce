@@ -31,7 +31,10 @@ export default function Cart() {
     <div className="flex flex-col gap-1 container">
       <h2 className="m-3 text-3xl">Sepetim ({totalItemCount} ürün)</h2>
       {cart.map((item) => (
-        <div className=" p-2 border-1 rounded-md border-primaryColor mx-5 my-1 bg-gray-50">
+        <div
+          key={`${item.product.id}_${item.count}`}
+          className="p-2 border-1 rounded-md border-primaryColor mx-5 my-1 bg-gray-50"
+        >
           <div className="flex flex-row bg-gray-200  px-5 my-2">
             <input
               className="m-1"
