@@ -9,8 +9,10 @@ export const postLogin = () => async (dispatch) => {
     try {
         const response = await axiosInstance.post("/login");
         dispatch(setUser(response.data));
+        return response;
     } catch (error) {
         console.error("Kayıt oluşturamıyorum.", error);
+        throw error;
     }
 };
 

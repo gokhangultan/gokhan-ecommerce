@@ -33,7 +33,7 @@ export default function Signup() {
         dispatch(setUser(userData)); // Kullanıcı bilgilerini redux store'a kaydet
         localStorage.setItem("token", userData.token); // tokenini localStorage'a kaydet
         toast.success(
-          "Başarı İle Login Oldunuz. Ana Sayfaya yönlendiriliyorsunuz.",
+          response.data.name + " Hoşgeldin! Ana Sayfaya yönlendiriliyorsunuz.",
           {
             position: "top-right",
           }
@@ -43,12 +43,9 @@ export default function Signup() {
         }, 3000); // 3 saniye beklet sonra önceki sayfaya gönder
       }
     } catch (error) {
-      toast.error(
-        "Giriş Yapılırken, bir hata oluştu. Email Adresinizi ve Sifrenizi Kontrol Ediniz.",
-        {
-          position: "top-right",
-        }
-      );
+      toast.error(error.response.data.message, {
+        position: "top-right",
+      });
     } finally {
       setIsLoading(false);
     }

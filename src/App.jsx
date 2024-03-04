@@ -19,6 +19,7 @@ import { useDispatch } from "react-redux";
 import Axios from "axios";
 import { useHistory } from "react-router";
 import ConfirmOrder from "./pages/ConfirmOrder";
+import { ToastContainer, toast } from "react-toastify";
 
 function App() {
   const dispatch = useDispatch();
@@ -44,6 +45,9 @@ function App() {
 
           // reduxa yazdır
           dispatch({ type: "SET_USER", payload: userData });
+          toast.info(userData.name + " Hoşgeldin!", {
+            position: "top-right",
+          });
 
           // Renew
           localStorage.setItem("token", userData.token);
@@ -62,6 +66,7 @@ function App() {
 
   return (
     <div>
+      <ToastContainer position="top-right" autoClose={5000} />
       <Header />
       <Switch>
         <Route path="/" exact>

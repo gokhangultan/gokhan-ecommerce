@@ -25,14 +25,17 @@ function ProductDetailCard() {
     {
       src: "detail1.jpeg",
       key: 1,
+      className: "w-100 object-cover",
     },
     {
       src: "details2.jpeg",
       key: 2,
+      className: "w-100 object-cover",
     },
     {
       src: "detail3.jpeg",
       key: 3,
+      className: "w-100 object-cover",
     },
   ];
 
@@ -133,7 +136,7 @@ function ProductDetailCard() {
           src={product.images[0].url}
           alt={item.altText}
           style={customStyles}
-          className="object-contain md:w-[540px] w-[350px] h-full lg:h-auto carousel-image"
+          className="object-cover w-100 h-full lg:h-auto carousel-image"
         />
       </CarouselItem>
     );
@@ -187,7 +190,7 @@ function ProductDetailCard() {
             </Link>
           </div>
         </div>
-        <div className="flex flex-col lg:flex-row gap-5 ">
+        <div className="flex flex-col md:flex-row gap-5 ">
           <div className="basis-1/2">
             <div className="flex flex-col">
               <Carousel
@@ -318,11 +321,11 @@ function ProductDetailCard() {
           <div className="w-full border-t border-[#ECECEC]"></div>
         </div>
         <div>
-          <div className="flex flex-col md:flex-row gap-5">
+          <div className="flex flex-grow-1 basis-[210px]  flex-col sm:flex-row gap-5">
             <img
               src={product.images[0].url}
               alt="Product Image"
-              className=" w-[316px] h-[472px] rounded-md shadow-lg object-contain"
+              className=" w-100 h-[472px] rounded-md shadow-lg object-cover"
             />
             <div
               style={{
@@ -433,11 +436,11 @@ function ProductDetailCard() {
           <h3 className="text-textColor font-bold text-2xl">
             BESTSELLER PRODUCTS
           </h3>
-          <div className="flex items-center my-5">
+          <div className="flex  items-center my-5">
             <div className="w-full border-t border-[#ECECEC]"></div>
           </div>
           <section className="best-seller mb-10 text-center container ">
-            <div className=" flex flex-wrap flex-row gap-3 justify-between mb-5 ">
+            <div className=" flex flex-grow-1 basis-[250px] flex-wrap flex-row gap-3 justify-between mb-5 ">
               {displayProducts}
             </div>
             <div className="flex justify-center ">
