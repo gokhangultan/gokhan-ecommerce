@@ -27,12 +27,12 @@ export default function ProductCard({ product }) {
   };
 
   return (
-    <div className="flex justify-between border-1 border-gray-150 shadow-sm">
-      <div className="product-card w-[328px] h-[830px] sm:w-[308px] sm:h-[820px] m-3 relative">
+    <div className="flex flex-grow-1 basis-[250px] justify-between border-1 border-gray-150 shadow-sm">
+      <div className="product-card m-3 relative">
         <img
           src={product.images[0].url}
           alt="Product Image"
-          className="object-contain"
+          className="w-100 object-cover"
         />
         <button className="product-card-info">Sale</button>
         <button className="product-card-icon left-[75px]">
