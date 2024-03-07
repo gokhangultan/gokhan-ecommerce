@@ -98,18 +98,18 @@ export default function Header({ direction, ...args }) {
                 Shop
               </DropdownToggle>
               <DropdownMenu {...args}>
-                <DropdownItem text>Team</DropdownItem>
-                <DropdownItem disabled>Action (disabled)</DropdownItem>
-                <DropdownItem divider />
                 <DropdownItem header>Category</DropdownItem>
                 <Link to="/products">
                   <DropdownItem>For Men</DropdownItem>
+                  <DropdownItem divider />
                 </Link>
                 <Link to="/products">
                   <DropdownItem>For Women</DropdownItem>
+                  <DropdownItem divider />
                 </Link>
                 <Link to="/products">
                   <DropdownItem>Accessories</DropdownItem>
+                  <DropdownItem divider />
                 </Link>
                 <Link to="/products">
                   <DropdownItem>For Kids Action</DropdownItem>
@@ -216,7 +216,10 @@ export default function Header({ direction, ...args }) {
                   ))}
                   <div className="flex flex-row gap-2 justify-center">
                     <Link to="/cart">
-                      <button className="button bg-gray-300 text-black hover:bg-primaryColor px-2 py-2">
+                      <button
+                        className="button bg-gray-300 text-black hover:bg-primaryColor px-2 py-2 "
+                        onClick={closeCart}
+                      >
                         Sepete Git
                       </button>
                     </Link>
