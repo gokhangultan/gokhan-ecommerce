@@ -176,7 +176,7 @@ export default function Home() {
         </div>
       </section>
 
-      <div className="relative text-white carousel-item2 mb-5 ">
+      <div className="relative text-white carousel-item2 mb-5  ">
         <div className="">
           <Carousel2 />
           <div className="absolute top-[20px] left-[10px] sm:top-[180px] lg:left-[240px] z-10 flex flex-col text-left gap-4 carousel-2 w-[300px] md:w-[400px]">
