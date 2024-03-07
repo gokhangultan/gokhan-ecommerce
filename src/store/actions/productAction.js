@@ -5,9 +5,7 @@ const axiosInstance = Axios.create({
 });
 
 export const fetchProduct = (limit = "50", offset = 0, category = null, filter = null, sort = null) => async (dispatch) => {
-    console.log(limit, offset)
     try {
-        console.log("fetch")
         const response = await axiosInstance.get("/products", {
             params: {
                 limit: limit,
