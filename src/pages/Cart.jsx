@@ -71,7 +71,7 @@ export default function Cart() {
   };
 
   return (
-    <div className="flex flex-col md:flex-row">
+    <div className="flex flex-col md:flex-row container">
       <div className="flex flex-col gap-1 container basis-3/4">
         <h2 className="m-3 text-3xl">Sepetim ({totalItemCount} ürün)</h2>
         {cart.map((item) => (
@@ -86,7 +86,7 @@ export default function Cart() {
                 checked={item.checked}
                 onChange={() => handleCheckboxChange(item.product.id)}
               />
-              <h2 className="m-1 rounded px-6 py-2">
+              <h2 className="m-1 rounded px-6 py-2">rr2
                 Satıcı: {item.product.store_id}
               </h2>
               <h2 className="m-1  rounded px-6 py-2">

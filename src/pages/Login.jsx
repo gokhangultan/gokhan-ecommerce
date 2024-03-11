@@ -116,7 +116,7 @@ export default function Signup() {
               {isLoading ? "Kayıt Olunuyor..." : "Login"}
             </button>
             <div>
-              Do not you have an account ?{" "}
+              Do not you have an account ?
               <Link to="/signup">
                 <button className="text-primaryColor">Signup</button>
               </Link>{" "}
