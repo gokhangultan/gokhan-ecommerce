@@ -105,7 +105,7 @@ export default function Signup(props) {
                 className="form-input"
               />
               {errors.name && (
-                <span className="text-secondaryColor text-sm leading-7">
+                <span className="text-red-500 text-sm leading-7">
                   Adınız En Az 3 Karakter Olmalı.
                 </span>
               )}
@@ -122,7 +122,7 @@ export default function Signup(props) {
                 className="form-input"
               />
               {errors.email && (
-                <span className="text-secondaryColor text-sm leading-7">
+                <span className="text-red-500 text-sm leading-7">
                   Lütfen Geçerli Bir Email Giriniz.
                 </span>
               )}
@@ -141,7 +141,7 @@ export default function Signup(props) {
                 className="form-input"
               />
               {errors.password && (
-                <span className="text-secondaryColor text-sm leading-7">
+                <span className="text-red-500 text-sm leading-7">
                   Sifreniz En Az 8 Karakter Olmalı, İçerisinde Büyük-Küçük Harf
                   veya Özel Karakter İçermelidir.
                 </span>
@@ -161,7 +161,7 @@ export default function Signup(props) {
                 className="form-input"
               />
               {errors.confirmPassword && (
-                <span className="text-secondaryColor text-sm leading-7">
+                <span className="text-red-500 text-sm leading-7">
                   Şifreleriniz Eşleşmiyor.
                 </span>
               )}
@@ -192,7 +192,7 @@ export default function Signup(props) {
                     className="form-input"
                   />
                   {errors.store?.name && (
-                    <span className="text-secondaryColor text-sm leading-7">
+                    <span className="text-red-500 text-sm leading-7">
                       Store Adınız En Az 3 Karakter Olmalı.
                     </span>
                   )}
@@ -207,11 +207,11 @@ export default function Signup(props) {
                       pattern: /^(\+90|0)?\d{10}$/,
                     })}
                     type="text"
-                    placeholder="Store Telefon *"
+                    placeholder="Store Telefon * (___)_______"
                     className="form-input"
                   />
                   {errors.store?.phone && (
-                    <span className="text-secondaryColor text-sm leading-7">
+                    <span className="text-red-500 text-sm leading-7">
                       Lütfen Geçerli Bir telefon numarası giriniz. "+90- XXX XXX
                       XX XX"
                     </span>
@@ -231,7 +231,7 @@ export default function Signup(props) {
                     className="form-input"
                   />
                   {errors.store?.tax_no && (
-                    <span className="text-secondaryColor text-sm leading-7">
+                    <span className="text-red-500 text-sm leading-7">
                       Vergi Numaranızı Kontrol Ediniz: "TXXXXVXXXXXX".
                     </span>
                   )}
@@ -251,7 +251,7 @@ export default function Signup(props) {
                     className="form-input"
                   />
                   {errors.store?.bank_account && (
-                    <span className="text-secondaryColor text-sm leading-7">
+                    <span className="text-red-500 text-sm leading-7">
                       IBAN Adresinizi Kontrol Ediniz: "TRXX XXXX XXXX XXXX XXXX
                       XXXX XX".
                     </span>
