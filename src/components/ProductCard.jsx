@@ -12,6 +12,7 @@ import { faHeart, faClock } from "@fortawesome/free-regular-svg-icons";
 import { Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { GlobalAction } from "../store/reducers/ShoppingCardReducer";
+import { ToastContainer, toast } from "react-toastify";
 
 export default function ProductCard({ product }) {
   const dispatch = useDispatch();
@@ -24,10 +25,14 @@ export default function ProductCard({ product }) {
 
   const handleAddToCart = () => {
     dispatch({ type: GlobalAction.setAddCard, payload: product });
+    toast.success("Ürün Sepete Eklendi..", {
+      position: "top-right",
+    });
   };
 
   return (
     <div className="flex flex-grow-1 basis-[250px] justify-between border-1 border-gray-150 shadow-sm">
+      <ToastContainer position="top-right" autoClose={2000} />
       <div className="product-card m-3 relative">
         <img
           src={product.images[0].url}
