@@ -51,7 +51,7 @@ export default function CategoryCard() {
               <img
                 src={category.img}
                 alt={category.title}
-                className="md:w-[305px] md:h-[223px] w-[305px] h-[323px]"
+                className=" w-[305px] h-[283px] object-contain"
               />
               <div className=" absolute inset-0 flex flex-col justify-center items-center text-center bg-opacity-40 ">
                 <h5 className="z-10 text-white font-bold text-base leading-6 bg-gray-400 rounded-sm px-1">

@@ -155,8 +155,8 @@ export default function ProductList(direction) {
             </Link>
           </div>
         </div>
-        <div className="flex md:flex-row flex-col gap-4 justify-between ">
-          <div className="flex md:flex-row flex-col gap-4 justify-between ">
+        <div className="flex sm:flex-row flex-col gap-4 justify-between ">
+          <div className="flex sm:flex-row flex-col gap-4 justify-between ">
             {categories.slice(0, 1).map((category) => (
               <CategoryCard key={category.id} category={category} />
             ))}
