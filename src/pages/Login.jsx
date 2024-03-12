@@ -85,7 +85,7 @@ export default function Signup() {
                 className="form-input"
               />
               {errors.email && (
-                <span className="text-secondaryColor text-sm leading-7">
+                <span className="text-red-500 text-sm leading-7">
                   Email Adresiniz Kayıtlı Değil.{" "}
                 </span>
               )}
@@ -102,7 +102,7 @@ export default function Signup() {
                 className="form-input"
               />
               {errors.password && (
-                <span className="text-secondaryColor text-sm leading-7">
+                <span className="text-red-500 text-sm leading-7">
                   Yanlış Şifre!
                 </span>
               )}
