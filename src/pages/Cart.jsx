@@ -267,12 +267,14 @@ export default function Cart() {
             </h5>
           </div>
           <div className="flex justify-center">
-            <button
-              className="bg-primaryColor p-3 rounded text-white"
-              onClick={createOrder}
-            >
-              Sipariş Oluştur
-            </button>
+            <Link to="/confirm">
+              <button
+                className="bg-primaryColor p-3 rounded text-white"
+                onClick={createOrder}
+              >
+                Sipariş Oluştur
+              </button>
+            </Link>
           </div>
         </div>
       </div>
