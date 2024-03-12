@@ -17,6 +17,24 @@ export default function Cart() {
   const [couponCodeApplied, setCouponCodeApplied] = useState(false);
   const [discountAppliedText, setDiscountAppliedText] = useState("");
 
+  const createOrder = () => {
+    const orderData = {
+      cardTotal: cardTotal.toFixed(2),
+      shippingPrice: shippingPrice,
+      totalPrice: totalPrice.toFixed(2),
+      discountAmount: DiscountAmount.toFixed(2),
+      couponCodeApplied: couponCodeApplied,
+      discountAppliedText: discountAppliedText,
+      items: cart.map((item) => ({
+        name: item.product.name,
+        count: item.count,
+        price: item.product.price,
+      })),
+    };
+
+    sessionStorage.setItem("orderData", JSON.stringify(orderData));
+  };
+
   const cardTotal = cart.reduce(
     (total, item) => total + item.count * item.product.price,
     0
@@ -86,7 +104,7 @@ export default function Cart() {
                 checked={item.checked}
                 onChange={() => handleCheckboxChange(item.product.id)}
               />
-              <h2 className="m-1 rounded px-6 py-2">rr2
+              <h2 className="m-1 rounded px-6 py-2">
                 Satıcı: {item.product.store_id}
               </h2>
               <h2 className="m-1  rounded px-6 py-2">
@@ -249,7 +267,10 @@ export default function Cart() {
             </h5>
           </div>
           <div className="flex justify-center">
-            <button className="bg-primaryColor p-3 rounded text-white">
+            <button
+              className="bg-primaryColor p-3 rounded text-white"
+              onClick={createOrder}
+            >
               Sipariş Oluştur
             </button>
           </div>
