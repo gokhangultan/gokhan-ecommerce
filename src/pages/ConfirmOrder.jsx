@@ -24,10 +24,10 @@ export default function ConfirmOrder() {
   const [paymentButtonClicked, setPaymentButtonClicked] = useState(false);
   const [isButtonClicked, setIsButtonClicked] = useState(false);
   const [selectedAddress, setSelectedAddress] = useState(null);
-  console.log(selectedAddress);
   const [cities, setCities] = useState([]);
   const dispatch = useDispatch();
   const adressList = useSelector((state) => state.shoppingCard.address[0]);
+  const adressListSelected = useSelector((state) => state.shoppingCard);
   const [isEditing, setIsEditing] = useState(false);
   const [formData, setFormData] = useState({});
 
@@ -65,14 +65,15 @@ export default function ConfirmOrder() {
   const handleClick = () => {
     setIsButtonClicked(!isButtonClicked);
   };
+
   const handleSelectChange = (event) => {
-    const selectedId = event.target.value;
-    const selected = adressList[4][4].find(
+    const selectedId = parseInt(event.target.value); // selectedId'yi integer'a dönüştür
+    const selected = adressListSelected.address[0].find(
       (address) => address.id === selectedId
     );
     setSelectedAddress(selected);
-    console.log(selectedId);
   };
+
   const showForm = () => {
     document.getElementById("contactForm").classList.remove("hidden");
   };
@@ -96,8 +97,6 @@ export default function ConfirmOrder() {
   };
 
   const onSubmit = async (data) => {
-    localStorage.setItem("addressInfo", JSON.stringify(data));
-
     try {
       await axiosInstance.post("/user/address", data, {
         headers: {
@@ -118,20 +117,18 @@ export default function ConfirmOrder() {
       });
     }
   };
-  const onEdit = async (updatedData) => {
+
+  const onEdit = async (formData) => {
+    delete formData.id;
     try {
-      await axiosInstance.put(
-        `/user/address/${selectedAddress.id}`, // selectedAddressId'yi selectedAddress'den aldık
-        updatedData,
-        {
-          headers: {
-            Authorization: localStorage.getItem("token"),
-          },
-        }
-      );
+      await axiosInstance.put(`/user/address/${selectedAddress.id}`, formData, {
+        headers: {
+          Authorization: localStorage.getItem("token"),
+        },
+      });
 
       // Redux store'u güncelleme işlemi
-      // dispatch(setAddress(updatedData)); // Güncellenmiş adresi Redux store'a set et
+      // dispatch(setAddress(formData)); // Güncellenmiş adresi Redux store'a set et
 
       // Başarı mesajı göster
       toast.success("Adres başarıyla güncellendi.");
@@ -140,7 +137,10 @@ export default function ConfirmOrder() {
       toast.error("Adres güncellenirken bir hata oluştu.");
     }
   };
-
+  const handleEditSubmit = async (formData) => {
+    await onEdit(formData);
+  };
+  console.log(formData);
   useEffect(() => {
     const data = JSON.parse(sessionStorage.getItem("orderData"));
     if (data) {
@@ -412,19 +412,21 @@ export default function ConfirmOrder() {
                 {isEditing && (
                   <div>
                     <h2>Adres Düzenleme Formu</h2>
-                    <form id="contactForm" onSubmit={handleSubmit(onSubmit)}>
+                    <form
+                      id="contactForm"
+                      onSubmit={handleSubmit(handleEditSubmit)}
+                    >
                       <div className="flex-col flex bg-gray-200 p-5 gap-2 rounded-lg ">
                         <select
-                          {...register("selectedAddressId ", {
+                          {...register("id ", {
                             required: true,
                           })}
                           className="p-2 bg-gray-100 rounded-lg"
                           onChange={handleSelectChange}
                         >
+                          <option value="">Değişiklik Adresi Seçiniz</option>
                           {adressList.map((address, index) => (
                             <option key={index} value={address.id}>
-                              {" "}
-                              {/* Değer olarak address.id kullanılmalı */}
                               {address.title} - {address.name} - {address.id}
                             </option>
                           ))}
@@ -438,7 +440,14 @@ export default function ConfirmOrder() {
                           {...register("title", { required: true })}
                           type="text"
                           className="p-2 bg-gray-100 rounded-lg "
-                          value={selectedAddress ? selectedAddress.title : ""} // Seçilen adresin başlığını göster
+                          placeholder={
+                            selectedAddress
+                              ? selectedAddress.title
+                              : "Adres Başlığı"
+                          }
+                          defaultValue={
+                            selectedAddress ? selectedAddress.title : ""
+                          }
                         />
                         {errors.title && (
                           <span className="text-red-500 text-sm leading-7 ">
@@ -448,9 +457,13 @@ export default function ConfirmOrder() {
                         <input
                           {...register("name", { required: true })}
                           type="text"
-                          placeholder="Adı "
+                          placeholder={
+                            selectedAddress ? selectedAddress.name : "Adı"
+                          }
                           className="p-2 bg-gray-100 rounded-lg "
-                          value={selectedAddress ? selectedAddress.name : ""} // Değişiklik burada
+                          defaultValue={
+                            selectedAddress ? selectedAddress.name : ""
+                          }
                         />
                         {errors.name && (
                           <span className="text-red-500 text-sm leading-7 ">
@@ -460,8 +473,13 @@ export default function ConfirmOrder() {
                         <input
                           {...register("surname", { required: true })}
                           type="text"
-                          placeholder="Soyadı"
                           className="p-2 bg-gray-100 rounded-lg "
+                          placeholder={
+                            selectedAddress ? selectedAddress.surname : "SoyAdı"
+                          }
+                          defaultValue={
+                            selectedAddress ? selectedAddress.surname : ""
+                          }
                         />
                         {errors.surname && (
                           <span className="text-red-500 text-sm leading-7 ">
@@ -474,7 +492,12 @@ export default function ConfirmOrder() {
                             pattern: /^(\+90|0)?\d{10}$/,
                           })}
                           type="text"
-                          placeholder="Telefon * (___)_______"
+                          placeholder={
+                            selectedAddress ? selectedAddress.phone : "Phone"
+                          }
+                          defaultValue={
+                            selectedAddress ? selectedAddress.phone : ""
+                          }
                           className="p-2  bg-gray-100 rounded-lg "
                         />
                         {errors.phone && (
@@ -486,6 +509,12 @@ export default function ConfirmOrder() {
                         <select
                           {...register("city", { required: true })}
                           className="p-2 bg-gray-100 rounded-lg"
+                          placeholder={
+                            selectedAddress ? selectedAddress.city : "Sehir"
+                          }
+                          defaultValue={
+                            selectedAddress ? selectedAddress.city : ""
+                          }
                         >
                           {cities.map((city, index) => (
                             <option key={index} value={city}>
@@ -501,7 +530,14 @@ export default function ConfirmOrder() {
                         <input
                           {...register("district", { required: true })}
                           type="text"
-                          placeholder="district"
+                          placeholder={
+                            selectedAddress
+                              ? selectedAddress.district
+                              : "district"
+                          }
+                          defaultValue={
+                            selectedAddress ? selectedAddress.district : ""
+                          }
                           className="p-2 bg-gray-100 rounded-lg "
                         />
                         {errors.district && (
@@ -512,7 +548,14 @@ export default function ConfirmOrder() {
                         <input
                           {...register("neighborhood", { required: true })}
                           type="text"
-                          placeholder="Neighborhood"
+                          placeholder={
+                            selectedAddress
+                              ? selectedAddress.neighborhood
+                              : "neighborhood"
+                          }
+                          defaultValue={
+                            selectedAddress ? selectedAddress.neighborhood : ""
+                          }
                           className="p-2 bg-gray-100 rounded-lg "
                         />
                         {errors.neighborhood && (
@@ -523,7 +566,14 @@ export default function ConfirmOrder() {
                         <textarea
                           {...register("address", { required: true })}
                           type="text"
-                          placeholder="Açık Adresiniz"
+                          placeholder={
+                            selectedAddress
+                              ? selectedAddress.address
+                              : "address"
+                          }
+                          defaultValue={
+                            selectedAddress ? selectedAddress.address : ""
+                          }
                           className="p-2  bg-gray-100 rounded-lg "
                         />
                         {errors.address && (
