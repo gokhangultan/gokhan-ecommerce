@@ -119,9 +119,8 @@ export default function ConfirmOrder() {
   };
 
   const onEdit = async (formData) => {
-    delete formData.id;
     try {
-      await axiosInstance.put(`/user/address/${selectedAddress.id}`, formData, {
+      await axiosInstance.put("/user/address/", formData, {
         headers: {
           Authorization: localStorage.getItem("token"),
         },
@@ -137,10 +136,7 @@ export default function ConfirmOrder() {
       toast.error("Adres güncellenirken bir hata oluştu.");
     }
   };
-  const handleEditSubmit = async (formData) => {
-    await onEdit(formData);
-  };
-  console.log(formData);
+
   useEffect(() => {
     const data = JSON.parse(sessionStorage.getItem("orderData"));
     if (data) {
@@ -412,13 +408,10 @@ export default function ConfirmOrder() {
                 {isEditing && (
                   <div>
                     <h2>Adres Düzenleme Formu</h2>
-                    <form
-                      id="contactForm"
-                      onSubmit={handleSubmit(handleEditSubmit)}
-                    >
+                    <form id="contactForm" onSubmit={handleSubmit(onEdit)}>
                       <div className="flex-col flex bg-gray-200 p-5 gap-2 rounded-lg ">
                         <select
-                          {...register("id ", {
+                          {...register("id", {
                             required: true,
                           })}
                           className="p-2 bg-gray-100 rounded-lg"
@@ -582,7 +575,6 @@ export default function ConfirmOrder() {
                           </span>
                         )}
                         <button
-                          onClick={onEdit}
                           type="submit"
                           className="text-sm font-bold leading-6 bg-primaryColor rounded px-5 py-3 text-white hover:text-primaryColor hover:bg-gray-400 border-1 border-primaryColor"
                         >
