@@ -10,7 +10,11 @@ import { useDispatch, useSelector } from "react-redux";
 import { GlobalAction } from "../store/reducers/ShoppingCardReducer";
 import { ToastContainer, toast } from "react-toastify";
 import { faUser } from "@fortawesome/free-regular-svg-icons";
-import { fetchAddress } from "../store/actions/addressAction";
+import {
+  axiosInstance,
+  fetchAddress,
+  setAddress,
+} from "../store/actions/addressAction";
 
 export default function ConfirmOrder() {
   const [orderData, setOrderData] = useState(null);
@@ -19,9 +23,13 @@ export default function ConfirmOrder() {
   const [addressButtonClicked, setAddressButtonClicked] = useState(false);
   const [paymentButtonClicked, setPaymentButtonClicked] = useState(false);
   const [isButtonClicked, setIsButtonClicked] = useState(false);
+  const [selectedAddress, setSelectedAddress] = useState(null);
   const [cities, setCities] = useState([]);
   const dispatch = useDispatch();
-  const adressList = useSelector((state) => state.shoppingCard.address);
+  const adressList = useSelector((state) => state.shoppingCard.address[0]);
+  const adressListSelected = useSelector((state) => state.shoppingCard);
+  const [isEditing, setIsEditing] = useState(false);
+  const [formData, setFormData] = useState({});
 
   useEffect(() => {
     if (!adressList || adressList.length === 0) {
@@ -58,6 +66,14 @@ export default function ConfirmOrder() {
     setIsButtonClicked(!isButtonClicked);
   };
 
+  const handleSelectChange = (event) => {
+    const selectedId = parseInt(event.target.value); // selectedId'yi integer'a dönüştür
+    const selected = adressListSelected.address[0].find(
+      (address) => address.id === selectedId
+    );
+    setSelectedAddress(selected);
+  };
+
   const showForm = () => {
     document.getElementById("contactForm").classList.remove("hidden");
   };
@@ -75,12 +91,50 @@ export default function ConfirmOrder() {
     setPaymentButtonClicked(true);
   };
 
-  const onSubmit = (data) => {
-    // localStorage'a adresi at
-    localStorage.setItem("addressInfo", JSON.stringify(data));
-    toast.success(" Adresiniz Kaydedildi.", {
-      position: "top-right",
-    });
+  const handleEdit = (selectedAddress) => {
+    setFormData(selectedAddress); // Populate form fields with address data
+    setIsEditing(true); // Show the editing form
+  };
+
+  const onSubmit = async (data) => {
+    try {
+      await axiosInstance.post("/user/address", data, {
+        headers: {
+          Authorization: localStorage.getItem("token"),
+        },
+      });
+
+      // Redux store'a adresi set et
+      dispatch(setAddress(data));
+      toast.success("Adresiniz Kaydedildi.", {
+        position: "top-right",
+      });
+    } catch (error) {
+      console.error("Adres gönderilemedi veya işlenemedi.", error);
+
+      toast.error("Adres gönderilemedi ", {
+        position: "top-right",
+      });
+    }
+  };
+
+  const onEdit = async (formData) => {
+    try {
+      await axiosInstance.put("/user/address/", formData, {
+        headers: {
+          Authorization: localStorage.getItem("token"),
+        },
+      });
+
+      // Redux store'u güncelleme işlemi
+      // dispatch(setAddress(formData)); // Güncellenmiş adresi Redux store'a set et
+
+      // Başarı mesajı göster
+      toast.success("Adres başarıyla güncellendi.");
+    } catch (error) {
+      console.error("Adres güncellenemedi:", error);
+      toast.error("Adres güncellenirken bir hata oluştu.");
+    }
   };
 
   useEffect(() => {
@@ -141,6 +195,7 @@ export default function ConfirmOrder() {
             </p>
           </button>
         </div>
+
         <div className={showAddressInfo ? "flex " : "hidden"}>
           <div className="flex flex-col w-full gap-3">
             <div className=" items-center flex gap-2">
@@ -153,6 +208,116 @@ export default function ConfirmOrder() {
               Gönder" tikini kaldırın ve Fatura adresi olarak kayıtlı Kurumsal
               Fatura adresinizi seçin.
             </div>
+            <form
+              id="contactForm"
+              className="hidden"
+              onSubmit={handleSubmit(onSubmit)}
+            >
+              <div className="flex-col flex bg-gray-200 p-5 gap-2 rounded-lg ">
+                <input
+                  {...register("title", { required: true })}
+                  type="text"
+                  placeholder="Adres Başığı"
+                  className="p-2 bg-gray-100 rounded-lg "
+                />
+                {errors.title && (
+                  <span className="text-red-500 text-sm leading-7 ">
+                    Adres Başlığı Zorunludur
+                  </span>
+                )}
+                <input
+                  {...register("name", { required: true })}
+                  type="text"
+                  placeholder="Adı "
+                  className="p-2 bg-gray-100 rounded-lg "
+                />
+                {errors.name && (
+                  <span className="text-red-500 text-sm leading-7 ">
+                    Ad Alanı Zorunludur
+                  </span>
+                )}
+                <input
+                  {...register("surname", { required: true })}
+                  type="text"
+                  placeholder="Soyadı"
+                  className="p-2 bg-gray-100 rounded-lg "
+                />
+                {errors.surname && (
+                  <span className="text-red-500 text-sm leading-7 ">
+                    SoyAd Alanı Zorunludur
+                  </span>
+                )}
+                <input
+                  {...register("phone", {
+                    required: true,
+                    pattern: /^(\+90|0)?\d{10}$/,
+                  })}
+                  type="text"
+                  placeholder="Telefon * (___)_______"
+                  className="p-2  bg-gray-100 rounded-lg "
+                />
+                {errors.phone && (
+                  <span className="text-red-500 text-sm leading-7 ">
+                    Lütfen Geçerli Bir telefon numarası giriniz. "+90- XXX XXX
+                    XX XX"
+                  </span>
+                )}
+                <select
+                  {...register("city", { required: true })}
+                  className="p-2 bg-gray-100 rounded-lg"
+                >
+                  {cities.map((city, index) => (
+                    <option key={index} value={city}>
+                      {city}
+                    </option>
+                  ))}
+                </select>
+                {errors.city && (
+                  <span className="text-red-500 text-sm leading-7">
+                    Lütfen Şehir Seçiniz
+                  </span>
+                )}
+                <input
+                  {...register("district", { required: true })}
+                  type="text"
+                  placeholder="district"
+                  className="p-2 bg-gray-100 rounded-lg "
+                />
+                {errors.district && (
+                  <span className="text-red-500 text-sm leading-7 ">
+                    District Alanı Zorunludur
+                  </span>
+                )}
+                <input
+                  {...register("neighborhood", { required: true })}
+                  type="text"
+                  placeholder="Neighborhood"
+                  className="p-2 bg-gray-100 rounded-lg "
+                />
+                {errors.neighborhood && (
+                  <span className="text-red-500 text-sm leading-7 ">
+                    Neighborhood Alanı Zorunludur
+                  </span>
+                )}
+                <textarea
+                  {...register("address", { required: true })}
+                  type="text"
+                  placeholder="Açık Adresiniz"
+                  className="p-2  bg-gray-100 rounded-lg "
+                />
+                {errors.address && (
+                  <span className="text-red-500 text-sm leading-7 ">
+                    Açık Adres Alanı Doldurunuz
+                  </span>
+                )}
+                <button
+                  type="submit"
+                  className="text-sm font-bold leading-6 bg-primaryColor rounded px-5 py-3 text-white hover:text-primaryColor hover:bg-gray-400 border-1 border-primaryColor"
+                >
+                  Adresi Kaydet
+                </button>
+              </div>
+            </form>
             <div className="flex flex-row justify-between">
               <h1>Teslimat Adresi</h1>
               <h1>Faturamı Aynı Adrese Gönder</h1>
@@ -171,184 +336,260 @@ export default function ConfirmOrder() {
                   <h1>Yeni Adres Ekle</h1>
                 </button>
                 <div>
-                  {adressList.map((address, index) => (
-                    <div key={index}>
-                      <div className="flex flex-col gap-2">
-                        <div className="flex flex-row justify-between">
-                          <div>
-                            <input
-                              className="m-1"
-                              type="checkbox"
-                              onClick={handleClick}
-                            />
-                            {address.title}
-                          </div>
-                          <h1 className="underline">Düzenle</h1>
-                        </div>
-                        <div
-                          className={`flex flex-col gap-3 bg-${
-                            isButtonClicked ? "primaryColor" : "gray-200"
-                          } ${isButtonClicked ? "" : "shadow-lg"} text-${
-                            isButtonClicked ? "white" : "black"
-                          } p-2 rounded-lg`}
-                        >
-                          <div className="flex flex-row justify-between items-center">
-                            <h1 className="flex items-center gap-2">
-                              {" "}
-                              <FontAwesomeIcon
-                                icon={faUser}
-                                style={{
-                                  color: isButtonClicked
-                                    ? "#FFFFFF"
-                                    : "#23A6F0",
-                                }}
-                                size="lg"
-                              />{" "}
-                              {address.name}
-                            </h1>
-                            <h1 className="flex items-center gap-2">
-                              {" "}
-                              <FontAwesomeIcon
-                                icon={faPhone}
-                                style={{
-                                  color: isButtonClicked
-                                    ? "#FFFFFF"
-                                    : "#23A6F0",
-                                }}
-                                size="lg"
+                  {adressList && adressList.length > 0 ? (
+                    adressList.map((address, index) => (
+                      <div key={index}>
+                        <div className="flex flex-col gap-2">
+                          <div className="flex flex-row justify-between">
+                            <div>
+                              <input
+                                className="m-1"
+                                type="checkbox"
+                                onClick={handleClick}
                               />
-                              {address.phone}
-                            </h1>
+                              {address.title}
+                            </div>
+                            <button
+                              className="underline"
+                              onClick={() => handleEdit(address)}
+                            >
+                              Düzenle
+                            </button>
                           </div>
-                          <div className="flex flex-col gap-2">
-                            <h2>{address.city}</h2>
-                            <p>{address.address}</p>
+                          <div
+                            className={`flex flex-col gap-3 bg-${
+                              isButtonClicked ? "primaryColor" : "gray-200"
+                            } ${isButtonClicked ? "" : "shadow-lg"} text-${
+                              isButtonClicked ? "white" : "black"
+                            } p-2 rounded-lg`}
+                          >
+                            <div className="flex flex-row justify-between items-center">
+                              <h1 className="flex items-center gap-2">
+                                <FontAwesomeIcon
+                                  icon={faUser}
+                                  style={{
+                                    color: isButtonClicked
+                                      ? "#FFFFFF"
+                                      : "#23A6F0",
+                                  }}
+                                  size="lg"
+                                />
+                                {address.name}
+                              </h1>
+                              <h1 className="flex items-center gap-2">
+                                <FontAwesomeIcon
+                                  icon={faPhone}
+                                  style={{
+                                    color: isButtonClicked
+                                      ? "#FFFFFF"
+                                      : "#23A6F0",
+                                  }}
+                                  size="lg"
+                                />
+                                {address.phone}
+                              </h1>
+                            </div>
+                            <div className="flex flex-col gap-2">
+                              <h2>{address.city}</h2>
+                              <p>{address.address}</p>
+                            </div>
                           </div>
                         </div>
                       </div>
-                    </div>
-                  ))}
+                    ))
+                  ) : (
+                    <p>Adresler Alınırken Bir Sorun Oluştu</p>
+                  )}
                 </div>
 
                 <div>box1</div>
               </div>
               <div className="flex-col flex gap-3 basis-1/2">
-                <div>box1</div>
+                {isEditing && (
+                  <div>
+                    <h2>Adres Düzenleme Formu</h2>
+                    <form id="contactForm" onSubmit={handleSubmit(onEdit)}>
+                      <div className="flex-col flex bg-gray-200 p-5 gap-2 rounded-lg ">
+                        <select
+                          {...register("id", {
+                            required: true,
+                          })}
+                          className="p-2 bg-gray-100 rounded-lg"
+                          onChange={handleSelectChange}
+                        >
+                          <option value="">Değişiklik Adresi Seçiniz</option>
+                          {adressList.map((address, index) => (
+                            <option key={index} value={address.id}>
+                              {address.title} - {address.name} - {address.id}
+                            </option>
+                          ))}
+                        </select>
+                        {errors.selectedAddressId && (
+                          <span className="text-red-500 text-sm leading-7 ">
+                            Lütfen bir adres seçin
+                          </span>
+                        )}
+                        <input
+                          {...register("title", { required: true })}
+                          type="text"
+                          className="p-2 bg-gray-100 rounded-lg "
+                          placeholder={
+                            selectedAddress
+                              ? selectedAddress.title
+                              : "Adres Başlığı"
+                          }
+                          defaultValue={
+                            selectedAddress ? selectedAddress.title : ""
+                          }
+                        />
+                        {errors.title && (
+                          <span className="text-red-500 text-sm leading-7 ">
+                            Adres Başlığı Zorunludur
+                          </span>
+                        )}
+                        <input
+                          {...register("name", { required: true })}
+                          type="text"
+                          placeholder={
+                            selectedAddress ? selectedAddress.name : "Adı"
+                          }
+                          className="p-2 bg-gray-100 rounded-lg "
+                          defaultValue={
+                            selectedAddress ? selectedAddress.name : ""
+                          }
+                        />
+                        {errors.name && (
+                          <span className="text-red-500 text-sm leading-7 ">
+                            Ad Alanı Zorunludur
+                          </span>
+                        )}
+                        <input
+                          {...register("surname", { required: true })}
+                          type="text"
+                          className="p-2 bg-gray-100 rounded-lg "
+                          placeholder={
+                            selectedAddress ? selectedAddress.surname : "SoyAdı"
+                          }
+                          defaultValue={
+                            selectedAddress ? selectedAddress.surname : ""
+                          }
+                        />
+                        {errors.surname && (
+                          <span className="text-red-500 text-sm leading-7 ">
+                            SoyAd Alanı Zorunludur
+                          </span>
+                        )}
+                        <input
+                          {...register("phone", {
+                            required: true,
+                            pattern: /^(\+90|0)?\d{10}$/,
+                          })}
+                          type="text"
+                          placeholder={
+                            selectedAddress ? selectedAddress.phone : "Phone"
+                          }
+                          defaultValue={
+                            selectedAddress ? selectedAddress.phone : ""
+                          }
+                          className="p-2  bg-gray-100 rounded-lg "
+                        />
+                        {errors.phone && (
+                          <span className="text-red-500 text-sm leading-7 ">
+                            Lütfen Geçerli Bir telefon numarası giriniz. "+90-
+                            XXX XXX XX XX"
+                          </span>
+                        )}
+                        <select
+                          {...register("city", { required: true })}
+                          className="p-2 bg-gray-100 rounded-lg"
+                          placeholder={
+                            selectedAddress ? selectedAddress.city : "Sehir"
+                          }
+                          defaultValue={
+                            selectedAddress ? selectedAddress.city : ""
+                          }
+                        >
+                          {cities.map((city, index) => (
+                            <option key={index} value={city}>
+                              {city}
+                            </option>
+                          ))}
+                        </select>
+                        {errors.city && (
+                          <span className="text-red-500 text-sm leading-7">
+                            Lütfen Şehir Seçiniz
+                          </span>
+                        )}
+                        <input
+                          {...register("district", { required: true })}
+                          type="text"
+                          placeholder={
+                            selectedAddress
+                              ? selectedAddress.district
+                              : "district"
+                          }
+                          defaultValue={
+                            selectedAddress ? selectedAddress.district : ""
+                          }
+                          className="p-2 bg-gray-100 rounded-lg "
+                        />
+                        {errors.district && (
+                          <span className="text-red-500 text-sm leading-7 ">
+                            District Alanı Zorunludur
+                          </span>
+                        )}
+                        <input
+                          {...register("neighborhood", { required: true })}
+                          type="text"
+                          placeholder={
+                            selectedAddress
+                              ? selectedAddress.neighborhood
+                              : "neighborhood"
+                          }
+                          defaultValue={
+                            selectedAddress ? selectedAddress.neighborhood : ""
+                          }
+                          className="p-2 bg-gray-100 rounded-lg "
+                        />
+                        {errors.neighborhood && (
+                          <span className="text-red-500 text-sm leading-7 ">
+                            Neighborhood Alanı Zorunludur
+                          </span>
+                        )}
+                        <textarea
+                          {...register("address", { required: true })}
+                          type="text"
+                          placeholder={
+                            selectedAddress
+                              ? selectedAddress.address
+                              : "address"
+                          }
+                          defaultValue={
+                            selectedAddress ? selectedAddress.address : ""
+                          }
+                          className="p-2  bg-gray-100 rounded-lg "
+                        />
+                        {errors.address && (
+                          <span className="text-red-500 text-sm leading-7 ">
+                            Açık Adres Alanı Doldurunuz
+                          </span>
+                        )}
+                        <button
+                          type="submit"
+                          className="text-sm font-bold leading-6 bg-primaryColor rounded px-5 py-3 text-white hover:text-primaryColor hover:bg-gray-400 border-1 border-primaryColor"
+                        >
+                          Adresi Güncelle
+                        </button>
+                      </div>
+                    </form>
+                  </div>
+                )}{" "}
                 <div>box1</div>
               </div>
             </div>
           </div>
         </div>
-        <form
-          id="contactForm"
-          className="hidden"
-          onSubmit={handleSubmit(onSubmit)}
-        >
-          <div className="flex-col flex bg-gray-200 p-5 gap-2 rounded-lg ">
-            <input
-              {...register("title", { required: true })}
-              type="text"
-              placeholder="Adres Başığı"
-              className="p-2 bg-gray-100 rounded-lg "
-            />
-            {errors.title && (
-              <span className="text-red-500 text-sm leading-7 ">
-                Adres Başlığı Zorunludur
-              </span>
-            )}
-            <input
-              {...register("name", { required: true })}
-              type="text"
-              placeholder="Adı "
-              className="p-2 bg-gray-100 rounded-lg "
-            />
-            {errors.name && (
-              <span className="text-red-500 text-sm leading-7 ">
-                Ad Alanı Zorunludur
-              </span>
-            )}
-            <input
-              {...register("surname", { required: true })}
-              type="text"
-              placeholder="Soyadı"
-              className="p-2 bg-gray-100 rounded-lg "
-            />
-            {errors.surname && (
-              <span className="text-red-500 text-sm leading-7 ">
-                SoyAd Alanı Zorunludur
-              </span>
-            )}
-            <input
-              {...register("phone", {
-                required: true,
-                pattern: /^(\+90|0)?\d{10}$/,
-              })}
-              type="text"
-              placeholder="Telefon * (___)_______"
-              className="p-2  bg-gray-100 rounded-lg "
-            />
-            {errors.phone && (
-              <span className="text-red-500 text-sm leading-7 ">
-                Lütfen Geçerli Bir telefon numarası giriniz. "+90- XXX XXX XX
-                XX"
-              </span>
-            )}
-            <select
-              {...register("city", { required: true })}
-              className="p-2 bg-gray-100 rounded-lg"
-            >
-              {cities.map((city, index) => (
-                <option key={index} value={city}>
-                  {city}
-                </option>
-              ))}
-            </select>
-            {errors.city && (
-              <span className="text-red-500 text-sm leading-7">
-                Lütfen Şehir Seçiniz
-              </span>
-            )}
-            <input
-              {...register("district", { required: true })}
-              type="text"
-              placeholder="district"
-              className="p-2 bg-gray-100 rounded-lg "
-            />
-            {errors.district && (
-              <span className="text-red-500 text-sm leading-7 ">
-                District Alanı Zorunludur
-              </span>
-            )}
-            <input
-              {...register("neighborhood", { required: true })}
-              type="text"
-              placeholder="Neighborhood"
-              className="p-2 bg-gray-100 rounded-lg "
-            />
-            {errors.neighborhood && (
-              <span className="text-red-500 text-sm leading-7 ">
-                Neighborhood Alanı Zorunludur
-              </span>
-            )}
-            <textarea
-              {...register("address", { required: true })}
-              type="text"
-              placeholder="Açık Adresiniz"
-              className="p-2  bg-gray-100 rounded-lg "
-            />
-            {errors.address && (
-              <span className="text-red-500 text-sm leading-7 ">
-                Açık Adres Alanı Doldurunuz
-              </span>
-            )}
-            <button
-              type="submit"
-              className="text-sm font-bold leading-6 bg-primaryColor rounded px-5 py-3 text-white hover:text-primaryColor hover:bg-gray-400 border-1 border-primaryColor"
-            >
-              Adresi Kaydet
-            </button>
-          </div>
-        </form>
+
         <div className={showPaymentOptions ? "flex" : "hidden"}>
           Ödeme Seçenekleri Görüntüleniyor
         </div>

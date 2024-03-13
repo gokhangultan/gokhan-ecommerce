@@ -59,12 +59,12 @@ export const shoppingCartReducer = (state = initialState, action) => {
                 ...state,
                 payment: action.payload
             };
-        case GlobalAction.setAddressInfo:
-            // Adres bilgilerini güncelleme
-            return {
-                ...state,
-                address: action.payload
-            };
+            case GlobalAction.setAddressInfo:
+                // Adres bilgilerini güncelleme
+                return {
+                    ...state,
+                    address: [...state.address, action.payload]
+                };
         default:
             return state;
     }
