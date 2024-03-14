@@ -8,6 +8,7 @@ import { fetchRoles } from "../store/actions/roleActions";
 import { Link } from "react-router-dom/cjs/react-router-dom.min";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronRight } from "@fortawesome/free-solid-svg-icons";
+import { useHistory } from "react-router";
 
 const axiosInstance = Axios.create({
   baseURL: "https://workintech-fe-ecommerce.onrender.com",
@@ -24,6 +25,7 @@ export default function Signup(props) {
   const [isLoading, setIsLoading] = useState(false);
   const dispatch = useDispatch();
   const roles = useSelector((state) => state.global.roles);
+  const history = useHistory();
 
   //Rolleri fetchle al
   useEffect(() => {
@@ -268,9 +270,14 @@ export default function Signup(props) {
             </button>
             <div>
               Do you have an account ?{" "}
-              <Link to="/login">
-                <button className="text-primaryColor">Login</button>
-              </Link>{" "}
+              <button
+                className="text-primaryColor"
+                onClick={() => {
+                  history.push("/login");
+                }}
+              >
+                Login
+              </button>
             </div>
             <ToastContainer position="top-right" autoClose={5000} />
           </div>

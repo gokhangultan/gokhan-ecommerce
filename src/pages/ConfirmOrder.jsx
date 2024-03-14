@@ -7,7 +7,6 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
-import { GlobalAction } from "../store/reducers/ShoppingCardReducer";
 import { ToastContainer, toast } from "react-toastify";
 import { faUser } from "@fortawesome/free-regular-svg-icons";
 import {
@@ -92,8 +91,8 @@ export default function ConfirmOrder() {
   };
 
   const handleEdit = (selectedAddress) => {
-    setFormData(selectedAddress); // Populate form fields with address data
-    setIsEditing(true); // Show the editing form
+    setFormData(selectedAddress);
+    setIsEditing(true);
   };
 
   const onSubmit = async (data) => {

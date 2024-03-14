@@ -9,12 +9,13 @@ import {
   faChevronRight,
 } from "@fortawesome/free-solid-svg-icons";
 import { faHeart, faClock } from "@fortawesome/free-regular-svg-icons";
-import { Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { GlobalAction } from "../store/reducers/ShoppingCardReducer";
 import { ToastContainer, toast } from "react-toastify";
+import { useHistory } from "react-router";
 
 export default function ProductCard({ product }) {
+  const history = useHistory();
   const dispatch = useDispatch();
   const categories = {
     1: { id: 1, code: "k:tisort" },
@@ -111,11 +112,16 @@ export default function ProductCard({ product }) {
               STOCK {product.stock}
             </h6>
           </div>
-          <Link to={`/product/${categoryCode}/${product.id}/${product.name}/`}>
-            <button className="product-card-more ">
-              Learn More <FontAwesomeIcon icon={faChevronRight} />{" "}
-            </button>
-          </Link>
+          <button
+            className="product-card-more"
+            onClick={() => {
+              history.push(
+                `/product/${categoryCode}/${product.id}/${product.name}/`
+              );
+            }}
+          >
+            Learn More <FontAwesomeIcon icon={faChevronRight} />
+          </button>
         </div>
       </div>
     </div>
