@@ -2,9 +2,8 @@ import { faPlus, faTrash, faX } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useDispatch, useSelector } from "react-redux";
 import { GlobalAction } from "../store/reducers/ShoppingCardReducer";
-import { Link } from "react-router-dom/cjs/react-router-dom.min";
 import { useEffect, useState } from "react";
-import { Button } from "reactstrap";
+import { useHistory } from "react-router";
 
 export default function Cart() {
   const cart = useSelector((state) => state.shoppingCard.cart);
@@ -12,6 +11,7 @@ export default function Cart() {
   const dispatch = useDispatch();
   const [confirmOrder, setConfirmOrder] = useState(false);
   const [shippingPrice, setShippingPrice] = useState(29.9);
+  const history = useHistory();
   const [totalPrice, setTotalPrice] = useState(0);
   const [showForm, setShowForm] = useState(false);
   const [couponCodeApplied, setCouponCodeApplied] = useState(false);
@@ -269,7 +269,10 @@ export default function Cart() {
           <div className="flex justify-center">
             <button
               className="bg-primaryColor p-3 rounded text-white"
-              onClick={createOrder}
+              onClick={() => {
+                history.push("/confirm");
+                createOrder();
+              }}
             >
               Sipariş Oluştur
             </button>

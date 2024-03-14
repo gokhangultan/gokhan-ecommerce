@@ -2,16 +2,16 @@ import Carousel from "../components/Carousel";
 import Carousel2 from "../components/Carousel2";
 import ProductCard from "../components/ProductCard";
 import FeaturedCard from "../components/FeaturedCard";
-import { Link } from "react-router-dom/cjs/react-router-dom.min";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 import { fetchProduct } from "../store/actions/productAction";
 import ReactPaginate from "react-paginate";
+import { useHistory } from "react-router";
 
 export default function Home() {
   const [pageNumber, setPageNumber] = useState(0);
   const [sortedProducts, setSortedProducts] = useState([]);
-
+  const history = useHistory();
   const dispatch = useDispatch();
   const productList = useSelector((state) => state.products.productList);
   const sortByPopularity = () => {
@@ -86,11 +86,14 @@ export default function Home() {
             </h4>
           </div>
           <div>
-            <Link to="/products">
-              <button className="carousel-button hover:bg-white hover:text-[#2DC071]">
-                SHOP NOW
-              </button>
-            </Link>
+            <button
+              className="carousel-button hover:bg-white hover:text-[#2DC071]"
+              onClick={() => {
+                history.push("/products");
+              }}
+            >
+              SHOP NOW
+            </button>
           </div>
         </div>
       </div>
@@ -103,38 +106,59 @@ export default function Home() {
           Problems trying to resolve the conflict between{" "}
         </p>
         <div className="flex flex-col sm:flex-row gap-3 justify-center mt-[50px] relative mx-4">
-          <Link to="/products">
-            {" "}
-            <div className="flex">
-              <img
-                src="editor.jpeg"
-                className="object-cover w-[500px] h-[509px]"
-              />
-              <button className="editor-button border-1">MEN</button>
-            </div>
-          </Link>
-          <Link to="/products">
-            <div className="flex">
-              <img
-                src="editor2.jpeg"
-                className="object-cover w-[500px] sm:w-[250px]  h-[509px]"
-              />
-              <button className="editor-button border-1 ">WOMEN</button>
-            </div>
-          </Link>
+          {" "}
+          <div className="flex">
+            <img
+              src="editor.jpeg"
+              className="object-cover w-[500px] h-[509px]"
+            />
+            <button
+              className="editor-button border-1"
+              onClick={() => {
+                history.push("/products");
+              }}
+            >
+              MEN
+            </button>
+          </div>
+          <div className="flex">
+            <img
+              src="editor2.jpeg"
+              className="object-cover w-[500px] sm:w-[250px]  h-[509px]"
+            />
+            <button
+              className="editor-button border-1 "
+              onClick={() => {
+                history.push("/products");
+              }}
+            >
+              WOMEN
+            </button>
+          </div>
           <div className="flex-col relative ">
-            <Link to="/products">
-              <div className="flex mb-2">
-                <img
-                  src="editor3.jpeg"
-                  className="object-cover w-[500px] sm:w-[250px] h-[250px]"
-                />
-                <button className="editor-button border-1">KIDS</button>
-                <button className=" editor-button mt-[176px] border-1">
-                  ACCESSORIES
-                </button>
-              </div>
-            </Link>
+            <div className="flex mb-2">
+              <img
+                src="editor3.jpeg"
+                className="object-cover w-[500px] sm:w-[250px] h-[250px]"
+              />
+              <button
+                className="editor-button border-1"
+                onClick={() => {
+                  history.push("/products");
+                }}
+              >
+                KIDS
+              </button>
+              <button
+                className=" editor-button mt-[176px] border-1"
+                onClick={() => {
+                  history.push("/products");
+                }}
+              >
+                ACCESSORIES
+              </button>
+            </div>
+
             <div className="flex">
               <img
                 src="editor4.jpeg"
@@ -200,11 +224,14 @@ export default function Home() {
               <h3 className=" text-white  text-2xl leading-8 font-bold mr-0 sm:mr-10 ">
                 $16.48
               </h3>
-              <Link to="/card">
-                <button className="carousel-button hover:bg-white hover:text-green-500 bg-[#2DC071] ">
-                  ADD TO CART
-                </button>
-              </Link>{" "}
+              <button
+                className="carousel-button hover:bg-white hover:text-green-500 bg-[#2DC071] "
+                onClick={() => {
+                  history.push("/card");
+                }}
+              >
+                ADD TO CART
+              </button>
             </div>
           </div>
         </div>
@@ -226,17 +253,22 @@ export default function Home() {
                 We know how large objects will act, but things on a small scale.
               </div>
               <div className="flex flex-col sm:flex-row  gap-3 ">
-                <Link to="/productpage">
-                  <button className="button primary-button px-4 ">
-                    BUY NOW
-                  </button>
-                </Link>
-                <Link to="/">
-                  {" "}
-                  <button className="button secondary-button ">
-                    READ MORE
-                  </button>
-                </Link>
+                <button
+                  className="button primary-button px-4 "
+                  onClick={() => {
+                    history.push("/productpage");
+                  }}
+                >
+                  BUY NOW
+                </button>{" "}
+                <button
+                  className="button secondary-button "
+                  onClick={() => {
+                    history.push("/");
+                  }}
+                >
+                  READ MORE
+                </button>
               </div>
             </div>
           </div>

@@ -117,9 +117,14 @@ export default function Signup() {
             </button>
             <div>
               Do not you have an account ?
-              <Link to="/signup">
-                <button className="text-primaryColor">Signup</button>
-              </Link>{" "}
+              <button
+                className="text-primaryColor"
+                onClick={() => {
+                  history.push("/signup");
+                }}
+              >
+                Signup
+              </button>
             </div>
             <ToastContainer position="top-right" autoClose={5000} />
           </div>

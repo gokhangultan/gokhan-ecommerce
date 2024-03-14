@@ -1,7 +1,7 @@
 import Axios from 'axios';
 import { GlobalAction } from '../reducers/ShoppingCardReducer';
 
-const axiosInstance = Axios.create({
+export const axiosInstance = Axios.create({
     baseURL: "https://workintech-fe-ecommerce.onrender.com"
 });
 
@@ -13,8 +13,12 @@ export const fetchAddress = () => async (dispatch, getState) => {
             // adres varmı kontrol et
             return;
         }
-        const response = await axiosInstance.get("/user/address");
-        dispatch(setAddress(response.data));
+        const response = await axiosInstance.get("/user/address", {
+            headers: {
+                Authorization: localStorage.getItem("token")
+            }
+        });
+                dispatch(setAddress(response.data));
     } catch (error) {
         console.error("Adreslere erişemiyorum.", error);
     }

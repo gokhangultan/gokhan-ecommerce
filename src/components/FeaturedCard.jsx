@@ -1,9 +1,10 @@
 import { faClock } from "@fortawesome/free-regular-svg-icons";
 import { faChartLine, faChevronRight } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { Link } from "react-router-dom/cjs/react-router-dom.min";
+import { useHistory } from "react-router";
 
 export default function FeaturedCard() {
+  const history = useHistory();
   return (
     <div>
       <div className="w-[328px] h-[606px] border-1 border-gray-150 shadow relative">
@@ -37,11 +38,15 @@ export default function FeaturedCard() {
               10 comments
             </h6>
           </div>
-          <Link to="/">
-            <button className="product-card-more ">
-              Learn More <FontAwesomeIcon icon={faChevronRight} />{" "}
-            </button>
-          </Link>
+          <button
+            className="product-card-more "
+            onClick={() => {
+              history.push("/");
+              closeCart();
+            }}
+          >
+            Learn More <FontAwesomeIcon icon={faChevronRight} />{" "}
+          </button>
         </div>
       </div>
     </div>
