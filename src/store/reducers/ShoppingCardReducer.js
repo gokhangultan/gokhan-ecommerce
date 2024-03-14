@@ -9,7 +9,7 @@ export const GlobalAction = {
 }
 const initialState = {
     cart: [],
-    payment: {},
+    payment: [],
     address: []
 };
 
