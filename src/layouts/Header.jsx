@@ -4,10 +4,9 @@ import {
   faMagnifyingGlass,
   faCartShopping,
   faBars,
-  faCancel,
   faX,
 } from "@fortawesome/free-solid-svg-icons";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useGravatar } from "use-gravatar";
 
 import {
@@ -16,7 +15,6 @@ import {
   DropdownMenu,
   DropdownItem,
   Collapse,
-  Button,
   CardBody,
   Card,
 } from "reactstrap";
@@ -83,9 +81,14 @@ export default function Header({ direction, ...args }) {
         </div>
         <div className=" sm:hidden xl:flex lg:flex md:hidden basis-4/5">
           <nav className="hidden sm:flex xl:flex lg:flex md:flex xl:gap-4 sm:gap-2">
-            <Link to="/">
-              <button className="py-1.5">Home</button>
-            </Link>
+            <button
+              className="py-1.5"
+              onClick={() => {
+                history.push("/");
+              }}
+            >
+              Home
+            </button>
             <Dropdown
               isOpen={dropdownOpen}
               toggle={toggle}
@@ -116,18 +119,38 @@ export default function Header({ direction, ...args }) {
                 </Link>
               </DropdownMenu>
             </Dropdown>
-            <Link to="/about">
-              <button className="py-1.5">About</button>
-            </Link>
-            <Link to="/team">
-              <button className="py-1.5">Team</button>
-            </Link>
-            <Link to="/contact">
-              <button className="py-1.5">Contact</button>
-            </Link>
-            <Link to="/">
-              <button className="py-1.5">Pages</button>
-            </Link>
+            <button
+              className="py-1.5"
+              onClick={() => {
+                history.push("/about");
+              }}
+            >
+              About
+            </button>
+            <button
+              className="py-1.5"
+              onClick={() => {
+                history.push("/team");
+              }}
+            >
+              Team
+            </button>
+            <button
+              className="py-1.5"
+              onClick={() => {
+                history.push("/contact");
+              }}
+            >
+              Contact
+            </button>
+            <button
+              className="py-1.5"
+              onClick={() => {
+                history.push("/");
+              }}
+            >
+              Pages
+            </button>
           </nav>
         </div>
         <div className="flex basis-2/5 mx-1 ">
@@ -215,29 +238,36 @@ export default function Header({ direction, ...args }) {
                     </div>
                   ))}
                   <div className="flex flex-row gap-2 justify-center">
-                    <Link to="/cart">
-                      <button
-                        className="button bg-gray-300 text-black hover:bg-primaryColor px-2 py-2 "
-                        onClick={closeCart}
-                      >
-                        Sepete Git
-                      </button>
-                    </Link>
-                    <Link to="/confirm">
-                      {" "}
-                      <button className="button bg-primaryColor text-black hover:bg-gray-300 px-2 py-2">
-                        Siparişi Tamamla
-                      </button>
-                    </Link>
+                    <button
+                      className="button bg-gray-300 text-black hover:bg-primaryColor px-2 py-2 "
+                      onClick={() => {
+                        history.push("/cart");
+                        closeCart();
+                      }}
+                    >
+                      Sepete Git
+                    </button>
+
+                    <button
+                      className="button bg-primaryColor text-black hover:bg-gray-300 px-2 py-2"
+                      onClick={() => {
+                        history.push("/confirm");
+                      }}
+                    >
+                      Siparişi Tamamla
+                    </button>
                   </div>
                 </CardBody>
               </Card>
             </Collapse>
-            <Link to="/favorites">
-              <button className=" header-button">
-                <FontAwesomeIcon icon={faHeart} /> 1
-              </button>
-            </Link>
+            <button
+              className=" header-button"
+              onClick={() => {
+                history.push("/favorites");
+              }}
+            >
+              <FontAwesomeIcon icon={faHeart} /> 1
+            </button>
           </div>
         </div>
       </div>
@@ -262,11 +292,14 @@ export default function Header({ direction, ...args }) {
       </div>
       <div className={`${isMenuVisible ? "flex flex-col" : "hidden"}`}>
         <nav className="flex lg:hidden  flex-col  mt-2 gap-1 items-center">
-          <Link to="/">
-            <button className="text-[30px] leading-[45px]  text-secondaryColor">
-              Home
-            </button>
-          </Link>
+          <button
+            className="text-[30px] leading-[45px]  text-secondaryColor"
+            onClick={() => {
+              history.push("/");
+            }}
+          >
+            Home
+          </button>
           <Dropdown
             isOpen={dropdownOpen}
             toggle={toggle}
@@ -296,21 +329,30 @@ export default function Header({ direction, ...args }) {
               </Link>
             </DropdownMenu>
           </Dropdown>
-          <Link to="/about">
-            <button className="text-[30px] leading-[45px]  text-secondaryColor">
-              About
-            </button>
-          </Link>
-          <Link to="/team">
-            <button className="text-[30px] leading-[45px]  text-secondaryColor">
-              Team
-            </button>
-          </Link>
-          <Link to="/contact">
-            <button className="text-[30px] leading-[45px]  text-secondaryColor">
-              Contact
-            </button>
-          </Link>
+          <button
+            className="text-[30px] leading-[45px]  text-secondaryColor"
+            onClick={() => {
+              history.push("/about");
+            }}
+          >
+            About
+          </button>
+          <button
+            className="text-[30px] leading-[45px]  text-secondaryColor"
+            onClick={() => {
+              history.push("/team");
+            }}
+          >
+            Team
+          </button>
+          <button
+            className="text-[30px] leading-[45px]  text-secondaryColor"
+            onClick={() => {
+              history.push("/contact");
+            }}
+          >
+            Contact
+          </button>
 
           <div className=" flex flex-col items-center  lg:hidden  gap-2 ">
             <Link to={userName ? "/" : "/login"} className="header-link">
@@ -396,26 +438,35 @@ export default function Header({ direction, ...args }) {
                     </div>
                   ))}
                   <div className="flex flex-row gap-2 justify-center">
-                    <Link to="/cart">
-                      <button className="button bg-gray-300 text-black hover:bg-primaryColor px-2 py-2">
-                        Sepete Git
-                      </button>
-                    </Link>
-                    <Link to="/confirm">
-                      {" "}
-                      <button className="button bg-primaryColor text-black hover:bg-gray-300 px-2 py-2">
-                        Siparişi Tamamla
-                      </button>
-                    </Link>
+                    <button
+                      className="button bg-gray-300 text-black hover:bg-primaryColor px-2 py-2"
+                      onClick={() => {
+                        history.push("/cart");
+                      }}
+                    >
+                      Sepete Git
+                    </button>
+
+                    <button
+                      className="button bg-primaryColor text-black hover:bg-gray-300 px-2 py-2"
+                      onClick={() => {
+                        history.push("/confirm");
+                      }}
+                    >
+                      Siparişi Tamamla
+                    </button>
                   </div>
                 </CardBody>
               </Card>
             </Collapse>{" "}
-            <Link to="/favorites">
-              <button className=" header-button">
-                <FontAwesomeIcon icon={faHeart} /> 1
-              </button>
-            </Link>
+            <button
+              className=" header-button"
+              onClick={() => {
+                history.push("/favorites");
+              }}
+            >
+              <FontAwesomeIcon icon={faHeart} /> 1
+            </button>
           </div>
         </nav>
       </div>
