@@ -95,7 +95,7 @@ function App() {
         </Route>
         <Route path="/confirm" exact>
           {/* Secure Routing */}
-          {token ? <ConfirmOrder /> : <Login />}
+          <ConfirmOrder />
         </Route>
         <Route path="/product/:category/:productId/:productNameSlug">
           <ProductDetail />

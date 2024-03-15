@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { GlobalAction } from "../store/reducers/ShoppingCardReducer";
 import { useEffect, useState } from "react";
 import { useHistory } from "react-router";
+import { Link } from "react-router-dom/cjs/react-router-dom.min";
 
 export default function Cart() {
   const cart = useSelector((state) => state.shoppingCard.cart);
