@@ -9,7 +9,7 @@ export const GlobalAction = {
 }
 const initialState = {
     cart: [],
-    payment: {},
+    payment: [],
     address: []
 };
 
@@ -57,7 +57,7 @@ export const shoppingCartReducer = (state = initialState, action) => {
             // Ödeme bilgilerini güncelleme
             return {
                 ...state,
-                payment: action.payload
+                payment: [...state.payment, action.payload]
             };
             case GlobalAction.setAddressInfo:
                 // Adres bilgilerini güncelleme

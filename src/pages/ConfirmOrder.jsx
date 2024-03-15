@@ -14,6 +14,8 @@ import {
   fetchAddress,
   setAddress,
 } from "../store/actions/addressAction";
+import { fetchPayment } from "../store/actions/paymentAction";
+import PaymentForm from "../components/PaymentForm";
 
 export default function ConfirmOrder() {
   const [orderData, setOrderData] = useState(null);
@@ -26,15 +28,24 @@ export default function ConfirmOrder() {
   const [cities, setCities] = useState([]);
   const dispatch = useDispatch();
   const adressList = useSelector((state) => state.shoppingCard.address[0]);
+  const paymentList = useSelector((state) => state.shoppingCard.payment);
   const adressListSelected = useSelector((state) => state.shoppingCard);
   const [isEditing, setIsEditing] = useState(false);
   const [formData, setFormData] = useState({});
+  const [showSavedCardOptions, setShowSavedCardOptions] = useState(false);
+
+  const handleUseSavedCard = () => {
+    setShowSavedCardOptions(true);
+  };
 
   useEffect(() => {
     if (!adressList || adressList.length === 0) {
       dispatch(fetchAddress());
     }
-  }, [dispatch, adressList]);
+    if (!paymentList || paymentList.length === 0) {
+      dispatch(fetchPayment());
+    }
+  }, [dispatch, adressList, paymentList]);
 
   useEffect(() => {
     const fetchCities = async () => {
@@ -126,9 +137,8 @@ export default function ConfirmOrder() {
       });
 
       // Redux store'u güncelleme işlemi
-      // dispatch(setAddress(formData)); // Güncellenmiş adresi Redux store'a set et
+      dispatch(setAddress(formData)); // Güncellenmiş adresi Redux store'a set et
 
-      // Başarı mesajı göster
       toast.success("Adres başarıyla güncellendi.");
     } catch (error) {
       console.error("Adres güncellenemedi:", error);
@@ -400,8 +410,6 @@ export default function ConfirmOrder() {
                     <p>Adresler Alınırken Bir Sorun Oluştu</p>
                   )}
                 </div>
-
-                <div>box1</div>
               </div>
               <div className="flex-col flex gap-3 basis-1/2">
                 {isEditing && (
@@ -583,14 +591,41 @@ export default function ConfirmOrder() {
                     </form>
                   </div>
                 )}{" "}
-                <div>box1</div>
               </div>
             </div>
           </div>
         </div>
 
-        <div className={showPaymentOptions ? "flex" : "hidden"}>
-          Ödeme Seçenekleri Görüntüleniyor
+        <div className={showPaymentOptions ? "flex " : "hidden"}>
+          <div>
+            <div className="flex flex-row justify-between">
+              <h1 className="text-2xl font-bold ">Kart Bilgileri</h1>
+              <button
+                className="underline text-base font-bold text-primaryColor"
+                onClick={() => handleUseSavedCard()}
+              >
+                Kayıtlı Kartımla Ödeme Yap
+              </button>
+            </div>
+            <PaymentForm />
+            {showSavedCardOptions && (
+              <div className="flex flex-col gap-3 mt-3">
+                {paymentList.map((payment, index) => (
+                  <div
+                    key={index}
+                    className="border-5 border-primaryColor rounded-lg p-3"
+                  >
+                    <p>Kart Numarası: {payment.card_no}</p>
+                    <p>
+                      Son Kullanma Tarihi: {payment.expire_month}/
+                      {payment.expire_year}
+                    </p>
+                    <p>Ad Üzerindeki İsim: {payment.name_on_card}</p>
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
         </div>
       </div>
 
