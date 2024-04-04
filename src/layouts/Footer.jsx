@@ -23,7 +23,7 @@ export default function Footer() {
       <div className="w-[full] px-[50px] sm:px-[195px] py-[50px] flex flex-col sm:flex-row justify-between  gap-3 bg-[#FAFAFA]">
         <Link to="/">
           <h3 className="font-bold text-2xl leading-8 text-[#252B42]">
-            Bandage
+            PortaKal
           </h3>
         </Link>
         <div className="flex gap-3">

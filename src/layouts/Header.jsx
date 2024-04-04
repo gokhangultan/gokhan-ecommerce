@@ -66,61 +66,57 @@ export default function Header({ direction, ...args }) {
   };
 
   return (
-    <header
-      className={`xl:mx-[118px] lg:mx-[30px] md:mx-[15px]               mx-[10px] lg:h-[91px]   ${
-        isMenuVisible ? "h-[501px]" : ""
-      } pt-4`}
-    >
+    <header className={`container   ${isMenuVisible ? "h-[501px]" : ""} py-3`}>
       <div className="flex ">
         <div className="hidden  sm:hidden xl:flex lg:flex md:hidden basis-2/5 ">
           <Link to="/">
-            <h3 className=" xl:mx-[136px] lg:mx-[40px] md:mx-[20px] mx-[5px] text-[24px] font-bold font- text-[#252B42] leading-8">
-              BrandName
-            </h3>
+            <h3 className="logo-text">PortaKal</h3>
           </Link>
         </div>
         <div className=" sm:hidden xl:flex lg:flex md:hidden basis-4/5">
-          <nav className="hidden sm:flex xl:flex lg:flex md:flex xl:gap-4 sm:gap-2">
+          <nav className="hidden sm:flex gap-2">
             <button
-              className="py-1.5"
+              className=""
               onClick={() => {
                 history.push("/");
               }}
             >
               Home
             </button>
-            <Dropdown
-              isOpen={dropdownOpen}
-              toggle={toggle}
-              direction={direction}
-            >
-              <DropdownToggle
-                caret
-                className="text-black border-none  hover:bg-gray-300 "
+            <button>
+              <Dropdown
+                isOpen={dropdownOpen}
+                toggle={toggle}
+                direction={direction}
               >
-                Shop
-              </DropdownToggle>
-              <DropdownMenu {...args}>
-                <DropdownItem header>Category</DropdownItem>
-                <Link to="/products">
-                  <DropdownItem>For Men</DropdownItem>
-                  <DropdownItem divider />
-                </Link>
-                <Link to="/products">
-                  <DropdownItem>For Women</DropdownItem>
-                  <DropdownItem divider />
-                </Link>
-                <Link to="/products">
-                  <DropdownItem>Accessories</DropdownItem>
-                  <DropdownItem divider />
-                </Link>
-                <Link to="/products">
-                  <DropdownItem>For Kids Action</DropdownItem>
-                </Link>
-              </DropdownMenu>
-            </Dropdown>
+                <DropdownToggle
+                  caret
+                  className="text-black border-none  hover:bg-gray-300 "
+                >
+                  Shop
+                </DropdownToggle>
+                <DropdownMenu {...args}>
+                  <DropdownItem header>Category</DropdownItem>
+                  <Link to="/products">
+                    <DropdownItem>For Men</DropdownItem>
+                    <DropdownItem divider />
+                  </Link>
+                  <Link to="/products">
+                    <DropdownItem>For Women</DropdownItem>
+                    <DropdownItem divider />
+                  </Link>
+                  <Link to="/products">
+                    <DropdownItem>Accessories</DropdownItem>
+                    <DropdownItem divider />
+                  </Link>
+                  <Link to="/products">
+                    <DropdownItem>For Kids Action</DropdownItem>
+                  </Link>
+                </DropdownMenu>
+              </Dropdown>
+            </button>
             <button
-              className="py-1.5"
+              className=""
               onClick={() => {
                 history.push("/about");
               }}
@@ -128,7 +124,7 @@ export default function Header({ direction, ...args }) {
               About
             </button>
             <button
-              className="py-1.5"
+              className=""
               onClick={() => {
                 history.push("/team");
               }}
@@ -136,7 +132,7 @@ export default function Header({ direction, ...args }) {
               Team
             </button>
             <button
-              className="py-1.5"
+              className=""
               onClick={() => {
                 history.push("/contact");
               }}
@@ -144,7 +140,7 @@ export default function Header({ direction, ...args }) {
               Contact
             </button>
             <button
-              className="py-1.5"
+              className=""
               onClick={() => {
                 history.push("/");
               }}
@@ -153,22 +149,21 @@ export default function Header({ direction, ...args }) {
             </button>
           </nav>
         </div>
-        <div className="flex basis-2/5 mx-1 ">
-          <div className=" hidden  sm:hidden xl:flex lg:flex md:hidden gap-4 w-[280px]">
+        <div className="flex  ">
+          <div className=" hidden  sm:hidden xl:flex lg:flex md:hidden gap-2 items-center ">
             <Link to={userName ? "/" : "/login"} className="header-link">
-              <div className="flex-row flex">
-                {/* Eğer token varsa Gravatar resmini, yoksa faUser ikonunu göster */}
+              <div className="flex-row flex  justify-center items-center gap-2">
                 {userName ? (
                   <img
                     src={gravatarUrl}
                     alt="User Avatar"
-                    className="avatar w-10 h-10"
+                    className="avatar w-8 h-8 rounded-lg"
                   />
                 ) : (
                   <FontAwesomeIcon icon={faUser} />
                 )}
                 <button
-                  className="header-button border-1 border-primaryColor ml-3"
+                  className="header-button border-1 border-primaryColor"
                   onClick={token && handleLogout}
                 >
                   {userName ? `${userName}  Logout` : "Login / Register"}
@@ -180,17 +175,18 @@ export default function Header({ direction, ...args }) {
             </button>
             {isSearchOpen && (
               <div>
-                <form onSubmit={handleSubmit}>
+                <form
+                  onSubmit={handleSubmit}
+                  className="flex flex-col lg:flex-row gap-2"
+                >
                   <input
                     type="text"
                     value={searchValue}
                     onChange={handleChange}
                     placeholder="Ne aramıştınız..."
+                    className="border-2 p-1"
                   />
-                  <button
-                    type="submit"
-                    className="bg-primaryColor text-white p-2 rounded mx-5"
-                  >
+                  <button type="submit" className="header-button">
                     Sitede Bul
                   </button>
                 </form>
@@ -200,12 +196,12 @@ export default function Header({ direction, ...args }) {
               <FontAwesomeIcon icon={faCartShopping} /> {totalItemCount}
             </button>
             <Collapse isOpen={isOpen} {...args}>
-              <Card className="w-[380px] absolute z-10 left-[70%] top-[9%]">
+              <Card className="absolute z-10 left-[70%] top-[9%] px-3">
                 <CardBody className="flex flex-col gap-2">
                   <div className="flex flex-row justify-between">
                     <h2>Sepetim ({totalItemCount} ürün)</h2>
                     <button
-                      className="bg-gray-300 rounded-full p-2 hover:bg-primaryColor"
+                      className="header-button border-1 border-primaryColor"
                       onClick={closeCart}
                     >
                       <FontAwesomeIcon icon={faX} />
@@ -214,16 +210,16 @@ export default function Header({ direction, ...args }) {
                   {cart.map((item) => (
                     <div
                       key={item.product.id}
-                      className=" bg-gray-50 flex flex-row gap-3 p-2 border-1 rounded-md border-primaryColor"
+                      className="  flex flex-row gap-3 p-2 border-1 rounded-lg border-primaryColor"
                     >
-                      <div className="flex basis-1/4 justify-center items-center">
+                      <div className="flex basis-1/5 justify-center items-center">
                         <img
                           src={item.product.images[0].url}
-                          className="object-contain w-[100px] h-[100px]"
+                          className="object-contain rounded-lg"
                           alt="product"
                         />
                       </div>
-                      <div className="flex flex-col basis-3/4">
+                      <div className="flex flex-col basis-4/5">
                         <div>{item.product.name}</div>
                         <div className="flex flex-row gap-3">
                           <div>Price: ${item.product.price}</div>
@@ -239,7 +235,7 @@ export default function Header({ direction, ...args }) {
                   ))}
                   <div className="flex flex-row gap-2 justify-center">
                     <button
-                      className="button bg-gray-300 text-black hover:bg-primaryColor px-2 py-2 "
+                      className="button-main"
                       onClick={() => {
                         history.push("/cart");
                         closeCart();
@@ -249,7 +245,7 @@ export default function Header({ direction, ...args }) {
                     </button>
 
                     <button
-                      className="button bg-primaryColor text-black hover:bg-gray-300 px-2 py-2"
+                      className="primary-button"
                       onClick={() => {
                         history.push("/confirm");
                       }}
@@ -274,13 +270,11 @@ export default function Header({ direction, ...args }) {
       <div className="flex justify-between">
         <div className="flex lg:hidden  ">
           <Link to="/">
-            <h3 className="  xl:mx-[136px] lg:mx-[40px] md:mx-[20px] mx-[5px] text-[24px] font-bold font- text-[#252B42] leading-8 pb-2">
-              BrandName
-            </h3>
+            <h3 className="logo-text">PortaKal</h3>
           </Link>
         </div>
-        <div className="flex-2 mx-1 my-2 flex lg:hidden">
-          <div className="flex gap-4 ">
+        <div className="button-main flex lg:hidden">
+          <div className="flex">
             <button
               onClick={toggleMenuVisibility}
               className="text-secondaryColor"
@@ -291,9 +285,9 @@ export default function Header({ direction, ...args }) {
         </div>
       </div>
       <div className={`${isMenuVisible ? "flex flex-col" : "hidden"}`}>
-        <nav className="flex lg:hidden  flex-col  mt-2 gap-1 items-center">
+        <nav className="flex lg:hidden flex-col gap-1 items-center">
           <button
-            className="text-[30px] leading-[45px]  text-secondaryColor"
+            className="mobile-menu-text"
             onClick={() => {
               history.push("/");
             }}
@@ -330,7 +324,7 @@ export default function Header({ direction, ...args }) {
             </DropdownMenu>
           </Dropdown>
           <button
-            className="text-[30px] leading-[45px]  text-secondaryColor"
+            className="mobile-menu-text"
             onClick={() => {
               history.push("/about");
             }}
@@ -338,7 +332,7 @@ export default function Header({ direction, ...args }) {
             About
           </button>
           <button
-            className="text-[30px] leading-[45px]  text-secondaryColor"
+            className="mobile-menu-text"
             onClick={() => {
               history.push("/team");
             }}
@@ -346,7 +340,7 @@ export default function Header({ direction, ...args }) {
             Team
           </button>
           <button
-            className="text-[30px] leading-[45px]  text-secondaryColor"
+            className="mobile-menu-text"
             onClick={() => {
               history.push("/contact");
             }}
@@ -354,15 +348,15 @@ export default function Header({ direction, ...args }) {
             Contact
           </button>
 
-          <div className=" flex flex-col items-center  lg:hidden  gap-2 ">
+          <div className=" flex flex-col lg:hidden  gap-2 ">
             <Link to={userName ? "/" : "/login"} className="header-link">
-              <div className="flex-row flex">
+              <div className="flex-row flex  items-center justify-center">
                 {/* Eğer token varsa Gravatar resmini, yoksa faUser ikonunu göster */}
                 {userName ? (
                   <img
                     src={gravatarUrl}
                     alt="User Avatar"
-                    className="avatar w-10 h-10 rounded-full"
+                    className="avatar w-8 h-8 rounded-lg"
                   />
                 ) : (
                   <FontAwesomeIcon icon={faUser} />
@@ -380,17 +374,15 @@ export default function Header({ direction, ...args }) {
             </button>
             {isSearchOpen && (
               <div>
-                <form onSubmit={handleSubmit}>
+                <form onSubmit={handleSubmit} className="flex flex-row gap-2">
                   <input
                     type="text"
                     value={searchValue}
                     onChange={handleChange}
                     placeholder="Ne aramıştınız..."
+                    className="border-2 p-1"
                   />
-                  <button
-                    type="submit"
-                    className="bg-primaryColor text-white p-2 rounded mx-5"
-                  >
+                  <button type="submit" className="header-button">
                     Sitede Bul
                   </button>
                 </form>
@@ -400,30 +392,30 @@ export default function Header({ direction, ...args }) {
               <FontAwesomeIcon icon={faCartShopping} /> {totalItemCount}
             </button>
             <Collapse isOpen={isOpen} {...args}>
-              <Card className="w-[380px] absolute z-10 left-[1%] top-[6%]">
+              <Card className="absolute z-10 top-[9%] px-3">
                 <CardBody className="flex flex-col gap-2">
                   <div className="flex flex-row justify-between">
                     <h2>Sepetim ({totalItemCount} ürün)</h2>
                     <button
-                      className="bg-gray-300 rounded-full p-2 hover:bg-primaryColor"
+                      className="header-button border-1 border-primaryColor"
                       onClick={closeCart}
                     >
                       <FontAwesomeIcon icon={faX} />
                     </button>
-                  </div>
+                  </div>{" "}
                   {cart.map((item) => (
                     <div
                       key={item.product.id}
-                      className=" bg-gray-50 flex flex-row gap-3 p-2 border-1 rounded-md border-primaryColor"
+                      className="  flex flex-row gap-3 p-2 border-1 rounded-lg border-primaryColor"
                     >
-                      <div className="flex basis-1/4 justify-center items-center">
+                      <div className="flex basis-1/5 justify-center items-center">
                         <img
                           src={item.product.images[0].url}
-                          className="object-contain w-[100px] h-[100px]"
+                          className="object-contain rounded-lg"
                           alt="product"
                         />
                       </div>
-                      <div className="flex flex-col basis-3/4">
+                      <div className="flex flex-col basis-4/5">
                         <div>{item.product.name}</div>
                         <div className="flex flex-row gap-3">
                           <div>Price: ${item.product.price}</div>
@@ -439,16 +431,17 @@ export default function Header({ direction, ...args }) {
                   ))}
                   <div className="flex flex-row gap-2 justify-center">
                     <button
-                      className="button bg-gray-300 text-black hover:bg-primaryColor px-2 py-2"
+                      className="button-main"
                       onClick={() => {
                         history.push("/cart");
+                        closeCart();
                       }}
                     >
                       Sepete Git
                     </button>
 
                     <button
-                      className="button bg-primaryColor text-black hover:bg-gray-300 px-2 py-2"
+                      className="primary-button"
                       onClick={() => {
                         history.push("/confirm");
                       }}
@@ -458,7 +451,7 @@ export default function Header({ direction, ...args }) {
                   </div>
                 </CardBody>
               </Card>
-            </Collapse>{" "}
+            </Collapse>
             <button
               className=" header-button"
               onClick={() => {

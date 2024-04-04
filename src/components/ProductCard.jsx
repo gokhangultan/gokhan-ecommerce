@@ -11,7 +11,7 @@ import {
 import { faHeart, faClock } from "@fortawesome/free-regular-svg-icons";
 import { useDispatch } from "react-redux";
 import { GlobalAction } from "../store/reducers/ShoppingCardReducer";
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-toastify";
 import { useHistory } from "react-router";
 
 export default function ProductCard({ product }) {
@@ -33,7 +33,6 @@ export default function ProductCard({ product }) {
 
   return (
     <div className="flex flex-grow-1 basis-[250px] justify-between border-1 border-gray-150 shadow-sm">
-      <ToastContainer position="top-right" autoClose={2000} />
       <div className="product-card m-3 relative">
         <img
           src={product.images[0].url}
