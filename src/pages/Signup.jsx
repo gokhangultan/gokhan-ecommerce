@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import Axios from "axios";
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchRoles } from "../store/actions/roleActions";
@@ -279,7 +279,6 @@ export default function Signup(props) {
                 Login
               </button>
             </div>
-            <ToastContainer position="top-right" autoClose={5000} />
           </div>
         </form>
       </div>

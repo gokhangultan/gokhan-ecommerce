@@ -7,12 +7,21 @@
   @apply text-white px-4 py-3 sm:px-8 sm:py-3 font-bold rounded-md border text-sm;
 
 }
-
-.primary-button {
-  @apply bg-green-500 hover:bg-transparent hover:border-green-500 hover:text-green-500;
+.button-main {
+  @apply text-white text-sm hover:text-primaryColor bg-primaryColor hover:bg-white rounded-lg px-2 py-1 border-2 border-primaryColor ;
 
 }
 
+.primary-button {
+  @apply  text-white text-sm  bg-green-500 hover:bg-white rounded-lg px-2 py-1 border-2 hover:bg-transparent border-green-500 hover:text-green-500;
+
+}
+.logo-text{
+  @apply text-[24px] font-bold text-[#252B42] leading-8 py-3;
+}
+.mobile-menu-text{
+  @apply text-[30px] leading-[45px]  text-secondaryColor;
+}
 .product-card-icon {
   @apply absolute top-[350px] p-2 rounded-full bg-white w-[40px] h-[40px] hover:text-red-600;
 }
@@ -46,7 +55,7 @@
 }
 
 .header-button {
-  @apply text-primaryColor text-sm hover:text-white hover:bg-primaryColor rounded p-1;
+  @apply text-primaryColor text-sm hover:text-white hover:bg-primaryColor rounded-lg px-2 py-1;
 }
 
 .secondary-text {

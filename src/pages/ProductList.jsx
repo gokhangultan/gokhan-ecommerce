@@ -19,7 +19,7 @@ import { fetchProduct } from "../store/actions/productAction";
 import ReactPaginate from "react-paginate";
 import ProductCard from "../components/ProductCard";
 import Companies from "../components/Companies";
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-toastify";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 export default function ProductList(direction) {
@@ -232,7 +232,6 @@ export default function ProductList(direction) {
                   >
                     Sitede Bul
                   </button>
-                  <ToastContainer position="top-right" autoClose={2000} />
                 </div>
               )}
             </div>

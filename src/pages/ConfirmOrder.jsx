@@ -7,7 +7,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-toastify";
 import { faUser } from "@fortawesome/free-regular-svg-icons";
 import {
   axiosInstance,
@@ -160,8 +160,6 @@ export default function ConfirmOrder() {
 
   return (
     <div className="flex flex-col md:flex-row container">
-      <ToastContainer position="top-right" autoClose={5000} />
-
       <div className={`flex flex-col gap-1 container basis-3/4`}>
         <div className="flex flex-col md:flex-row justify-between gap-1">
           <button
