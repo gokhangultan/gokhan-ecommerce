@@ -19,46 +19,31 @@ export default function Footer() {
     console.log("Email subscribed:", email);
   };
   return (
-    <div>
-      <div className="w-[full] px-[50px] sm:px-[195px] py-[50px] flex flex-col sm:flex-row justify-between  gap-3 bg-[#FAFAFA]">
+    <div className="container">
+      <div className=" flex flex-col sm:flex-row justify-between ">
         <Link to="/">
-          <h3 className="font-bold text-2xl leading-8 text-[#252B42]">
-            PortaKal
-          </h3>
+          <h3 className="logo-text">PortaKal</h3>
         </Link>
-        <div className="flex gap-3">
+        <div className="flex gap-2 items-center">
+          <button className="button-main">
+            <FontAwesomeIcon icon={faFacebook} size="lg" />
+          </button>
+
           <a href="" target="_blank">
-            <button className="hover:text-white hover:bg-gray-300 rounded-full p-2">
-              <FontAwesomeIcon
-                icon={faFacebook}
-                size="lg"
-                style={{ color: "#23A6F0" }}
-              />
+            <button className="button-main">
+              <FontAwesomeIcon icon={faInstagram} size="lg" />
             </button>
           </a>
           <a href="" target="_blank">
-            <button className="hover:text-white hover:bg-gray-300 rounded-full p-2">
-              <FontAwesomeIcon
-                icon={faInstagram}
-                size="lg"
-                style={{ color: "#23A6F0" }}
-              />
-            </button>
-          </a>
-          <a href="" target="_blank">
-            <button className="hover:text-white hover:bg-gray-300 rounded-full p-2">
-              <FontAwesomeIcon
-                icon={faTwitter}
-                size="lg"
-                style={{ color: "#23A6F0" }}
-              />
+            <button className="button-main">
+              <FontAwesomeIcon icon={faTwitter} size="lg" />
             </button>
           </a>
         </div>
       </div>
-      <div className="w-[full] px-[50px] sm:px-[195px] py-5">
-        <div className="flex flex-col gap-5  sm:flex-row justify-between flex-wrap">
-          <div className="flex flex-col gap-3">
+      <div className="my-5">
+        <div className="flex flex-col gap-3 sm:flex-row justify-between flex-wrap">
+          <div className="flex flex-col gap-1">
             <h5 className="footer-title">Company Info</h5>
             <Link to="/about" className="footer-link">
               About us
@@ -73,7 +58,7 @@ export default function Footer() {
               Blog
             </Link>
           </div>
-          <div className="flex flex-col gap-3">
+          <div className="flex flex-col gap-1">
             <h5 className="footer-title">Legal</h5>
             <Link to="/about" className="footer-link">
               About us
@@ -88,7 +73,7 @@ export default function Footer() {
               Blog
             </Link>
           </div>
-          <div className="flex flex-col gap-3">
+          <div className="flex flex-col gap-1">
             <h5 className="footer-title">Features</h5>
             <Link to="" className="footer-link">
               Business Marketing
@@ -103,7 +88,7 @@ export default function Footer() {
               Unlimited Support
             </Link>
           </div>
-          <div className="flex flex-col gap-3">
+          <div className="flex flex-col gap-1">
             <h5 className="footer-title">Resources</h5>
             <Link to="" className="footer-link">
               IOS & Android
@@ -118,20 +103,20 @@ export default function Footer() {
               API
             </Link>
           </div>
-          <div className="flex flex-col gap-3">
+          <div className="flex flex-col gap-1 justify-between">
             <h5 className="footer-title">Get In Touch</h5>
-            <form onSubmit={handleSubmit} className="flex flex-row ">
+            <form
+              onSubmit={handleSubmit}
+              className="flex flex-row justify-center items-center "
+            >
               <input
                 type="email"
                 placeholder="Your Email"
                 value={email}
                 onChange={handleInputChange}
-                className="pl-2 py-3 rounded-md border-1 border-[#E6E6E6] text-gray-500 bg-[#F9F9F9]"
+                className="header-button hover:bg-transparent outline-none border-2"
               />
-              <button
-                type="submit"
-                className="bg-[#23A6F0] text-[#E6E6E6] rounded-md border-1 w-[117px] h-[58px] hover:bg-white hover:primary-text hover:border-[#23A6F0]"
-              >
+              <button type="submit" className="button-main bg-primaryColor">
                 Subscribe
               </button>
             </form>
@@ -141,7 +126,7 @@ export default function Footer() {
           </div>
         </div>
       </div>
-      <div className="w-[full] px-[50px] sm:px-[195px] py-4 bg-[#FAFAFA]">
+      <div className="my-5">
         <h6 className="font-bold leading-6 text-sm secondary-text  collection-text ">
           Made With Love By Gokhan Gultan All Right Reserved{" "}
         </h6>

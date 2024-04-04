@@ -16,12 +16,18 @@
   @apply  text-white text-sm  bg-green-500 hover:bg-white rounded-lg px-2 py-1 border-2 hover:bg-transparent border-green-500 hover:text-green-500;
 
 }
+.social-icon {
+  @apply hover:text-white hover:bg-gray-300 rounded-full px-2 py-1 text-primaryColor;
+}
+
 .logo-text{
   @apply text-[24px] font-bold text-[#252B42] leading-8 py-3;
 }
+
 .mobile-menu-text{
   @apply text-[30px] leading-[45px]  text-secondaryColor;
 }
+
 .product-card-icon {
   @apply absolute top-[350px] p-2 rounded-full bg-white w-[40px] h-[40px] hover:text-red-600;
 }
