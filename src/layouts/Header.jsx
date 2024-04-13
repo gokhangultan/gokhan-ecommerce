@@ -66,7 +66,7 @@ export default function Header({ direction, ...args }) {
   };
 
   return (
-    <header className={`container   ${isMenuVisible ? "h-[501px]" : ""} py-3`}>
+    <header className={`container ${isMenuVisible ? "h-[501px]" : ""} py-3`}>
       <div className="flex ">
         <div className="hidden  sm:hidden xl:flex lg:flex md:hidden basis-2/5 ">
           <Link to="/">

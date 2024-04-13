@@ -98,14 +98,14 @@ export default function Home() {
         </div>
       </div>
 
-      <section className="editor-pick py-[80px] relative text-center">
+      <section className="editor-pick py-[80px] relative text-center container">
         <h3 className="font-bold text-2xl leading-[32px]  text-[#252B42] align-middle mb-3">
           EDITOR'S PICK
         </h3>
         <p className="text-sm leading-5 align-middle">
           Problems trying to resolve the conflict between{" "}
         </p>
-        <div className="flex flex-col sm:flex-row gap-3 justify-center mt-[50px] relative mx-4">
+        <div className="flex flex-col sm:flex-row gap-3 justify-center mt-5 relative mx-4">
           {" "}
           <div className="flex">
             <img

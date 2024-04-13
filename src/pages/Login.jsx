@@ -113,7 +113,7 @@ export default function Signup() {
               className="text-sm font-bold leading-6 bg-primaryColor rounded px-5 py-3 text-white hover:text-primaryColor hover:bg-gray-400 border-1 border-primaryColor"
               disabled={isLoading}
             >
-              {isLoading ? "Kayıt Olunuyor..." : "Login"}
+              {isLoading ? "Giriş Yapılıyor..." : "Login"}
             </button>
             <div>
               Do not you have an account ?
