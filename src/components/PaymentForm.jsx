@@ -1,7 +1,7 @@
 import { faInfoCircle } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useForm } from "react-hook-form";
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-toastify";
 import { axiosInstance } from "../store/actions/addressAction";
 import { useDispatch } from "react-redux";
 import { setPayment } from "../store/actions/paymentAction";
@@ -147,7 +147,6 @@ export default function PaymentForm() {
           </button>
         </div>
       </form>
-      <ToastContainer position="top-right" autoClose={5000} />
     </div>
   );
 }

@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import Axios from "axios";
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useDispatch } from "react-redux";
 import { setUser } from "../store/actions/loginAction";
@@ -113,7 +113,7 @@ export default function Signup() {
               className="text-sm font-bold leading-6 bg-primaryColor rounded px-5 py-3 text-white hover:text-primaryColor hover:bg-gray-400 border-1 border-primaryColor"
               disabled={isLoading}
             >
-              {isLoading ? "Kayıt Olunuyor..." : "Login"}
+              {isLoading ? "Giriş Yapılıyor..." : "Login"}
             </button>
             <div>
               Do not you have an account ?
@@ -126,7 +126,6 @@ export default function Signup() {
                 Signup
               </button>
             </div>
-            <ToastContainer position="top-right" autoClose={5000} />
           </div>
         </form>
       </div>

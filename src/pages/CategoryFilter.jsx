@@ -23,7 +23,7 @@ import { fetchProduct } from "../store/actions/productAction";
 import ReactPaginate from "react-paginate";
 import { useParams } from "react-router-dom";
 import Companies from "../components/Companies";
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-toastify";
 
 export default function ProductList({ direction, ...args }) {
   const { categoryId } = useParams();
@@ -259,7 +259,6 @@ export default function ProductList({ direction, ...args }) {
                     >
                       Sitede Bul
                     </button>
-                    <ToastContainer position="top-right" autoClose={2000} />
                   </form>
                 </div>
               )}
