@@ -88,22 +88,6 @@ export default function ProductCard({ product }) {
           <div className="flex gap-1 mb-3 justify-between">
             <h6 className="text-xs  leading-4 secondary-text ">
               <FontAwesomeIcon
-                icon={faClock}
-                size="lg"
-                style={{ color: "#23A6F0" }}
-              />{" "}
-              22hr 30min
-            </h6>
-            <h6 className="text-xs  leading-4 secondary-text ">
-              <FontAwesomeIcon
-                icon={faChartLine}
-                size="lg"
-                style={{ color: "#E77C40" }}
-              />{" "}
-              64 Lessons
-            </h6>
-            <h6 className="text-xs  leading-4 secondary-text ">
-              <FontAwesomeIcon
                 icon={faChartArea}
                 size="lg"
                 style={{ color: "#23856D" }}

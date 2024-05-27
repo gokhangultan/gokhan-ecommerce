@@ -2,6 +2,7 @@ export const GlobalAction = {
     setAddCard: "ADD_TO_CART",
     setRemoveCard: "REMOVE_FROM_CART",
     setPaymentInfo: "SET_PAYMENT_INFO",
+    setRemoveAllCard: "REMOVE_ALL_FROM_CART", 
     setAddressInfo: "SET_ADDRESS_INFO",
     //increase ve decrease count ayrı action yemiyor idleri aynı oldugu icin iki aksiyonda artırmayı yapıyor. 
     //Alternatif cözümü bu sekilde.
@@ -41,7 +42,11 @@ export const shoppingCartReducer = (state = initialState, action) => {
                 ...state,
                 cart: state.cart.filter(item => item.product.id !== action.payload)
             };
-
+            case GlobalAction.setRemoveAllCard:
+                return {
+                    ...state,
+                    cart: []
+                };
         case GlobalAction.setChangeCount:
             const { productId, change } = action.payload;
             return {

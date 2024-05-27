@@ -18,6 +18,9 @@ import {
 } from "../store/actions/addressAction";
 import { fetchPayment } from "../store/actions/paymentAction";
 import PaymentForm from "../components/PaymentForm";
+import AddressCreateForm from "../components/AddressCreateForm";
+import AddressEditForm from "../components/AddressEditForm";
+import { GlobalAction } from "../store/reducers/ShoppingCardReducer";
 
 export default function ConfirmOrder({ paymentId }) {
   const [orderData, setOrderData] = useState(null);
@@ -26,28 +29,81 @@ export default function ConfirmOrder({ paymentId }) {
   const [addressButtonClicked, setAddressButtonClicked] = useState(false);
   const [paymentButtonClicked, setPaymentButtonClicked] = useState(false);
   const [isButtonClicked, setIsButtonClicked] = useState(false);
-  const [selectedAddress, setSelectedAddress] = useState(null);
-  const [cities, setCities] = useState([]);
   const dispatch = useDispatch();
   const adressList = useSelector((state) => state.shoppingCard.address[0]);
   const paymentList = useSelector((state) => state.shoppingCard.payment);
-  const adressListSelected = useSelector((state) => state.shoppingCard);
   const [isEditing, setIsEditing] = useState(false);
-  const [formData, setFormData] = useState({});
+  const [formData, setFormData] = useState({ ccv: "" });
   const [showSavedCardOptions, setShowSavedCardOptions] = useState(false);
+  const [selectedPayment, setSelectedPayment] = useState(null);
+
+  const handleSelectPayment = (payment) => {
+    setSelectedPayment(payment);
+    setFormData(payment);
+  };
+
+  const handleUpdatePayment = async () => {
+    try {
+      const paymentData = {
+        id: selectedPayment.id,
+        card_no: formData.card_no,
+        expire_month: formData.expire_month,
+        expire_year: formData.expire_year,
+        name_on_card: formData.name_on_card,
+      };
+      const response = await axiosInstance.put(`/user/card`, paymentData, {
+        headers: {
+          Authorization: localStorage.getItem("token"),
+        },
+      });
+
+      if (response.status === 200 && response.status === 201) {
+        toast.success("Ödeme Yönteminiz Güncellendi.");
+      }
+    } catch (error) {
+      toast.error("Ödeme Yönteminiz Güncellenemedi. ");
+    }
+  };
+
+  const handleCreateOrder = async () => {
+    try {
+      const payload = {
+        address_id: 1, // Update with the selected address ID
+        order_date: new Date().toISOString(), // Update with the current date and time
+        card_no: formData.card_no,
+        card_name: formData.name_on_card,
+        card_expire_month: formData.expire_month,
+        card_expire_year: formData.expire_year,
+        card_ccv: 333, // Assuming you have a ccv field in your form
+        price: orderData.totalPrice,
+        products: orderData.items.map((item) => ({
+          product_id: item.product_id,
+          count: item.count,
+          detail: item.detail,
+        })),
+      };
+
+      const response = await axiosInstance.post("/order", payload, {
+        headers: {
+          Authorization: localStorage.getItem("token"),
+        },
+      });
+
+      if (response.status === 200 && response.status === 201) {
+        toast.success("Siparişiniz Başarı İle Kaydedildi.");
+        dispatch({ type: GlobalAction.setRemoveAllCard });
+      }
+    } catch (error) {
+      console.error("Sipariş Oluşturulamadı:", error);
+      toast.error("Failed to create order. Please try again later.");
+    }
+  };
 
   const handleUseSavedCard = () => {
     setShowSavedCardOptions(true);
   };
 
-  useEffect(() => {
-    if (!adressList || adressList.length === 0) {
-      dispatch(fetchAddress());
-    }
-    if (!paymentList || paymentList.length === 0) {
-      dispatch(fetchPayment());
-    }
-  }, [dispatch, adressList, paymentList]);
+  const [cities, setCities] = useState([]);
 
   useEffect(() => {
     const fetchCities = async () => {
@@ -68,6 +124,15 @@ export default function ConfirmOrder({ paymentId }) {
     fetchCities();
   }, []);
 
+  useEffect(() => {
+    if (!adressList || adressList.length === 0) {
+      dispatch(fetchAddress());
+    }
+    if (!paymentList || paymentList.length === 0) {
+      dispatch(fetchPayment());
+    }
+  }, [dispatch, adressList, paymentList]);
+
   const {
     register,
     handleSubmit,
@@ -80,14 +145,6 @@ export default function ConfirmOrder({ paymentId }) {
   };
   const handleClick = () => {
     setIsButtonClicked(!isButtonClicked);
-  };
-
-  const handleSelectChange = (event) => {
-    const selectedId = parseInt(event.target.value); // selectedId'yi integer'a dönüştür
-    const selected = adressListSelected.address[0].find(
-      (address) => address.id === selectedId
-    );
-    setSelectedAddress(selected);
   };
 
   const showForm = () => {
@@ -107,30 +164,6 @@ export default function ConfirmOrder({ paymentId }) {
     setPaymentButtonClicked(true);
   };
 
-
-  const onSubmit = async (data) => {
-    try {
-      await axiosInstance.post("/user/address", data, {
-        headers: {
-          Authorization: localStorage.getItem("token"),
-        },
-      });
-
-      // Redux store'a adresi set et
-      dispatch(setAddress(data));
-      toast.success("Adresiniz Kaydedildi.", {
-        position: "top-right",
-      });
-    } catch (error) {
-      console.error("Adres gönderilemedi veya işlenemedi.", error);
-
-      toast.error("Adres gönderilemedi ", {
-        position: "top-right",
-      });
-    }
-  };
-
-
   const handleDelete = async (addressId) => {
     try {
       await axiosInstance.delete(`/user/address/${addressId}`, {
@@ -139,52 +172,12 @@ export default function ConfirmOrder({ paymentId }) {
         },
       });
 
-      // Redux store'u güncelleme işlemi
       dispatch(fetchAddress()); // Adres listesini yeniden al
 
       toast.success("Adres başarıyla silindi.");
     } catch (error) {
       console.error("Adres silinemedi:", error);
       toast.error("Adres silinirken bir hata oluştu.");
-    }
-  };
-  const onEdit = async (formData) => {
-    try {
-      await axiosInstance.put("/user/address/", formData, {
-        headers: {
-          Authorization: localStorage.getItem("token"),
-        },
-      });
-
-      // Redux store'u güncelleme işlemi
-      dispatch(setAddress(formData)); // Güncellenmiş adresi Redux store'a set et
-
-      toast.success("Adres başarıyla güncellendi.");
-    } catch (error) {
-      console.error("Adres güncellenemedi:", error);
-      toast.error("Adres güncellenirken bir hata oluştu.");
-    }
-  };
-
-  const handleEditPayment = async (paymentId) => {
-    try {
-      // PUT request to update the payment method with the given ID
-      const response = await axiosInstance.put(`/payments/${paymentId}`, {
-        // Update the payment data as needed
-      });
-  
-      if (response.status === 200) {
-        // If the request is successful, show a success message to the user
-        alert("Payment method updated successfully!");
-      } else {
-        // Handle other status codes or errors if necessary
-        console.error("Error updating payment method:", response.statusText);
-        alert("Error updating payment method. Please try again later.");
-      }
-    } catch (error) {
-      // Handle any network errors or exceptions
-      console.error("Error updating payment method:", error);
-      alert("Error updating payment method. Please try again later.");
     }
   };
 
@@ -257,116 +250,9 @@ export default function ConfirmOrder({ paymentId }) {
               Gönder" tikini kaldırın ve Fatura adresi olarak kayıtlı Kurumsal
               Fatura adresinizi seçin.
             </div>
-            <form
-              id="contactForm"
-              className="hidden"
-              onSubmit={handleSubmit(onSubmit)}
-            >
-              <div className="flex-col flex bg-gray-200 p-5 gap-2 rounded-lg ">
-                <input
-                  {...register("title", { required: true })}
-                  type="text"
-                  placeholder="Adres Başığı"
-                  className="p-2 bg-gray-100 rounded-lg "
-                />
-                {errors.title && (
-                  <span className="text-red-500 text-sm leading-7 ">
-                    Adres Başlığı Zorunludur
-                  </span>
-                )}
-                <input
-                  {...register("name", { required: true })}
-                  type="text"
-                  placeholder="Adı "
-                  className="p-2 bg-gray-100 rounded-lg "
-                />
-                {errors.name && (
-                  <span className="text-red-500 text-sm leading-7 ">
-                    Ad Alanı Zorunludur
-                  </span>
-                )}
-                <input
-                  {...register("surname", { required: true })}
-                  type="text"
-                  placeholder="Soyadı"
-                  className="p-2 bg-gray-100 rounded-lg "
-                />
-                {errors.surname && (
-                  <span className="text-red-500 text-sm leading-7 ">
-                    SoyAd Alanı Zorunludur
-                  </span>
-                )}
-                <input
-                  {...register("phone", {
-                    required: true,
-                    pattern: /^(\+90|0)?\d{10}$/,
-                  })}
-                  type="text"
-                  placeholder="Telefon * (___)_______"
-                  className="p-2  bg-gray-100 rounded-lg "
-                />
-                {errors.phone && (
-                  <span className="text-red-500 text-sm leading-7 ">
-                    Lütfen Geçerli Bir telefon numarası giriniz. "+90- XXX XXX
-                    XX XX"
-                  </span>
-                )}
-                <select
-                  {...register("city", { required: true })}
-                  className="p-2 bg-gray-100 rounded-lg"
-                >
-                  {cities.map((city, index) => (
-                    <option key={index} value={city}>
-                      {city}
-                    </option>
-                  ))}
-                </select>
-                {errors.city && (
-                  <span className="text-red-500 text-sm leading-7">
-                    Lütfen Şehir Seçiniz
-                  </span>
-                )}
-                <input
-                  {...register("district", { required: true })}
-                  type="text"
-                  placeholder="district"
-                  className="p-2 bg-gray-100 rounded-lg "
-                />
-                {errors.district && (
-                  <span className="text-red-500 text-sm leading-7 ">
-                    District Alanı Zorunludur
-                  </span>
-                )}
-                <input
-                  {...register("neighborhood", { required: true })}
-                  type="text"
-                  placeholder="Neighborhood"
-                  className="p-2 bg-gray-100 rounded-lg "
-                />
-                {errors.neighborhood && (
-                  <span className="text-red-500 text-sm leading-7 ">
-                    Neighborhood Alanı Zorunludur
-                  </span>
-                )}
-                <textarea
-                  {...register("address", { required: true })}
-                  type="text"
-                  placeholder="Açık Adresiniz"
-                  className="p-2  bg-gray-100 rounded-lg "
-                />
-                {errors.address && (
-                  <span className="text-red-500 text-sm leading-7 ">
-                    Açık Adres Alanı Doldurunuz
-                  </span>
-                )}
-                <button
-                  type="submit"
-                  className="text-sm font-bold leading-6 bg-primaryColor rounded px-5 py-3 text-white hover:text-primaryColor hover:bg-gray-400 border-1 border-primaryColor"
-                >
-                  Adresi Kaydet
-                </button>
-              </div>
-            </form>
+
+            <AddressCreateForm />
+
             <div className="flex flex-row justify-between">
               <h1>Teslimat Adresi</h1>
               <h1>Faturamı Aynı Adrese Gönder</h1>
@@ -399,20 +285,27 @@ export default function ConfirmOrder({ paymentId }) {
                               {address.title}
                             </div>
                             <div className="flex gap-1">
-                            <button className="hover:text-white hover:bg-gray-300 rounded-full p-2 mx-1"  onClick={() => handleEdit(address)}>
-                      <FontAwesomeIcon
-                        icon={faEdit}
-                        size="2xl"
-                        style={{ color: "#007BFF" }}
-                      />
-                    </button>
-                    <button className="hover:text-white hover:bg-gray-300 rounded-full p-2 mx-1" onClick={() => handleDelete(address.id)}>
-                      <FontAwesomeIcon
-                        icon={faMinusCircle}
-                        size="2xl"
-                        style={{ color: "#FF0000" }}
-                      />
-                    </button></div>
+                              <button
+                                className="hover:text-white hover:bg-gray-300 rounded-full p-2 mx-1"
+                                onClick={() => handleEdit(address)}
+                              >
+                                <FontAwesomeIcon
+                                  icon={faEdit}
+                                  size="2xl"
+                                  style={{ color: "#007BFF" }}
+                                />
+                              </button>
+                              <button
+                                className="hover:text-white hover:bg-gray-300 rounded-full p-2 mx-1"
+                                onClick={() => handleDelete(address.id)}
+                              >
+                                <FontAwesomeIcon
+                                  icon={faMinusCircle}
+                                  size="2xl"
+                                  style={{ color: "#FF0000" }}
+                                />
+                              </button>
+                            </div>
                           </div>
                           <div
                             className={`flex flex-col gap-3 bg-${
@@ -464,180 +357,7 @@ export default function ConfirmOrder({ paymentId }) {
                 {isEditing && (
                   <div>
                     <h2>Adres Düzenleme Formu</h2>
-                    <form id="contactForm" onSubmit={handleSubmit(onEdit)}>
-                      <div className="flex-col flex bg-gray-200 p-5 gap-2 rounded-lg ">
-                        <select
-                          {...register("id", {
-                            required: true,
-                          })}
-                          className="p-2 bg-gray-100 rounded-lg"
-                          onChange={handleSelectChange}
-                        >
-                          <option value="">Değişiklik Adresi Seçiniz</option>
-                          {adressList.map((address, index) => (
-                            <option key={index} value={address.id}>
-                              {address.title} - {address.name} - {address.id}
-                            </option>
-                          ))}
-                        </select>
-                        {errors.selectedAddressId && (
-                          <span className="text-red-500 text-sm leading-7 ">
-                            Lütfen bir adres seçin
-                          </span>
-                        )}
-                        <input
-                          {...register("title", { required: true })}
-                          type="text"
-                          className="p-2 bg-gray-100 rounded-lg "
-                          placeholder={
-                            selectedAddress
-                              ? selectedAddress.title
-                              : "Adres Başlığı"
-                          }
-                          defaultValue={
-                            selectedAddress ? selectedAddress.title : ""
-                          }
-                        />
-                        {errors.title && (
-                          <span className="text-red-500 text-sm leading-7 ">
-                            Adres Başlığı Zorunludur
-                          </span>
-                        )}
-                        <input
-                          {...register("name", { required: true })}
-                          type="text"
-                          placeholder={
-                            selectedAddress ? selectedAddress.name : "Adı"
-                          }
-                          className="p-2 bg-gray-100 rounded-lg "
-                          defaultValue={
-                            selectedAddress ? selectedAddress.name : ""
-                          }
-                        />
-                        {errors.name && (
-                          <span className="text-red-500 text-sm leading-7 ">
-                            Ad Alanı Zorunludur
-                          </span>
-                        )}
-                        <input
-                          {...register("surname", { required: true })}
-                          type="text"
-                          className="p-2 bg-gray-100 rounded-lg "
-                          placeholder={
-                            selectedAddress ? selectedAddress.surname : "SoyAdı"
-                          }
-                          defaultValue={
-                            selectedAddress ? selectedAddress.surname : ""
-                          }
-                        />
-                        {errors.surname && (
-                          <span className="text-red-500 text-sm leading-7 ">
-                            SoyAd Alanı Zorunludur
-                          </span>
-                        )}
-                        <input
-                          {...register("phone", {
-                            required: true,
-                            pattern: /^(\+90|0)?\d{10}$/,
-                          })}
-                          type="text"
-                          placeholder={
-                            selectedAddress ? selectedAddress.phone : "Phone"
-                          }
-                          defaultValue={
-                            selectedAddress ? selectedAddress.phone : ""
-                          }
-                          className="p-2  bg-gray-100 rounded-lg "
-                        />
-                        {errors.phone && (
-                          <span className="text-red-500 text-sm leading-7 ">
-                            Lütfen Geçerli Bir telefon numarası giriniz. "+90-
-                            XXX XXX XX XX"
-                          </span>
-                        )}
-                        <select
-                          {...register("city", { required: true })}
-                          className="p-2 bg-gray-100 rounded-lg"
-                          placeholder={
-                            selectedAddress ? selectedAddress.city : "Sehir"
-                          }
-                          defaultValue={
-                            selectedAddress ? selectedAddress.city : ""
-                          }
-                        >
-                          {cities.map((city, index) => (
-                            <option key={index} value={city}>
-                              {city}
-                            </option>
-                          ))}
-                        </select>
-                        {errors.city && (
-                          <span className="text-red-500 text-sm leading-7">
-                            Lütfen Şehir Seçiniz
-                          </span>
-                        )}
-                        <input
-                          {...register("district", { required: true })}
-                          type="text"
-                          placeholder={
-                            selectedAddress
-                              ? selectedAddress.district
-                              : "district"
-                          }
-                          defaultValue={
-                            selectedAddress ? selectedAddress.district : ""
-                          }
-                          className="p-2 bg-gray-100 rounded-lg "
-                        />
-                        {errors.district && (
-                          <span className="text-red-500 text-sm leading-7 ">
-                            District Alanı Zorunludur
-                          </span>
-                        )}
-                        <input
-                          {...register("neighborhood", { required: true })}
-                          type="text"
-                          placeholder={
-                            selectedAddress
-                              ? selectedAddress.neighborhood
-                              : "neighborhood"
-                          }
-                          defaultValue={
-                            selectedAddress ? selectedAddress.neighborhood : ""
-                          }
-                          className="p-2 bg-gray-100 rounded-lg "
-                        />
-                        {errors.neighborhood && (
-                          <span className="text-red-500 text-sm leading-7 ">
-                            Neighborhood Alanı Zorunludur
-                          </span>
-                        )}
-                        <textarea
-                          {...register("address", { required: true })}
-                          type="text"
-                          placeholder={
-                            selectedAddress
-                              ? selectedAddress.address
-                              : "address"
-                          }
-                          defaultValue={
-                            selectedAddress ? selectedAddress.address : ""
-                          }
-                          className="p-2  bg-gray-100 rounded-lg "
-                        />
-                        {errors.address && (
-                          <span className="text-red-500 text-sm leading-7 ">
-                            Açık Adres Alanı Doldurunuz
-                          </span>
-                        )}
-                        <button
-                          type="submit"
-                          className="text-sm font-bold leading-6 bg-primaryColor rounded px-5 py-3 text-white hover:text-primaryColor hover:bg-gray-400 border-1 border-primaryColor"
-                        >
-                          Adresi Güncelle
-                        </button>
-                      </div>
-                    </form>
+                    <AddressEditForm />
                   </div>
                 )}{" "}
               </div>
@@ -647,66 +367,164 @@ export default function ConfirmOrder({ paymentId }) {
 
         <div className={showPaymentOptions ? "flex " : "hidden"}>
           <div>
-            <div className="flex flex-row justify-between">
+            <div className="flex flex-row justify-between pb-2">
               <h1 className="text-2xl font-bold ">Kart Bilgileri</h1>
               <button
-                className="underline text-base font-bold text-primaryColor"
-                onClick={() => handleUseSavedCard()}
+                onClick={handleUseSavedCard}
+                className="text-sm font-bold leading-6 bg-primaryColor rounded px-5 py-3 text-white hover:text-primaryColor hover:bg-gray-400 border-1 border-primaryColor"
               >
                 Kayıtlı Kartımla Ödeme Yap
               </button>
             </div>
-            <PaymentForm />
+            <div className="flex flex-row justify-between">
+              <PaymentForm />
+              <div className="pl-5 m-1 flex items-end">
+                {selectedPayment && (
+                  <div>
+                    <h2>Seçili Kart Bilgileri</h2>
+                    <div className="border-2 border-gray-200 p-2 rounded-lg">
+                      <div className="flex flex-col gap-2">
+                        <label>Kart Numarası</label>
+                        <input
+                          type="text"
+                          value={formData.card_no}
+                          onChange={(e) =>
+                            setFormData({
+                              ...formData,
+                              card_no: e.target.value,
+                            })
+                          }
+                        />
+                        <label>Son Kullanma Ayı</label>
+                        <input
+                          type="number"
+                          value={formData.expire_month}
+                          onChange={(e) =>
+                            setFormData({
+                              ...formData,
+                              expire_month: e.target.value,
+                            })
+                          }
+                        />
+                        <label>Son Kullanma Yılı</label>
+                        <input
+                          type="number"
+                          value={formData.expire_year}
+                          onChange={(e) =>
+                            setFormData({
+                              ...formData,
+                              expire_year: e.target.value,
+                            })
+                          }
+                        />
+                        <label>Kart Üzerindeki İsim</label>
+                        <input
+                          type="text"
+                          value={formData.name_on_card}
+                          onChange={(e) =>
+                            setFormData({
+                              ...formData,
+                              name_on_card: e.target.value,
+                            })
+                          }
+                        />
+
+                        <button
+                          onClick={handleUpdatePayment}
+                          className="text-sm font-bold leading-6 bg-primaryColor rounded px-5 py-3 text-white hover:text-primaryColor hover:bg-gray-400 border-1 border-primaryColor"
+                        >
+                          Kart Bilgilerini Güncelle
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                )}
+              </div>
+            </div>
             {showSavedCardOptions && (
-  <div className="flex flex-col gap-3 mt-3">
-   {paymentList.map((paymentArray, index1) => (
-  paymentArray.map((payment, index2) => {
-    const cardNumber = payment.card_no;
-    const visibleDigits = 10; 
-    const maskedCardNumber =
-      cardNumber.substring(0, cardNumber.length - visibleDigits).replace(/\d/g, '*') + cardNumber.substring(cardNumber.length - visibleDigits);
+              <div className="flex flex-col gap-3 mt-3">
+                {Array.isArray(paymentList) && paymentList.length > 0 ? (
+                  paymentList.map((paymentArray, index1) =>
+                    Array.isArray(paymentArray) && paymentArray.length > 0 ? (
+                      paymentArray.map((payment, index2) => {
+                        const cardNumber = payment.card_no;
+                        const visibleDigits = 10;
+                        const maskedCardNumber =
+                          cardNumber
+                            .substring(0, cardNumber.length - visibleDigits)
+                            .replace(/\d/g, "*") +
+                          cardNumber.substring(
+                            cardNumber.length - visibleDigits
+                          );
 
-    return (
-      <div
-        key={`${index1}-${index2}`}
-        className="border-5 border-primaryColor rounded-lg p-3"
-      >
-        <div>
-          <div className="flex justify-between">
-          <div className="flex gap-2 items-center">
-            <img
-              src="https://www.gokhangultan.com/logo.gg.png"
-              className="lg:max-w-[50px] max-w-[50px] object-contain pb-3"
-              alt="Logo"
-            />
-            <p className="text-xl font-bold">BANK</p>
-           
-          </div>
-          <div className="">
-          <button className="hover:text-white hover:bg-gray-300 rounded-full p-2 mx-1"  onClick={() => handleEditPayment(paymentId)}>
-                <FontAwesomeIcon
-                  icon={faEdit}
-                  size="2xl"
-                  style={{ color: "#007BFF" }}
-                />
-              </button>
-              </div></div>
-          <div className="flex flex-col gap-2 items-end text-xl font-bold">
-            <p> {maskedCardNumber}</p>
-            <p>
-               {payment.expire_month}/
-              {payment.expire_year}
-            </p>
-            <p>{payment.name_on_card}</p>
-          </div>
-        </div>
-      </div>
-    );
-  })
-))}
+                        return (
+                          <div
+                            key={`${index1}-${index2}`}
+                            className="border-5 border-primaryColor rounded-lg p-3"
+                          >
+                            <div>
+                              <div className="flex justify-between">
+                                <div className="flex flex-col justify-between">
+                                  <div className="flex gap-2 items-center">
+                                    <img
+                                      src="https://www.gokhangultan.com/logo.gg.png"
+                                      className="lg:max-w-[50px] max-w-[50px] object-contain pb-3"
+                                      alt="Logo"
+                                    />
+                                    <p className="text-xl font-bold">BANK</p>
+                                  </div>
+                                  <button
+                                    onClick={() => handleSelectPayment(payment)}
+                                    className="text-sm font-bold leading-6 bg-primaryColor rounded px-5 py-3 text-white hover:text-primaryColor hover:bg-gray-400 border-1 border-primaryColor"
+                                  >
+                                    Select As Payment
+                                  </button>
+                                </div>
 
-  </div>
-)}
+                                <div className="flex flex-row justify-between items-center">
+                                  <div>
+                                    <input
+                                      className="m-1"
+                                      type="checkbox"
+                                      checked={selectedPayment === payment}
+                                      onChange={() =>
+                                        handleSelectPayment(payment)
+                                      }
+                                    />
+                                    {payment.title}
+                                  </div>
+                                  <div className="flex gap-1">
+                                    <button
+                                      className="hover:text-white hover:bg-blue-600 rounded-lg w-8"
+                                      onClick={() =>
+                                        handleSelectPayment(payment)
+                                      }
+                                    >
+                                      <FontAwesomeIcon icon={faEdit} />
+                                    </button>
+                                  </div>
+                                </div>
+                              </div>
+                              <div className="flex flex-col gap-2 items-end text-xl font-bold">
+                                <p>{maskedCardNumber}</p>
+                                <p>
+                                  {payment.expire_month}/{payment.expire_year}
+                                </p>
+                                <p>{payment.name_on_card}</p>
+                              </div>
+                            </div>
+                          </div>
+                        );
+                      })
+                    ) : (
+                      <p>No payment methods found in this array</p>
+                    )
+                  )
+                ) : (
+                  <p>No payment methods found</p>
+                )}
+              </div>
+            )}
           </div>
         </div>
       </div>
@@ -760,7 +578,10 @@ export default function ConfirmOrder({ paymentId }) {
             </h5>
           </div>
           <div className="flex justify-center">
-            <button className="bg-primaryColor p-3 rounded text-white">
+            <button
+              className="bg-primaryColor p-3 rounded text-white"
+              onClick={handleCreateOrder}
+            >
               Kaydet Devam Et
             </button>
           </div>

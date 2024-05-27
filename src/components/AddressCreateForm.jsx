@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { axiosInstance, setAddress } from "../store/actions/addressAction";
 import { toast } from "react-toastify";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 
 export default function AddressCreateForm() {
   const {
@@ -11,10 +11,7 @@ export default function AddressCreateForm() {
     formState: { errors },
   } = useForm();
   const [cities, setCities] = useState([]);
-  const [selectedAddress, setSelectedAddress] = useState(null);
-  const adressListSelected = useSelector((state) => state.shoppingCard);
   const dispatch = useDispatch();
-  const adressList = useSelector((state) => state.shoppingCard.address[0]);
 
   useEffect(() => {
     const fetchCities = async () => {
@@ -34,31 +31,6 @@ export default function AddressCreateForm() {
 
     fetchCities();
   }, []);
-
-  const handleSelectChange = (event) => {
-    const selectedId = parseInt(event.target.value); // selectedId'yi integer'a dönüştür
-    const selected = adressListSelected.address[0].find(
-      (address) => address.id === selectedId
-    );
-    setSelectedAddress(selected);
-  };
-
-  const onEdit = async (formData) => {
-    try {
-      await axiosInstance.put("/user/address/", formData, {
-        headers: {
-          Authorization: localStorage.getItem("token"),
-        },
-      });
-
-      dispatch(setAddress(formData)); // Güncellenmiş adresi Redux store'a set et
-
-      toast.success("Adres başarıyla güncellendi.");
-    } catch (error) {
-      console.error("Adres güncellenemedi:", error);
-      toast.error("Adres güncellenirken bir hata oluştu.");
-    }
-  };
 
   const onSubmit = async (data) => {
     try {
@@ -83,35 +55,13 @@ export default function AddressCreateForm() {
   };
 
   return (
-    <form id="contactForm" onSubmit={handleSubmit(onEdit)}>
+    <form id="contactForm" className="hidden" onSubmit={handleSubmit(onSubmit)}>
       <div className="flex-col flex bg-gray-200 p-5 gap-2 rounded-lg ">
-        <select
-          {...register("id", {
-            required: true,
-          })}
-          className="p-2 bg-gray-100 rounded-lg"
-          onChange={handleSelectChange}
-        >
-          <option value="">Değişiklik Adresi Seçiniz</option>
-          {adressList.map((address, index) => (
-            <option key={index} value={address.id}>
-              {address.title} - {address.name} - {address.id}
-            </option>
-          ))}
-        </select>
-        {errors.selectedAddressId && (
-          <span className="text-red-500 text-sm leading-7 ">
-            Lütfen bir adres seçin
-          </span>
-        )}
         <input
           {...register("title", { required: true })}
           type="text"
+          placeholder="Adres Başığı"
           className="p-2 bg-gray-100 rounded-lg "
-          placeholder={
-            selectedAddress ? selectedAddress.title : "Adres Başlığı"
-          }
-          defaultValue={selectedAddress ? selectedAddress.title : ""}
         />
         {errors.title && (
           <span className="text-red-500 text-sm leading-7 ">
@@ -121,9 +71,8 @@ export default function AddressCreateForm() {
         <input
           {...register("name", { required: true })}
           type="text"
-          placeholder={selectedAddress ? selectedAddress.name : "Adı"}
+          placeholder="Adı "
           className="p-2 bg-gray-100 rounded-lg "
-          defaultValue={selectedAddress ? selectedAddress.name : ""}
         />
         {errors.name && (
           <span className="text-red-500 text-sm leading-7 ">
@@ -133,9 +82,8 @@ export default function AddressCreateForm() {
         <input
           {...register("surname", { required: true })}
           type="text"
+          placeholder="Soyadı"
           className="p-2 bg-gray-100 rounded-lg "
-          placeholder={selectedAddress ? selectedAddress.surname : "SoyAdı"}
-          defaultValue={selectedAddress ? selectedAddress.surname : ""}
         />
         {errors.surname && (
           <span className="text-red-500 text-sm leading-7 ">
@@ -148,8 +96,7 @@ export default function AddressCreateForm() {
             pattern: /^(\+90|0)?\d{10}$/,
           })}
           type="text"
-          placeholder={selectedAddress ? selectedAddress.phone : "Phone"}
-          defaultValue={selectedAddress ? selectedAddress.phone : ""}
+          placeholder="Telefon * (___)_______"
           className="p-2  bg-gray-100 rounded-lg "
         />
         {errors.phone && (
@@ -160,8 +107,6 @@ export default function AddressCreateForm() {
         <select
           {...register("city", { required: true })}
           className="p-2 bg-gray-100 rounded-lg"
-          placeholder={selectedAddress ? selectedAddress.city : "Sehir"}
-          defaultValue={selectedAddress ? selectedAddress.city : ""}
         >
           {cities.map((city, index) => (
             <option key={index} value={city}>
@@ -177,8 +122,7 @@ export default function AddressCreateForm() {
         <input
           {...register("district", { required: true })}
           type="text"
-          placeholder={selectedAddress ? selectedAddress.district : "district"}
-          defaultValue={selectedAddress ? selectedAddress.district : ""}
+          placeholder="district"
           className="p-2 bg-gray-100 rounded-lg "
         />
         {errors.district && (
@@ -189,10 +133,7 @@ export default function AddressCreateForm() {
         <input
           {...register("neighborhood", { required: true })}
           type="text"
-          placeholder={
-            selectedAddress ? selectedAddress.neighborhood : "neighborhood"
-          }
-          defaultValue={selectedAddress ? selectedAddress.neighborhood : ""}
+          placeholder="Neighborhood"
           className="p-2 bg-gray-100 rounded-lg "
         />
         {errors.neighborhood && (
@@ -203,8 +144,7 @@ export default function AddressCreateForm() {
         <textarea
           {...register("address", { required: true })}
           type="text"
-          placeholder={selectedAddress ? selectedAddress.address : "address"}
-          defaultValue={selectedAddress ? selectedAddress.address : ""}
+          placeholder="Açık Adresiniz"
           className="p-2  bg-gray-100 rounded-lg "
         />
         {errors.address && (
@@ -216,7 +156,7 @@ export default function AddressCreateForm() {
           type="submit"
           className="text-sm font-bold leading-6 bg-primaryColor rounded px-5 py-3 text-white hover:text-primaryColor hover:bg-gray-400 border-1 border-primaryColor"
         >
-          Adresi Güncelle
+          Adresi Kaydet
         </button>
       </div>
     </form>

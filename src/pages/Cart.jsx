@@ -29,6 +29,8 @@ export default function Cart() {
       items: cart.map((item) => ({
         name: item.product.name,
         count: item.count,
+        detail: item.product.description,
+        product_id: item.product.id,
         price: item.product.price,
       })),
     };
