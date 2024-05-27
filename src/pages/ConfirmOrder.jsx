@@ -1,5 +1,7 @@
 import {
+  faEdit,
   faInfoCircle,
+  faMinusCircle,
   faPhone,
   faPlus,
 } from "@fortawesome/free-solid-svg-icons";
@@ -17,7 +19,7 @@ import {
 import { fetchPayment } from "../store/actions/paymentAction";
 import PaymentForm from "../components/PaymentForm";
 
-export default function ConfirmOrder() {
+export default function ConfirmOrder({ paymentId }) {
   const [orderData, setOrderData] = useState(null);
   const [showAddressInfo, setShowAddressInfo] = useState(false);
   const [showPaymentOptions, setShowPaymentOptions] = useState(false);
@@ -72,6 +74,10 @@ export default function ConfirmOrder() {
     formState: { errors },
   } = useForm();
 
+  const handleEdit = (selectedAddress) => {
+    setFormData(selectedAddress);
+    setIsEditing(true);
+  };
   const handleClick = () => {
     setIsButtonClicked(!isButtonClicked);
   };
@@ -101,10 +107,6 @@ export default function ConfirmOrder() {
     setPaymentButtonClicked(true);
   };
 
-  const handleEdit = (selectedAddress) => {
-    setFormData(selectedAddress);
-    setIsEditing(true);
-  };
 
   const onSubmit = async (data) => {
     try {
@@ -128,6 +130,24 @@ export default function ConfirmOrder() {
     }
   };
 
+
+  const handleDelete = async (addressId) => {
+    try {
+      await axiosInstance.delete(`/user/address/${addressId}`, {
+        headers: {
+          Authorization: localStorage.getItem("token"),
+        },
+      });
+
+      // Redux store'u güncelleme işlemi
+      dispatch(fetchAddress()); // Adres listesini yeniden al
+
+      toast.success("Adres başarıyla silindi.");
+    } catch (error) {
+      console.error("Adres silinemedi:", error);
+      toast.error("Adres silinirken bir hata oluştu.");
+    }
+  };
   const onEdit = async (formData) => {
     try {
       await axiosInstance.put("/user/address/", formData, {
@@ -143,6 +163,28 @@ export default function ConfirmOrder() {
     } catch (error) {
       console.error("Adres güncellenemedi:", error);
       toast.error("Adres güncellenirken bir hata oluştu.");
+    }
+  };
+
+  const handleEditPayment = async (paymentId) => {
+    try {
+      // PUT request to update the payment method with the given ID
+      const response = await axiosInstance.put(`/payments/${paymentId}`, {
+        // Update the payment data as needed
+      });
+  
+      if (response.status === 200) {
+        // If the request is successful, show a success message to the user
+        alert("Payment method updated successfully!");
+      } else {
+        // Handle other status codes or errors if necessary
+        console.error("Error updating payment method:", response.statusText);
+        alert("Error updating payment method. Please try again later.");
+      }
+    } catch (error) {
+      // Handle any network errors or exceptions
+      console.error("Error updating payment method:", error);
+      alert("Error updating payment method. Please try again later.");
     }
   };
 
@@ -347,7 +389,7 @@ export default function ConfirmOrder() {
                     adressList.map((address, index) => (
                       <div key={index}>
                         <div className="flex flex-col gap-2">
-                          <div className="flex flex-row justify-between">
+                          <div className="flex flex-row justify-between items-center">
                             <div>
                               <input
                                 className="m-1"
@@ -356,12 +398,21 @@ export default function ConfirmOrder() {
                               />
                               {address.title}
                             </div>
-                            <button
-                              className="underline"
-                              onClick={() => handleEdit(address)}
-                            >
-                              Düzenle
-                            </button>
+                            <div className="flex gap-1">
+                            <button className="hover:text-white hover:bg-gray-300 rounded-full p-2 mx-1"  onClick={() => handleEdit(address)}>
+                      <FontAwesomeIcon
+                        icon={faEdit}
+                        size="2xl"
+                        style={{ color: "#007BFF" }}
+                      />
+                    </button>
+                    <button className="hover:text-white hover:bg-gray-300 rounded-full p-2 mx-1" onClick={() => handleDelete(address.id)}>
+                      <FontAwesomeIcon
+                        icon={faMinusCircle}
+                        size="2xl"
+                        style={{ color: "#FF0000" }}
+                      />
+                    </button></div>
                           </div>
                           <div
                             className={`flex flex-col gap-3 bg-${
@@ -607,22 +658,55 @@ export default function ConfirmOrder() {
             </div>
             <PaymentForm />
             {showSavedCardOptions && (
-              <div className="flex flex-col gap-3 mt-3">
-                {paymentList.map((payment, index) => (
-                  <div
-                    key={index}
-                    className="border-5 border-primaryColor rounded-lg p-3"
-                  >
-                    <p>Kart Numarası: {payment.card_no}</p>
-                    <p>
-                      Son Kullanma Tarihi: {payment.expire_month}/
-                      {payment.expire_year}
-                    </p>
-                    <p>Ad Üzerindeki İsim: {payment.name_on_card}</p>
-                  </div>
-                ))}
-              </div>
-            )}
+  <div className="flex flex-col gap-3 mt-3">
+   {paymentList.map((paymentArray, index1) => (
+  paymentArray.map((payment, index2) => {
+    const cardNumber = payment.card_no;
+    const visibleDigits = 10; 
+    const maskedCardNumber =
+      cardNumber.substring(0, cardNumber.length - visibleDigits).replace(/\d/g, '*') + cardNumber.substring(cardNumber.length - visibleDigits);
+
+    return (
+      <div
+        key={`${index1}-${index2}`}
+        className="border-5 border-primaryColor rounded-lg p-3"
+      >
+        <div>
+          <div className="flex justify-between">
+          <div className="flex gap-2 items-center">
+            <img
+              src="https://www.gokhangultan.com/logo.gg.png"
+              className="lg:max-w-[50px] max-w-[50px] object-contain pb-3"
+              alt="Logo"
+            />
+            <p className="text-xl font-bold">BANK</p>
+           
+          </div>
+          <div className="">
+          <button className="hover:text-white hover:bg-gray-300 rounded-full p-2 mx-1"  onClick={() => handleEditPayment(paymentId)}>
+                <FontAwesomeIcon
+                  icon={faEdit}
+                  size="2xl"
+                  style={{ color: "#007BFF" }}
+                />
+              </button>
+              </div></div>
+          <div className="flex flex-col gap-2 items-end text-xl font-bold">
+            <p> {maskedCardNumber}</p>
+            <p>
+               {payment.expire_month}/
+              {payment.expire_year}
+            </p>
+            <p>{payment.name_on_card}</p>
+          </div>
+        </div>
+      </div>
+    );
+  })
+))}
+
+  </div>
+)}
           </div>
         </div>
       </div>

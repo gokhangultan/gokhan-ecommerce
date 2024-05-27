@@ -25,7 +25,7 @@ export default function PaymentForm() {
         },
       });
 
-      // Redux store'a adresi set et
+      // Redux store'a payment set et
       dispatch(setPayment(data));
       toast.success("Kart Bilgileriniz Kaydedildi.", {
         position: "top-right",
@@ -143,7 +143,7 @@ export default function PaymentForm() {
             type="submit"
             className="text-sm font-bold leading-6 bg-primaryColor rounded px-5 py-3 text-white hover:text-primaryColor hover:bg-gray-400 border-1 border-primaryColor"
           >
-            Ödemeyi Yap
+            Ödeme Yöntemini Kaydet
           </button>
         </div>
       </form>

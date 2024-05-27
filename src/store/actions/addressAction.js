@@ -28,3 +28,5 @@ export const setAddress = (address) => ({
     type: GlobalAction.setAddressInfo,
     payload: address
 });
+
+
