@@ -57,7 +57,7 @@ export default function ConfirmOrder({ paymentId }) {
         },
       });
 
-      if (response.status === 200 && response.status === 201) {
+      if (response.status === 200 || response.status === 201) {
         toast.success("Ödeme Yönteminiz Güncellendi.");
       }
     } catch (error) {
@@ -89,7 +89,7 @@ export default function ConfirmOrder({ paymentId }) {
         },
       });
 
-      if (response.status === 200 && response.status === 201) {
+      if (response.status === 200 || response.status === 201) {
         toast.success("Siparişiniz Başarı İle Kaydedildi.");
         dispatch({ type: GlobalAction.setRemoveAllCard });
       }
