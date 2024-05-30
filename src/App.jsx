@@ -20,6 +20,7 @@ import Axios from "axios";
 import { useHistory } from "react-router";
 import ConfirmOrder from "./pages/ConfirmOrder";
 import { ToastContainer, toast } from "react-toastify";
+import OrderCreate from "./pages/OrderCreate";
 
 function App() {
   const dispatch = useDispatch();
@@ -83,6 +84,9 @@ function App() {
         </Route>
         <Route path="/login" exact>
           <Login />
+        </Route>
+        <Route path="/ordercreate" exact>
+          <OrderCreate />
         </Route>
         <Route path="/signup" exact>
           <Signup />

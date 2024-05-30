@@ -21,6 +21,7 @@ import PaymentForm from "../components/PaymentForm";
 import AddressCreateForm from "../components/AddressCreateForm";
 import AddressEditForm from "../components/AddressEditForm";
 import { GlobalAction } from "../store/reducers/ShoppingCardReducer";
+import { useHistory } from "react-router";
 
 export default function ConfirmOrder({ paymentId }) {
   const [orderData, setOrderData] = useState(null);
@@ -36,6 +37,9 @@ export default function ConfirmOrder({ paymentId }) {
   const [formData, setFormData] = useState({ ccv: "" });
   const [showSavedCardOptions, setShowSavedCardOptions] = useState(false);
   const [selectedPayment, setSelectedPayment] = useState(null);
+  const history = useHistory();
+  const [selectedAddressId, setSelectedAddressId] = useState(null);
+  const [selectedAddress, setSelectedAddress] = useState(null);
 
   const handleSelectPayment = (payment) => {
     setSelectedPayment(payment);
@@ -68,13 +72,13 @@ export default function ConfirmOrder({ paymentId }) {
   const handleCreateOrder = async () => {
     try {
       const payload = {
-        address_id: 1, // Update with the selected address ID
-        order_date: new Date().toISOString(), // Update with the current date and time
+        address_id: selectedAddressId,
+        order_date: new Date().toISOString(),
         card_no: formData.card_no,
         card_name: formData.name_on_card,
         card_expire_month: formData.expire_month,
         card_expire_year: formData.expire_year,
-        card_ccv: 333, // Assuming you have a ccv field in your form
+        card_ccv: 333,
         price: orderData.totalPrice,
         products: orderData.items.map((item) => ({
           product_id: item.product_id,
@@ -92,6 +96,9 @@ export default function ConfirmOrder({ paymentId }) {
       if (response.status === 200 || response.status === 201) {
         toast.success("Siparişiniz Başarı İle Kaydedildi.");
         dispatch({ type: GlobalAction.setRemoveAllCard });
+        setTimeout(() => {
+          history.push("/ordercreate");
+        }, 3000);
       }
     } catch (error) {
       console.error("Sipariş Oluşturulamadı:", error);
@@ -212,8 +219,19 @@ export default function ConfirmOrder({ paymentId }) {
             >
               Adres Bilgileri
             </h1>
-            <p>343 sokak No8 daire4 Yigitler Mahallesi</p>
-            <p>35140 İzmir Buca</p>
+            {selectedAddress ? (
+              <div className="flex flex-col items-center gap-2 text-sm">
+                <p>Seçili Adres Bilgileri</p>
+                <p>{selectedAddress.city}</p>
+                <p>{selectedAddress.name}</p>
+                <p>{selectedAddress.title}</p>
+                <p>{selectedAddress.address}</p>
+
+                <p>{selectedAddress.zip}</p>
+              </div>
+            ) : (
+              <p>Lütfen Teslimat Adresi Seçiniz.</p>
+            )}
           </button>
           <button
             className={`border-5 border-gray-300 flex flex-col basis-1/2 p-3 gap-2 items-start  ${
@@ -344,6 +362,15 @@ export default function ConfirmOrder({ paymentId }) {
                               <h2>{address.city}</h2>
                               <p>{address.address}</p>
                             </div>
+                            <button
+                              onClick={() => {
+                                setSelectedAddressId(address.id);
+                                setSelectedAddress(address);
+                              }}
+                              className="text-sm font-bold leading-6 bg-primaryColor rounded px-5 py-3 text-white hover:text-primaryColor hover:bg-gray-400 border-1 border-primaryColor"
+                            >
+                              Select As Deliever
+                            </button>
                           </div>
                         </div>
                       </div>
